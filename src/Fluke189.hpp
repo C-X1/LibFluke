@@ -245,11 +245,24 @@ public:
 
 	typedef struct
 	{
-		unsigned int u0 :16;
+		unsigned int I_Time0		 :32; //Time(1st Occur.)
+		union
+		{
+		  signed int I_priValue0	 :32; //Primary Value	 (1st Occur.)
+		  struct
+		  {
+			unsigned int I_ErrorNoPV0:8;  //8 Bit Error Code (If Error == 1)
+			unsigned int 			 :22; //unneeded bits for Error
+			unsigned int I_ErrorPV0	 :2;  //Error when value == 1 (NoError: is 3 when negative or 0 when positiv)
+		  };
+		};
 		unsigned int u1 :8;
 		unsigned int u2 :8;
-
-
+		unsigned int u3 :16;
+		unsigned int u4 :16; //DBREF
+		unsigned int u5 :8;
+		unsigned int u6 :8;
+		unsigned int u7	:32;
 
 	}qd2_set_t;
 
@@ -258,7 +271,17 @@ public:
 		char I_CMD_ACK;
 		char n_CR0;
 		char n_QDHeaderInfo_Comma[3];
-		unsigned int DataCount:16;
+		unsigned int DataCount:16; //995 max
+
+		unsigned int I_InitalValue   :32; //Value on start of logging
+		unsigned int I_InitDecimal	 :8;  //Initial Disp. Dec. Pnt Locaction
+		signed int   I_InitPrefix    :8;  //Initial SI-Prefix
+		unsigned int uh3:16;
+		unsigned int I_DBREF_Set	 :16; //dBRef Value STD:600
+		unsigned int uh5:8;
+		unsigned int uh6:8;
+		unsigned int uh7:32;
+
 		qd2_set_t dsets[1];
 	} cmdr_QD2_t;
 
