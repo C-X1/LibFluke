@@ -36,7 +36,7 @@ namespace Fluke {
 			this->SetManufacturer("Fluke Corporation");
 			this->SetDeviceName("Fluke 189 Logging Multimeter");
 		//Setup delay to wait for multimeter response
-			this->DelayChar_us=2000;
+			this->DelayChar_us=5000;
 			this->DelayResponse_us=120000;
 	}
 	std::vector<Fluke189::SimpleListElement__QD4_BIN__t>Fluke189::CMD_QD4_CreateSimpleList_BIN()

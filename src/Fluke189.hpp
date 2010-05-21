@@ -233,6 +233,64 @@ public:
 		return Response;
 	}
 
+
+
+
+
+
+	//Get Logs
+	//Command QD 2<CR>
+
+#pragma pack(push, 1) //Pragma packing width 1
+
+	typedef struct
+	{
+		unsigned int u0 :16;
+		unsigned int u1 :8;
+		unsigned int u2 :8;
+
+
+
+	}qd2_set_t;
+
+	typedef struct
+	{
+		char I_CMD_ACK;
+		char n_CR0;
+		char n_QDHeaderInfo_Comma[3];
+		unsigned int DataCount:16;
+		qd2_set_t dsets[1];
+	} cmdr_QD2_t;
+
+#pragma pack(pop) //Reset pack pragma
+
+
+	typedef  SerialResponse<cmdr_QD2_t> RCT_QD2;
+
+
+	RCT_QD2 CMD_QD2(bool TerminatedSubstrings)
+	{
+		RCT_QD2 Response = this->SendCommand<cmdr_QD2_t>("QD 2\r",this->DelayResponse_us, this->DelayChar_us);
+		if(TerminatedSubstrings)//Insert String Terminators by overwriting unneeded stuff like commas and returns etc...
+		{
+			Response[1]=0;
+			Response[4]=0;
+		}
+		return Response;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 	//Get Single Saves
 	//Command QD 4<CR>
 
