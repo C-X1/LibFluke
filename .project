@@ -4,7 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>LibCalTime</project>
-		<project>LibSerialDevice</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
