@@ -248,24 +248,15 @@ public:
 
 	typedef struct
 	{
-		unsigned int I_Time0		 :32; //Time(1st Occur.)
-		union
-		{
-		  signed int I_priValue0	 :32; //Primary Value	 (1st Occur.)
-		  struct
-		  {
-			unsigned int I_ErrorNoPV0:8;  //8 Bit Error Code (If Error == 1)
-			unsigned int 			 :22; //unneeded bits for Error
-			unsigned int I_ErrorPV0	 :2;  //Error when value == 1 (NoError: is 3 when negative or 0 when positiv)
-		  };
-		};
-		unsigned int u1 :8;
-		unsigned int u2 :8;
-		unsigned int u3 :16;
-		unsigned int u4 :16; //DBREF
-		unsigned int u5 :8;
-		unsigned int u6 :8;
-		unsigned int u7	:32;
+		unsigned int I_TimeBeg	 :32; //Beginning Timestamp
+		unsigned int I_Decimal   :8; //Decimal Location
+	    signed int I_SI_Prefix	 :8;  //Si Prefix
+	    signed int I_MinValue    :32;
+        signed int I_MaxValue    :32;
+        signed int I_ActualValue :32;
+        unsigned int u_byte0 	 :32;
+
+        //TODO Missing...
 
 	}qd2_set_t;
 
@@ -296,7 +287,7 @@ public:
 		unsigned int I_MEMclr		  	 :2;  //In ViewMem its 2 if there are saves or logs, if not its 00, if Clr? is displayed its 1 //Unknown if its available in Log Mode
 		unsigned int I_AutoRange	 	 :1;  //1 when Auto Range
 		unsigned int I_ManualRange	 	 :1;  //1 when Manual Range
-	 	        bool u_bit1x			 :1;  //TODO Find out what that is for
+	 	        bool u_bit1			 	 :1;  //TODO Find out what that is for
 
 		unsigned int I_DBREF_Set	     :16; //dBRef Value STD:600
 		unsigned int I_MeasureMode	 	 :6;  //Mode (ACV DCV etc...)
@@ -304,9 +295,9 @@ public:
 
 				bool I_MinMaxMode		 :1;  //High if MinMax Mode(also Fast)
 				bool I_Fast				 :1;  //High if Fast
-				bool u_bit6				 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
+				bool u_bit2				 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 		unsigned int I_MinMaxAvg		 :2;  //(1=Max 2=Min 3=AVG)
-				bool u_bit55			 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
+				bool u_bit3				 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 				bool I_RisingEtch	 	 :1;  //High if rising etch displayed
 				bool I_FallingEtch	 	 :1;  //High if falling etch displayed
 
@@ -320,16 +311,17 @@ public:
 
 				bool I_Delta			 :1;  //High if Delta(Low if Delta Percent)
 				bool I_DeltaPercent		 :1;  //High if DeltaPercent(Low if Delta)
-				bool u_bit2				 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
+				bool u_bit6				 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 				bool I_Unit_AC_dB		 :1;  //High if(Prim is AC and Sec dB) only V and mV (AC)
 				bool I_Unit_dB_AC		 :1;  //High if(Prim is dB and Sec AC) only V and mV (AC)
-				bool u_bit1				 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
-				bool u_bit0				 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
+				bool u_bit7				 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
+				bool u_bit8				 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 				bool I_TODO	 			 :1;  //TODO Redefine Name //Maybe 1 when Decimal Loc is not in use ???
 
 		unsigned int I_SelectedRange 	 :8;  //Range: 5 50 500 5000 1 10 100 1000
 
 		unsigned int uh10:8;
+
 
 		qd2_set_t dsets[1];
 	} cmdr_QD2_t;
