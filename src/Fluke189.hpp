@@ -248,17 +248,18 @@ public:
 
 	typedef struct
 	{
-		unsigned int I_TimeBeg	 :32; //Beginning Timestamp
-		unsigned int I_Decimal   :8; //Decimal Location
-	    signed int I_SI_Prefix	 :8;  //Si Prefix
-	    signed int I_MinValue    :32;
-        signed int I_MaxValue    :32;
-        signed int I_ActualValue :32;
-        unsigned int u_byte0 	 :32;
-
-        //TODO Missing...
-
-	}qd2_set_t;
+		unsigned int I_TimeBeg	 :32; 	//Beginning timestamp for entry in units of 0.1s
+        unsigned int I_Decimal   :8; 	//Decimal point location
+        signed int I_SI_Prefix	 :8;    //Units.  -1 for milli, 1 for kilo, etc.
+        signed int I_MinValue    :32;	//Lowest value for this time period
+        signed int I_MaxValue    :32;	//Maximum value for this time period
+        signed int I_ActualValue :32;	//Actual value, sum of N
+        unsigned int u_byte0 	 :32;   //?, always all 0 in my tests
+        unsigned int I_SummedVal :32;   //Number of values which were summed
+        unsigned int I_Status	 :8;     //Status - 0x05 for normal, 0x85 for last entry, other //values for range changes or other oddities
+        unsigned int u_byte1     :8;	//? - always 0x01 in my tests
+        unsigned int I_TimeEnd	 :32; 	//Ending timestamp for this entry
+     }qd2_set_t;
 
 	typedef struct
 	{
