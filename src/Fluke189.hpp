@@ -253,9 +253,9 @@ public:
         signed int I_SI_Prefix	 :8;    //Units.  -1 for milli, 1 for kilo, etc.
         signed int I_MinValue    :32;	//Lowest value for this time period
         signed int I_MaxValue    :32;	//Maximum value for this time period
-        signed int I_ActualValue :32;	//Actual value, sum of N
+        signed int I_SummedValue :32;	//Actual value, sum of N
         unsigned int u_byte0 	 :32;   //?, always all 0 in my tests
-        unsigned int I_SummedVal :32;   //Number of values which were summed
+        unsigned int I_NumberSum :32;   //Number of values which were summed
         unsigned int I_Status	 :8;     //Status - 0x05 for normal, 0x85 for last entry, other //values for range changes or other oddities
         unsigned int u_byte1     :8;	//? - always 0x01 in my tests
         unsigned int I_TimeEnd	 :32; 	//Ending timestamp for this entry
