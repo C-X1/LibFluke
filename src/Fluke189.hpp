@@ -51,9 +51,9 @@ public:
 
 	typedef  SerialResponse<cmdr_ID_t> RCT_ID;
 
-	RCT_ID CMD_ID(bool TerminatedSubstrings, void (*progressbar)(unsigned int, unsigned int))
+	RCT_ID CMD_ID(bool TerminatedSubstrings,void* progressbar_object ,void (*progressbar_function)(void* progressbar_object ,unsigned int current_byte, unsigned int byte_amount))
 	{
-		RCT_ID Response = this->SendCommand<cmdr_ID_t>("ID\r",this->DelayResponse_us, this->DelayChar_us, 30, 0, 0, false, 0, *progressbar);
+		RCT_ID Response = this->SendCommand<cmdr_ID_t>("ID\r",this->DelayResponse_us, this->DelayChar_us, 30, 0, 0, false, 0, progressbar_object ,*progressbar_function);
 		if(TerminatedSubstrings)//Insert String Terminators by overwriting unneeded stuff like commas and returns etc...
 		{
 			Response[1]=0;
@@ -96,9 +96,9 @@ public:
 	typedef SerialResponse<cmdr_QS_t> RCT_QS;
 
 
-	RCT_QS CMD_QS(bool TerminatedSubstrings, void (*progressbar)(unsigned int, unsigned int))
+	RCT_QS CMD_QS(bool TerminatedSubstrings,void* progressbar_object ,void (*progressbar_function)(void* progressbar_object ,unsigned int current_byte, unsigned int byte_amount))
 	{
-		RCT_QS Response = this->SendCommand<cmdr_QS_t>("QS\r",this->DelayResponse_us, this->DelayChar_us, 34, 0, 0, false, 0, *progressbar);
+		RCT_QS Response = this->SendCommand<cmdr_QS_t>("QS\r",this->DelayResponse_us, this->DelayChar_us, 34, 0, 0, false, 0, progressbar_object ,*progressbar_function);
 		if(TerminatedSubstrings)//Insert String Terminators by overwriting unneeded stuff like commas and returns etc...
 		{
 			Response[1]=0;
@@ -225,9 +225,9 @@ public:
 	typedef SerialResponse<cmdr_QD0_t> RCT_QD0;
 
 
-	RCT_QD0 CMD_QD0(bool TerminatedSubstrings, void (*progressbar)(unsigned int, unsigned int))
+	RCT_QD0 CMD_QD0(bool TerminatedSubstrings, void* progressbar_object ,void (*progressbar_function)(void* progressbar_object ,unsigned int current_byte, unsigned int byte_amount))
 	{
-		RCT_QD0 Response = this->SendCommand<cmdr_QD0_t>("QD 0\r",this->DelayResponse_us, this->DelayChar_us, 47, 0, 0, false, 0, *progressbar);
+		RCT_QD0 Response = this->SendCommand<cmdr_QD0_t>("QD 0\r",this->DelayResponse_us, this->DelayChar_us, 47, 0, 0, false, 0, progressbar_object ,*progressbar_function);
 		if(TerminatedSubstrings)//Insert String Terminators by overwriting unneeded stuff like commas and returns etc...
 		{
 			Response[1]=0;
@@ -267,7 +267,7 @@ public:
 		char 		 n_CR0;
 		char		 n_QDHeaderInfo_Comma[3];
 
-		unsigned int DataCount       	 :16; //995 max
+		unsigned int I_DataCount       	 :16; //995 max
 
 		unsigned int I_InitalValue   	 :32; //Value on start of logging
 		unsigned int I_InitDecimal	 	 :8;  //Initial Disp. Dec. Pnt Locaction
@@ -333,9 +333,9 @@ public:
 	typedef  SerialResponse<cmdr_QD2_t> RCT_QD2;
 
 
-	RCT_QD2 CMD_QD2(bool TerminatedSubstrings, void (*progressbar)(unsigned int, unsigned int))
+	RCT_QD2 CMD_QD2(bool TerminatedSubstrings, void* progressbar_object ,void (*progressbar_function)(void* progressbar_object ,unsigned int current_byte, unsigned int byte_amount))
 	{
-		RCT_QD2 Response = this->SendCommand<cmdr_QD2_t>("QD 2\r",this->DelayResponse_us, this->DelayChar_us, 23, 6, 2, false, 32, *progressbar);
+		RCT_QD2 Response = this->SendCommand<cmdr_QD2_t>("QD 2\r",this->DelayResponse_us, this->DelayChar_us, 23, 6, 2, false, 32, progressbar_object ,*progressbar_function);
 		if(TerminatedSubstrings)//Insert String Terminators by overwriting unneeded stuff like commas and returns etc...
 		{
 			Response[1]=0;
@@ -455,7 +455,7 @@ public:
 		char I_CMD_ACK;
 		char n_CR0;
 		char n_QDHeaderInfo_Comma[3];
-		unsigned int DataCount:8;
+		unsigned int I_DataCount:8;
 		qd4_set_t dsets[1];
 	} cmdr_QD4_t;
 	#pragma pack(pop) //Reset pack pragma
@@ -463,9 +463,9 @@ public:
 
 	typedef  SerialResponse<cmdr_QD4_t> RCT_QD4;
 
-	RCT_QD4 CMD_QD4(bool TerminatedSubstrings, void (*progressbar)(unsigned int, unsigned int))
+	RCT_QD4 CMD_QD4(bool TerminatedSubstrings, void* progressbar_object ,void (*progressbar_function)(void* progressbar_object ,unsigned int current_byte, unsigned int byte_amount))
 	{
-		RCT_QD4 Response = this->SendCommand<cmdr_QD4_t>("QD 4\r",this->DelayResponse_us, this->DelayChar_us, 6, 6, 1, false, 42, *progressbar);
+		RCT_QD4 Response = this->SendCommand<cmdr_QD4_t>("QD 4\r",this->DelayResponse_us, this->DelayChar_us, 6, 6, 1, false, 42, progressbar_object ,*progressbar_function);
 		if(TerminatedSubstrings)//Insert String Terminators by overwriting unneeded stuff like commas and returns etc...
 		{
 			Response[1]=0;
