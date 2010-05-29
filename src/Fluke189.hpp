@@ -108,7 +108,7 @@ public:
 
 
 #pragma pack(push,1)
-	//QD Status Field
+	//QD Information Field
 	typedef struct
 	{
 				bool I_S_Auto		 		 :1;  //High if Auto Hold
@@ -126,7 +126,7 @@ public:
 		unsigned int I_MEMclr		 		 :2;  //In ViewMem its 2 if there are saves or logs, if not its 00, if Clr? is displayed its 1
 		unsigned int I_AutoRange	 		 :1;  //1 when Auto Range
 		unsigned int I_ManualRange			 :1;  //1 when Manual Range
-				bool u_bit1 				 :1;  //TODO Find out what that is for
+				bool I_ShiftDisplayed        :1;  //Is 1 as long the Shift sign is displayed in screen [__]
 
 		unsigned int I_DBREF_Set	 		 :16; //dBRef Value STD:600
 
@@ -135,28 +135,30 @@ public:
 
 				bool I_MinMaxMode	 		 :1;  //High if MinMax Mode(also Fast)
 				bool I_Fast			  		 :1;  //High if Fast
-				bool u_bit2 		 		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
+				bool u_bit1 		 		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 		unsigned int I_MinMaxAvg	 		 :2;  //(1=Max 2=Min 3=AVG)
-				bool u_bit3			 		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
+				bool u_bit2			 		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 				bool I_RisingEtch	 		 :1;  //High if rising etch displayed
 				bool I_FallingEtch	 		 :1;  //High if falling etch displayed
 
 		unsigned int I_SubState_ACDC 		 :2;  //Substates of V mV mA uA (DC Modes ONLY)
-				bool u_bit4		 	  		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
+				bool u_bit3		 	  		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 				bool I_Hold			   		 :1;  //High if Hold     (Low on AutoHold)
 				bool I_AutoHold		 	 	 :1;  //High if AutoHold (Low on Hold)
-				bool u_bit5			 		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
+				bool u_bit4			 		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 				bool I_dBRef_V_nm	 		 :1;  //High if V selected for dB_Ref, Low if m selected
 				bool I_DegC_nDegF	 		 :1;  //High if Celsius is selected, Low for Fahrenheit
 
 				bool I_Delta				 :1;  //High if Delta(Low if Delta Percent)
 				bool I_DeltaPercent			 :1;  //High if DeltaPercent(Low if Delta)
-				bool u_bit6					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
+				bool u_bit5					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 				bool I_Unit_AC_dB			 :1;  //High if(Prim is AC and Sec dB) only V and mV (AC)
 				bool I_Unit_dB_AC			 :1;  //High if(Prim is dB and Sec AC) only V and mV (AC)
+				bool u_bit6					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 				bool u_bit7					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
-				bool u_bit8					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
-				bool I_nTemperature			 :1;  //Bit is one when NOT in Temperature Measure or Setup or Clr? //TODO Redefine Name
+				bool I_RangeEnabled		 	 :1;  //Bit is one when Range Button is usable
+												  //Unsure about this... Bit is 0 when in Setup and in Temperature Mode or displaying Questions/Status
+				                                  //(Range Selection changeable when 1?)
 
 		unsigned int I_SelectedRange 	 	 :8;  //Range Mode
 		unsigned int I_CurrentView   		 :8;  //Displays Data of what is on screen currently 1=Measure, 2=Setup, 22=Setup(Timesetting) ...
