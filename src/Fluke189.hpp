@@ -155,7 +155,7 @@ public:
 				bool I_Unit_AC_dB			 :1;  //High if(Prim is AC and Sec dB) only V and mV (AC)
 				bool I_Unit_dB_AC			 :1;  //High if(Prim is dB and Sec AC) only V and mV (AC)
 				bool u_bit6					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
-				bool u_bit7					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
+				bool I_FourDigitMode		 :1;  //Only four digits selected in setup when 1
 				bool I_RangeEnabled		 	 :1;  //Bit is one when Range Button is usable
 												  //Unsure about this... Bit is 0 when in Setup and in Temperature Mode or displaying Questions/Status
 				                                  //(Range Selection changeable when 1?)
@@ -285,11 +285,6 @@ public:
 		  signed int I_InitPrefix    	 :8;  //Initial SI-Prefix
 
 		  qdInfo_t I_QDInfo;
-
-		unsigned int I_SelectedRange 	 :8;  //Range: 5 50 500 5000 1 10 100 1000
-
-		unsigned int uh10:8;
-
 
 		qd2_set_t dsets[1];
 	} cmdr_QD2_t;
