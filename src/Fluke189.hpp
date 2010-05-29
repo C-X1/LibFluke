@@ -123,7 +123,7 @@ public:
 				bool I_SetupOrViewMem 		 :1;  //Seems to be one when in Setup or in ViewMem
 				bool I_S_Delta		 		 :1;  //High if Delta is on
 				bool I_S_Percent     		 :1;  //High if Percent is on
-		unsigned int I_MEMclr		 		 :2;  //In ViewMem its 2 if there are saves or logs, if not its 00, if Clr? is displayed its 1
+		unsigned int I_MEMclr		 		 :2;  //In ViewMem its 3 if there are saves or logs, if not its 00, if Clr? is displayed its 1
 		unsigned int I_AutoRange	 		 :1;  //1 when Auto Range
 		unsigned int I_ManualRange			 :1;  //1 when Manual Range
 				bool I_ShiftDisplayed        :1;  //Is 1 as long the Shift sign is displayed in screen [__]
@@ -157,7 +157,8 @@ public:
 				bool u_bit6					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 				bool I_FourDigitMode		 :1;  //Only four digits selected in setup when 1
 				bool I_RangeDisplayed	 	 :1;  //Bit is one when Range is displayed (manual or auto)
-												  //Unsure about this... Bit is 0 when in Setup and in Temperature Mode or displaying Questions/Status
+												  //I am a bit unsure about this...
+												  //Bit is 0 when in Setup and in Temperature Mode or displaying Questions/Status
 				                                  //(Range Selection changeable when 1?)
 
 		unsigned int I_SelectedRange 	 	 :8;  //Range Mode
@@ -223,7 +224,7 @@ public:
 			unsigned int I_ErrorPV1 		 :2;  //Error when value == 1 (NoError: is 3 when negative or 0 when positiv)
 		  };
 		};
-		unsigned int I_priDecimal1  		 :8;  //Pri. Dec. Pnt Loc.(2nd Occur.)
+		unsigned int I_priDecimal1  		 :8;  //Pri. Dec. Pnt Loc.(2nd Occur.) //is 0xf when in ViewMem with no Logs "-----"
 		  signed int I_priSI_Prefix1 		 :8;  //Pri. SI-Prefix 	 (2nd Occur.)
 
 		  qdInfo_t I_QDInfo;
