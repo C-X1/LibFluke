@@ -152,8 +152,8 @@ public:
 				bool I_Delta				 :1;  //High if Delta(Low if Delta Percent)
 				bool I_DeltaPercent			 :1;  //High if DeltaPercent(Low if Delta)
 				bool u_bit5					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
-				bool I_Unit_AC_dB			 :1;  //High if(Prim is AC and Sec dB) only V and mV (AC)
 				bool I_Unit_dB_AC			 :1;  //High if(Prim is dB and Sec AC) only V and mV (AC)
+				bool I_Unit_AC_dB			 :1;  //High if(Prim is AC and Sec dB) only V and mV (AC)
 				bool u_bit6					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
 				bool I_FourDigitMode		 :1;  //Only four digits selected in setup when 1
 				bool I_RangeDisplayed	 	 :1;  //Bit is one when Range is displayed (manual or auto)
