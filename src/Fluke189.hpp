@@ -471,6 +471,70 @@ public:
 	    CV_ViewMem_NoData=0x06,
 	};
 
+	enum Analyse_UnitsUint
+	{
+		AU_None,
+
+		AU_AC_V,
+		AU_DC_V,
+		AU_ACDC_V,
+
+		AU_Volts,
+
+		AU_Ampere,
+
+		AU_dBm,
+		AU_dB_V,
+
+		AU_Hz,
+		AU_Seconds,
+
+		AU_Percent,
+
+		AU_Ohm,
+		AU_Siemens,
+
+		AU_Farad,
+
+		AU_Celsius,
+		AU_Fahrenheit,
+
+	};
+
+	enum Analyse_CurrentType
+	{
+		ACT_NoCurrentType,
+		ACT_AlternatingCurrent,
+		ACT_DirectCurrent,
+		ACT_DirectandAlternatingCurrent
+	};
+
+
+	typedef struct
+	{
+		//Units information
+
+		//primary
+		unsigned int i_priUnit;			//Integer number for unit (prim Disp.)
+		 std::string s_priUnit;			//Unit string(prim Disp.)
+		unsigned int i_priCurrentType;	//Integer number for current type AC DC AC+DC(prim Disp.)
+	     std::string s_priCurrentType;	//string for current type(prim Disp.)
+
+		//secondary
+        unsigned int i_secUnit;			//Integer number for unit (sec. Disp)
+		 std::string s_secUnit;			//Unit string(sec. Disp)
+		unsigned int i_secCurrentType;	//Integer number for current type AC DC AC+DC(sec. Disp)
+		 std::string s_secCurrentType;	//string for current type(sec. Disp)
+
+		//Special
+			    bool b_Logging;			//true if currently logging
+			    bool b_ViewMem;			//true if in ViewMem
+			    bool b_ModeSwitchERR;	//true if switch is stuck between two modes
+
+
+	} analysedInfo_t;
+
+	analysedInfo_t analyse_qdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
 
 
 private:
