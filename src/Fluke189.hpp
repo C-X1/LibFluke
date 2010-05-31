@@ -534,7 +534,6 @@ public:
 
 	} analysedInfo_t;
 
-	analysedInfo_t analyse_qdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
 
 
 private:
@@ -551,7 +550,8 @@ public:
 	Fluke189(std::string filename);
 	virtual ~Fluke189();
 
-	//Fluke189 Specific Command Functions
+	analysedInfo_t analyse_qdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
+
 
 
 
