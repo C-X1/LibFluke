@@ -550,7 +550,7 @@ public:
 	Fluke189(std::string filename);
 	virtual ~Fluke189();
 
-	analysedInfo_t analyse_qdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
+ 	analysedInfo_t analyse_qdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
 
 
 

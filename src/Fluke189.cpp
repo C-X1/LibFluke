@@ -256,7 +256,7 @@ namespace Fluke {
 		break;
 
 		//A= Substates
-		case 20: case 22:
+		case 20: case 22: case 21:
 			if(qdInfo->I_SubState_ACDC==1)
 			{
 				info.i_priUnit=AU_Ampere;
