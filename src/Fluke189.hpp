@@ -213,7 +213,9 @@ public:
 			unsigned int I_ErrorSV1 		 :2;  //Error when value == 1 (NoError: is 3 when negative or 0 when positiv)
 		   };
 		 };
+
 		unsigned int I_Time1				 :32; //Time(2nd Occur.)
+
 		union
 		{
 		  signed int I_priValue1			 :32; //Primary Value	 (2nd Occur.)
@@ -224,6 +226,7 @@ public:
 			unsigned int I_ErrorPV1 		 :2;  //Error when value == 1 (NoError: is 3 when negative or 0 when positiv)
 		  };
 		};
+
 		unsigned int I_priDecimal1  		 :8;  //Pri. Dec. Pnt Loc.(2nd Occur.) //is 0xf when in ViewMem with no Logs "-----"
 		  signed int I_priSI_Prefix1 		 :8;  //Pri. SI-Prefix 	 (2nd Occur.)
 
