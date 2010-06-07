@@ -19,6 +19,9 @@
 using namespace LibSerial;
 namespace Fluke {
 
+//Function for getting error string of a value error number
+std::string getFluke189ValueErrorString(unsigned int DisplayErrorNo);
+
 
 
 class Fluke189: public LibSerial::SerialDevice
@@ -556,7 +559,7 @@ public:
 
  	analysedInfo_t analyse_qdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
 
- 	std::string getDisplayErrorString(unsigned int DisplayErrorNo);
+
 
 
 
