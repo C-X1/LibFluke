@@ -67,7 +67,8 @@ public:
 	//Get Setup Informations
 	//Command: QS<CR>
 #pragma pack(push,1)
-	typedef struct{
+	typedef struct
+	{
 		char I_CMD_ACK;
 		char n_CR0;
 		char n_QSHeaderInfo_Comma[3];
@@ -86,7 +87,7 @@ public:
 		unsigned int u_unknown2	   :  8; // TODO: Find out what that is used for (always 00?)
 		unsigned int I_4Digits     :  8; // Digits setting (0=5 digits , 1=4 digits)
 		unsigned int u_unknown3	   :  8; // TODO: Find out what that is used for (always 00?)
-		unsigned int I_Beep_On	   :  8; // Beeo setting (0=off, 1=on)
+		unsigned int I_Beep_On	   :  8; // Beep setting (0=off, 1=on)
 		unsigned int u_ending1	   : 32; // TODO: Find out what the ending is used for (always 0x 00 90 01 c0 00 00 ??? )
 		unsigned int u_ending2	   : 16; // ^^
 	} cmdr_QS_t;
@@ -555,7 +556,7 @@ public:
 
  	analysedInfo_t analyse_qdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
 
-
+ 	std::string getDisplayErrorString(unsigned int DisplayErrorNo);
 
 
 

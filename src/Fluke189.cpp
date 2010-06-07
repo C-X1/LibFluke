@@ -381,6 +381,37 @@ namespace Fluke {
 		return info;
 	}
 
+ 	std::string Fluke189::getDisplayErrorString(unsigned int DisplayErrorNo)
+ 	{
+ 		std::string ErrorString;
+		switch(DisplayErrorNo)
+		{
+		case VE_Display_OFFLINE:
+			ErrorString = "-OFF-";
+		break;
+
+		case VE_LEADS_CONNECTION_WRONG:
+			ErrorString = "LEADS";
+		break;
+
+		case VE_OL_OUTOFRANGE_NOCON:
+			ErrorString = "OL";
+		break;
+
+		case VE_OPEN__NOTHING_CONNECTED:
+			ErrorString = "OPEN";
+		break;
+
+		case VE_FUSE:
+			ErrorString = "FUSE";
+		break;
+		}
+
+		return ErrorString;
+ 	}
+
+
+
 
 /*Namespace End*/}
 
