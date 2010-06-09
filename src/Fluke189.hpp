@@ -11,9 +11,13 @@
 
 #include "SerialDevice.hpp"
 #include "SerialResponse.hpp"
+#include <sstream>
+#include <iostream>
 #include <string>
+
 #include <inttypes.h>
 #include <vector>
+#include <math.h>
 
 
 using namespace LibSerial;
@@ -569,7 +573,27 @@ private:
 //Function for getting error string of a value error number
 std::string getFluke189ValueErrorString(unsigned int DisplayErrorNo);
 
+//Function for extracting additional Data out of a SerialResponse of command QD 0
 Fluke::Fluke189::analysedInfo_t Fluke189AnalyseQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
+
+
+//Struct to store values with their unit
+typedef struct
+{
+	signed   int intValue;		//Value from Fluke 189 (integer)
+	unsigned int intDecimal;	//Place of Decimal Point
+	signed   int intPrefix;		//Prefix
+	char         charUnit;		//Unit: V, A, S, s etc...
+	std::string	 strSymbolsAfter;  //Symbols to be placed after value and unit
+	std::string  strSymbolsBefore; //Symbols to be placed before value
+} fluke189Value_t;
+
+//This function decides if operandSmall is smaller than operandBig
+bool fluke189ValueSmallerThan(fluke189Value_t operandSmall,fluke189Value_t operandBig);
+std::string fluke189ValueToString(fluke189Value_t value);
+
+
+
 
 
 

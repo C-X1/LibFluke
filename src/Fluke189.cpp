@@ -417,5 +417,56 @@ namespace Fluke {
 
 
 
+	bool fluke189ValueSmallerThan(fluke189Value_t operandSmall,fluke189Value_t operandBig)
+	{
+
+		//Calculation of decimal point location:
+		//each step in prefix shifts the decimal point 3 times in a direction
+		int decimalPosSmall=(-3)*(operandSmall.intPrefix)+operandSmall.intDecimal;
+		int decimalPosBig  =(-3)*(operandBig.intPrefix)+operandBig.intDecimal;
+
+		//Note: DecimalPosSmall of a small value is bigger
+		int decimaldiff=decimalPosSmall-decimalPosBig;
+		if(decimaldiff==0)
+		{
+			return operandSmall.intValue < operandBig.intValue;
+		}
+		else if(decimaldiff < 0)
+		{
+			return (operandSmall.intValue / pow(10,decimaldiff))< operandBig.intValue;
+		}
+		else //decimaldiff>0
+		{
+			return (operandSmall.intValue * pow(10,decimaldiff)) < operandBig.intValue;
+		}
+	}
+
+	std::string fluke189ValueToString(fluke189Value_t value)
+	{
+		std::string strvalue, valmem;
+
+		std::stringstream convert_int;
+		//Add Symbols before Value
+		strvalue.append(value.strSymbolsBefore);
+		//Insert space
+		strvalue.append(" ");
+
+		//Convert Value into string
+		convert_int<<value.intValue;
+		convert_int>>valmem;
+		//Insert Decimal Point
+		valmem.insert(valmem.length()-value.intDecimal,1,'.');
+		//Append to Output
+		strvalue.append(valmem);
+		//Insert space
+		strvalue.append(" ");
+		//add Unit
+		strvalue.append(&value.charUnit);
+
+		//Add Symbols after Value
+		strvalue.append(value.strSymbolsAfter);
+		return strvalue;
+	}
+
 /*Namespace End*/}
 
