@@ -18,6 +18,7 @@
 #include <inttypes.h>
 #include <vector>
 #include <math.h>
+#include <stdlib.h>
 
 
 using namespace LibSerial;
@@ -578,15 +579,19 @@ Fluke::Fluke189::analysedInfo_t Fluke189AnalyseQdInfo(Fluke::Fluke189::qdInfo_t*
 
 
 //Struct to store values with their unit
-typedef struct
+typedef struct fluke189Value_t
 {
+	fluke189Value_t()
+	{
+		strUnit=' ';
+	}
 	signed   int intValue;		//Value from Fluke 189 (integer)
 	unsigned int intDecimal;	//Place of Decimal Point
 	signed   int intPrefix;		//Prefix
-	char         charUnit;		//Unit: V, A, S, s etc...
+	std::string  strUnit;		//Unit: V, A, S, s etc...
 	std::string	 strSymbolsAfter;  //Symbols to be placed after value and unit
 	std::string  strSymbolsBefore; //Symbols to be placed before value
-} fluke189Value_t;
+} fluke189Value;
 
 //This function decides if operandSmall is smaller than operandBig
 bool fluke189ValueSmallerThan(fluke189Value_t operandSmall,fluke189Value_t operandBig);

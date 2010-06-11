@@ -414,7 +414,92 @@ namespace Fluke {
 		return ErrorString;
  	}
 
+	std::string fluke189ValueToString(fluke189Value_t value)
+	{
+		std::string strvalue, valmem;
 
+		std::stringstream convert_int;
+
+		//Insert space
+		strvalue.append(" ");
+
+		//Convert Value into string
+		convert_int<<value.intValue;
+		convert_int>>valmem;
+		//Insert Decimal Point
+		int insertlocation=valmem.length()-value.intDecimal;
+		if(insertlocation <= 0)
+		{
+			//insert leading zeros and decimal point
+			unsigned int loc;
+			//if current value is smaller than 0 we need to insert the missing zeros on place 1
+			//because of the minus in front of the string
+			loc=(value.intValue < 0)? 1 : 0;
+			for(int i=0;insertlocation+i<0 && i<6;i++)
+			{
+				valmem.insert(loc,1,'0');
+			}
+			valmem.insert(loc,1,'.');
+			valmem.insert(loc,1,'0');
+		}
+		else if(insertlocation >= 0)
+		{
+			valmem.insert(insertlocation,1,'.');
+		}
+
+		//Append to Output
+		strvalue.append(valmem);
+		//Insert space
+		strvalue.append(" ");
+		//addPrefix
+		switch(value.intPrefix)
+		{
+		case 0:break;
+
+		case 1:
+			strvalue.append("k");
+		break;
+
+		case 2:
+			strvalue.append("M");
+		break;
+
+		case 3:
+			strvalue.append("G");
+		break;
+
+		case -1:
+			strvalue.append("m");
+		break;
+
+		case -2:
+			strvalue.append("µ");
+		break;
+
+		case -3:
+			strvalue.append("n");
+		break;
+
+		case -4:
+			strvalue.append("p");
+		break;
+		}
+
+
+
+
+
+
+		//add Unit
+		strvalue.append(value.strUnit);
+
+		//Add Symbols before Value
+		//strvalue.insert(value.strSymbolsBefore);
+
+		//Add Symbols after Value
+		//strvalue.append(value.strSymbolsAfter);
+		return strvalue;
+	}
 
 
 	bool fluke189ValueSmallerThan(fluke189Value_t operandSmall,fluke189Value_t operandBig)
@@ -427,46 +512,29 @@ namespace Fluke {
 
 		//Note: DecimalPosSmall of a small value is bigger
 		int decimaldiff=decimalPosSmall-decimalPosBig;
-		if(decimaldiff==0)
+
+	    long long big,small;
+		if(decimaldiff < 0)
 		{
-			return operandSmall.intValue < operandBig.intValue;
+			big=operandBig.intValue;
+			small=operandSmall.intValue*pow(10,abs(decimaldiff));
 		}
-		else if(decimaldiff < 0)
+		else if(decimaldiff > 0)
 		{
-			return (operandSmall.intValue / pow(10,decimaldiff))< operandBig.intValue;
+			small=operandSmall.intValue;
+			big=operandBig.intValue*pow(10,abs(decimaldiff));
 		}
-		else //decimaldiff>0
+		else
 		{
-			return (operandSmall.intValue * pow(10,decimaldiff)) < operandBig.intValue;
+			small=operandSmall.intValue;
+			big=operandBig.intValue;
 		}
+	//	if(operandSmall.intValue < operandBig.intValue)	std::cout<<fluke189ValueToString(operandSmall)<<" < "<<fluke189ValueToString(operandBig)<<"----"<<small<<"<"<<big<<std::endl;
+		return (operandSmall.intValue < operandBig.intValue);
+
 	}
 
-	std::string fluke189ValueToString(fluke189Value_t value)
-	{
-		std::string strvalue, valmem;
 
-		std::stringstream convert_int;
-		//Add Symbols before Value
-		strvalue.append(value.strSymbolsBefore);
-		//Insert space
-		strvalue.append(" ");
-
-		//Convert Value into string
-		convert_int<<value.intValue;
-		convert_int>>valmem;
-		//Insert Decimal Point
-		valmem.insert(valmem.length()-value.intDecimal,1,'.');
-		//Append to Output
-		strvalue.append(valmem);
-		//Insert space
-		strvalue.append(" ");
-		//add Unit
-		strvalue.append(&value.charUnit);
-
-		//Add Symbols after Value
-		strvalue.append(value.strSymbolsAfter);
-		return strvalue;
-	}
 
 /*Namespace End*/}
 
