@@ -510,41 +510,39 @@ namespace Fluke {
 		int decimalPosSmall=(-3)*(operandSmall.intPrefix)+operandSmall.intDecimal;
 		int decimalPosBig  =(-3)*(operandBig.intPrefix)+operandBig.intDecimal;
 
-		std::cout<<decimalPosBig<<std::endl;
-
 
 	    long long big,small; //Stores all values in piko prefix
 
-	    big=operandBig.intValue*pow(10, 12-decimalPosBig);
-	    small=operandSmall.intValue*pow(10, 12-decimalPosSmall);
+	    big=operandBig.intValue*pow(10, 13-decimalPosBig);
+	    small=operandSmall.intValue*pow(10, 13-decimalPosSmall);
 
 		return (small<big);
 	}
 
-	void fluke189ValueMinMaxAverage(fluke189Value_t current, fluke189Value_t& min, fluke189Value_t& max, fluke189Value_t& avg, long long &stat_average, long &stat_datanumber, bool &stat_reset,std::string &stat_unit)
+	void fluke189ValueMinMaxAverage(fluke189Value_t current, fluke189Value_t& min, fluke189Value_t& max, fluke189Value_t& avg, long long &stat_average, long &stat_datanumber, bool &reset,std::string &stat_unit)
 	{
 		//reset if unit (mode) changes...
 		if(current.strUnit!=stat_unit)
 		{
-			stat_reset=true;
+			reset=true;
 			stat_unit=current.strUnit;
 		}
 
 		//Clear average on reset
-		if(stat_reset) stat_average=0;
+		if(reset) stat_average=0;
 
 		//Max < Current
-		if(Fluke::fluke189ValueSmallerThan(max,current)  || stat_reset)
+		if(Fluke::fluke189ValueSmallerThan(max,current)  || reset)
 		{
 			max=current;
 		}
 		//Min > Current
-		if(Fluke::fluke189ValueSmallerThan(current,min) || stat_reset)
+		if(Fluke::fluke189ValueSmallerThan(current,min) || reset)
 		{
 			min=current;
 		}
 
-		stat_reset=false;
+		reset=false;
 
 		stat_average=(stat_average*stat_datanumber+current.intValue*pow(10,13-(current.intPrefix*(-3)+current.intDecimal)))/(stat_datanumber+1);
 
