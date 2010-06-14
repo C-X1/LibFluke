@@ -473,7 +473,7 @@ namespace Fluke {
 		break;
 
 		case -2:
-			strvalue.append("µ");
+			strvalue.append("u");
 		break;
 
 		case -3:
@@ -521,6 +521,45 @@ namespace Fluke {
 		return (small<big);
 	}
 
+	void fluke189ValueMinMaxAverage(fluke189Value_t current, fluke189Value_t& min, fluke189Value_t& max, fluke189Value_t& avg, long long &stat_average, long &stat_datanumber, bool &stat_reset,std::string &stat_unit)
+	{
+		//reset if unit (mode) changes...
+		if(current.strUnit!=stat_unit)
+		{
+			stat_reset=true;
+			stat_unit=current.strUnit;
+		}
+
+		//Clear average on reset
+		if(stat_reset) stat_average=0;
+
+		//Max < Current
+		if(Fluke::fluke189ValueSmallerThan(max,current)  || stat_reset)
+		{
+			max=current;
+		}
+		//Min > Current
+		if(Fluke::fluke189ValueSmallerThan(current,min) || stat_reset)
+		{
+			min=current;
+		}
+
+		stat_reset=false;
+
+		stat_average=(stat_average*stat_datanumber+current.intValue*pow(10,13-(current.intPrefix*(-3)+current.intDecimal)))/(stat_datanumber+1);
+
+
+		int highest_place_notzero;
+		//get highest place of value which is not zero
+		for(highest_place_notzero=18; (  abs(stat_average/pow(10,highest_place_notzero)) )==0 && highest_place_notzero >= 0; highest_place_notzero--)
+
+		//Set prefix according highest part of value
+		//if pico set it to nano
+		avg.intPrefix=((highest_place_notzero/3)==0)? -3  : (highest_place_notzero/3)-4;
+		avg.intDecimal=3;
+		avg.intValue=(int)(stat_average/pow(10,13-(avg.intPrefix*(-3)+avg.intDecimal)));
+		avg.strUnit=current.strUnit;
+	}
 
 
 /*Namespace End*/}

@@ -598,10 +598,8 @@ bool fluke189ValueSmallerThan(fluke189Value_t operandSmall,fluke189Value_t opera
 //This function generates a string out of a fluke189Value
 std::string fluke189ValueToString(fluke189Value_t value);
 
-
-
-
-
+//This function uses pointers to variables to calculate minimum, maximum and average value
+void fluke189ValueMinMaxAverage(fluke189Value_t current, fluke189Value_t& min, fluke189Value_t& max, fluke189Value_t& avg, long long& stat_average, long& stat_datanumber, bool& stat_reset,std::string& stat_unit);
 
 
 
