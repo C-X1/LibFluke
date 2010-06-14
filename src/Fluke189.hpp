@@ -595,6 +595,7 @@ typedef struct fluke189Value_t
 
 //This function decides if operandSmall is smaller than operandBig
 bool fluke189ValueSmallerThan(fluke189Value_t operandSmall,fluke189Value_t operandBig);
+//This function generates a string out of a fluke189Value
 std::string fluke189ValueToString(fluke189Value_t value);
 
 

@@ -510,28 +510,15 @@ namespace Fluke {
 		int decimalPosSmall=(-3)*(operandSmall.intPrefix)+operandSmall.intDecimal;
 		int decimalPosBig  =(-3)*(operandBig.intPrefix)+operandBig.intDecimal;
 
-		//Note: DecimalPosSmall of a small value is bigger
-		int decimaldiff=decimalPosSmall-decimalPosBig;
+		std::cout<<decimalPosBig<<std::endl;
 
-	    long long big,small;
-		if(decimaldiff < 0)
-		{
-			big=operandBig.intValue;
-			small=operandSmall.intValue*pow(10,abs(decimaldiff));
-		}
-		else if(decimaldiff > 0)
-		{
-			small=operandSmall.intValue;
-			big=operandBig.intValue*pow(10,abs(decimaldiff));
-		}
-		else
-		{
-			small=operandSmall.intValue;
-			big=operandBig.intValue;
-		}
-	//	if(operandSmall.intValue < operandBig.intValue)	std::cout<<fluke189ValueToString(operandSmall)<<" < "<<fluke189ValueToString(operandBig)<<"----"<<small<<"<"<<big<<std::endl;
-		return (operandSmall.intValue < operandBig.intValue);
 
+	    long long big,small; //Stores all values in piko prefix
+
+	    big=operandBig.intValue*pow(10, 12-decimalPosBig);
+	    small=operandSmall.intValue*pow(10, 12-decimalPosSmall);
+
+		return (small<big);
 	}
 
 
