@@ -426,26 +426,32 @@ namespace Fluke {
 		//Convert Value into string
 		convert_int<<value.intValue;
 		convert_int>>valmem;
-		//Insert Decimal Point
+
+		//if negative remove minus for the next step
+		if(value.intValue<0)valmem.replace(0,1,"");
+
+
+		//calculate insert location
 		int insertlocation=valmem.length()-value.intDecimal;
+
 		if(insertlocation <= 0)
 		{
-			//insert leading zeros and decimal point
-			unsigned int loc;
-			//if current value is smaller than 0 we need to insert the missing zeros on place 1
-			//because of the minus in front of the string
-			loc=(value.intValue < 0)? 1 : 0;
-			for(int i=0;insertlocation+i<0 && i<6;i++)
+			//insert leading zeros and decimal point //limited to a maximum of 5 zeros (we won't need more afaik)
+			for(int i=0;insertlocation+i<0 && i<5;i++)
 			{
-				valmem.insert(loc,1,'0');
+				valmem.insert(0,1,'0');
 			}
-			valmem.insert(loc,1,'.');
-			valmem.insert(loc,1,'0');
+			valmem.insert(0,1,'.');
+			valmem.insert(0,1,'0');
 		}
 		else if(insertlocation >= 0)
 		{
+			//insert decimal point
 			valmem.insert(insertlocation,1,'.');
 		}
+
+		//if negative insert minus again here
+		if(value.intValue<0)valmem.insert(0,1,'-');
 
 		//Append to Output
 		strvalue.append(valmem);
@@ -498,6 +504,18 @@ namespace Fluke {
 
 		//Add Symbols after Value
 		//strvalue.append(value.strSymbolsAfter);
+
+		//TODO remove: just debugging -.XYZ values
+		if(1)
+		{
+			std::cout<<" Stringvalue:"<<strvalue;
+			std::cout<<" Insertlocation:"<<insertlocation;
+			std::cout<<" Value:"<<value.intValue;
+			std::cout<<" Decimal:"<<value.intDecimal;
+			std::cout<<" Prefix:"<<value.intPrefix<<std::endl;
+		}
+
+
 		return strvalue;
 	}
 
