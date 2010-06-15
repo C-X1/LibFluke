@@ -479,16 +479,13 @@ namespace Fluke {
 		break;
 
 		case -2:
-			strvalue.append("u");
+			strvalue.append("µ");
 		break;
 
 		case -3:
 			strvalue.append("n");
 		break;
 
-		case -4:
-			strvalue.append("p");
-		break;
 		}
 
 
