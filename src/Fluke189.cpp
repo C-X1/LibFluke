@@ -458,6 +458,11 @@ namespace Fluke {
 		//Insert space
 		strvalue.append(" ");
 		//addPrefix
+
+
+
+
+
 		switch(value.intPrefix)
 		{
 		case 0:break;
@@ -489,18 +494,13 @@ namespace Fluke {
 		}
 
 
-
-
-
-
 		//add Unit
 		strvalue.append(value.strUnit);
 
 		//Add Symbols before Value
-		//strvalue.insert(value.strSymbolsBefore);
-
+		strvalue.insert(0,value.strSymbolsBefore);
 		//Add Symbols after Value
-		//strvalue.append(value.strSymbolsAfter);
+		strvalue.append(value.strSymbolsAfter);
 
 
 
@@ -535,7 +535,12 @@ namespace Fluke {
 		}
 
 		//Clear average on reset
-		if(reset) stat_average=0;
+		if(reset)
+		{
+			stat_average=0;
+			stat_datanumber=0;
+		}
+		stat_datanumber++;
 
 		//Max < Current
 		if(Fluke::fluke189ValueSmallerThan(max,current)  || reset)
