@@ -505,15 +505,6 @@ namespace Fluke {
 		//Add Symbols after Value
 		//strvalue.append(value.strSymbolsAfter);
 
-		//TODO remove: just debugging -.XYZ values
-		if(1)
-		{
-			std::cout<<" Stringvalue:"<<strvalue;
-			std::cout<<" Insertlocation:"<<insertlocation;
-			std::cout<<" Value:"<<value.intValue;
-			std::cout<<" Decimal:"<<value.intDecimal;
-			std::cout<<" Prefix:"<<value.intPrefix<<std::endl;
-		}
 
 
 		return strvalue;
