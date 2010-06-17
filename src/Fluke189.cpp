@@ -576,7 +576,7 @@ namespace Fluke {
 	/*
 	 * ResponseAnalyserWrapper Functions
 	 */
-	Fluke189::ValueError Fluke189ResponseAnalyserWrapper::get_PRIdisplayError(bool reading2)
+	Fluke189::ValueError Fluke189ResponseAnalyserWrapper::get_PRIdisplayError(bool reading2)  //TODO ADD NO ERROR!!!
 	{
 		switch(this->currentAnalyser->currentResponseContainerType)
 		{
@@ -656,12 +656,68 @@ namespace Fluke {
 
 	bool Fluke189ResponseAnalyserWrapper::hasErrorPRIdisplay(bool reading2)
 	{
+		switch(this->currentAnalyser->currentResponseContainerType)
+		{
+		case Fluke189ResponseAnalyser::QD0:
+				Fluke189::RCT_QD0* container0;
+				container0=(Fluke189::RCT_QD0*)this->currentAnalyser->container;
+				if(reading2)
+				{
+					return (Fluke189::ValueError)container0->Data()->I_ErrorPV0==1;
+				}
+				else
+				{
+					return (Fluke189::ValueError)container0->Data()->I_ErrorPV1==1;
+				}
+			break;
 
+		case Fluke189ResponseAnalyser::QD4:
+				Fluke189::RCT_QD4* container4;
+				container4=(Fluke189::RCT_QD4*)this->currentAnalyser->container;
+				if(reading2)
+				{
+					return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorPV0==1;
+				}
+				else
+				{
+					return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorPV1==1;
+				}
+			break;
+
+		default:
+			std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
+			return -1;
+		}
 	}
 
 	bool Fluke189ResponseAnalyserWrapper::hasErrorSECdisplay(bool reading2)
 	{
+		switch(this->currentAnalyser->currentResponseContainerType)
+		{
+		case Fluke189ResponseAnalyser::QD0:
+				Fluke189::RCT_QD0* container0;
+				container0=(Fluke189::RCT_QD0*)this->currentAnalyser->container;
+				if(reading2)
+				{
+					return (Fluke189::ValueError)container0->Data()->I_ErrorSV0==1;
+				}
+				else
+				{
+					return (Fluke189::ValueError)container0->Data()->I_ErrorSV1==1;
+				}
+			break;
 
+		case Fluke189ResponseAnalyser::QD4:
+				Fluke189::RCT_QD4* container4;
+				container4=(Fluke189::RCT_QD4*)this->currentAnalyser->container;
+				if(reading2)std::cerr<<"For QD4 there is no second value of the secondary display, ignoring..."<<std::endl;
+				return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorSV==1;
+			break;
+
+		default:
+			std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
+			return -1;
+		}
 	}
 
 
