@@ -443,6 +443,7 @@ public:
 		VE_FUSE						=0x1B,
 		VE_LEADS_CONNECTION_WRONG	=0x1D,
 		VE_OL_OUTOFRANGE_NOCON		=0x21,
+		VE_NOT_APPLICABLE			=0xFF,
 	};
 
 	enum MeasureMode
@@ -516,6 +517,25 @@ public:
 		ACT_DirectandAlternatingCurrent
 	};
 
+	enum Analyse_ModeSwitchSetting
+	{
+		AMS_Error,
+		AMS_VAC,
+		AMS_mVAC,
+		AMS_VDC,
+		AMS_mVDC,
+		AMS_OhmSiemens,
+		AMS_CapDiode,
+		AMS_Temp,
+		AMS_AACmAAC,
+		AMS_uAC,
+		AMS_ADCmADC,
+		AMS_uADC,
+		AMS_VIEWMEM,
+		AMS_NOT_APPLICABLE,
+	};
+
+
 
 	typedef struct
 	{
@@ -569,6 +589,147 @@ private:
 
 
 };
+
+
+
+
+
+class Fluke189ResponseAnalyser;
+class Fluke189ResponseAnalyserWrapper
+{
+	friend class Fluke189ResponseAnalyser;
+	unsigned int datasetnumber;
+	Fluke189ResponseAnalyser* currentAnalyser;
+	Fluke189ResponseAnalyserWrapper(unsigned int datasetnumber, Fluke189ResponseAnalyser* currentAnalyser)
+	: datasetnumber(datasetnumber), currentAnalyser(currentAnalyser){};
+
+
+
+public:
+
+	/**
+	 * Checks if a error in measurement is present in the current primary reading
+	 * @param[in] reading2 use reading2 instead of reading 1
+	 * @return \b<true> if the primary display value has an error
+	 */
+	bool hasErrorPRIdisplay(bool reading2);
+
+	/**
+	 * Checks if a error in measurement is present in the current secondary reading
+	 * @param[in] reading2 use reading2 instead of reading 1
+	 * @return \b<true> if the secondary display value has an error
+	 */
+	bool hasErrorSECdisplay(bool reading2);
+
+	/**
+	 * This function reads out the error number if there is a error
+	 * @param[in] reading2 use reading2 instead of reading 1
+	 * @return Error Numbers according to Fluke189::ValueError
+	 */
+	Fluke189::ValueError get_PRIdisplayError(bool reading2);
+	Fluke189::ValueError get_SECdisplayError(bool reading2);
+
+	/**
+	 * Returns the error string according to the ValueError number
+	 * @param[in] the error number
+	 * @return human readable error string
+	 */
+	std::string getValueErrorString(Fluke::Fluke189::ValueError number);
+
+
+	/**
+	 * Shows the current mode switch setting
+	 * @return number of mode switch or 0(stuck between to positions)
+	 */
+	Fluke189::Analyse_ModeSwitchSetting get_ModeSwitchSetting();
+
+
+
+};
+
+
+class Fluke189ResponseAnalyser
+{
+	friend class Fluke189ResponseAnalyserWrapper;
+
+
+public:
+	Fluke189ResponseAnalyser(Fluke189::RCT_QD0& container);
+	Fluke189ResponseAnalyser(Fluke189::RCT_QD2& container);
+	Fluke189ResponseAnalyser(Fluke189::RCT_QD4& container);
+
+	virtual ~Fluke189ResponseAnalyser(){};
+
+	Fluke189ResponseAnalyserWrapper operator[](unsigned int datasetnumber)
+	{
+		if(this->currentResponseContainerType == QD0 && datasetnumber != 0)
+		{
+			std::cerr<<"Your are using Fluke189ResponseAnalyser with QD0 and a data set field != 0"
+					   "\nBut QD0 has only one -> ignoring ... "<<std::endl;
+		}
+		return Fluke189ResponseAnalyserWrapper(datasetnumber,this);
+	};
+
+
+private:
+
+	enum ResponseContainerType
+	{
+		QD0,
+		QD2,
+		QD4,
+	};
+
+	ResponseContainerType currentResponseContainerType;
+	void* container;
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //Function for getting error string of a value error number
