@@ -381,7 +381,7 @@ namespace Fluke {
 		return info;
 	}
 
- 	std::string getFluke189ValueErrorString(unsigned int DisplayErrorNo)
+ 	std::string getFluke189ValueErrorString(unsigned int DisplayErrorNo) //TODO DELETE
  	{
  		std::string ErrorString;
 		switch(DisplayErrorNo)
@@ -578,6 +578,12 @@ namespace Fluke {
 	 */
 	Fluke189::ValueError Fluke189ResponseAnalyserWrapper::get_PRIdisplayError(bool reading2)  //TODO ADD NO ERROR!!!
 	{
+		if(!hasErrorPRIdisplay(reading2))
+		{
+			return Fluke189::VE_NO_ERROR;
+		}
+
+
 		switch(this->currentAnalyser->currentResponseContainerType)
 		{
 		case Fluke189ResponseAnalyser::QD0:
@@ -615,6 +621,11 @@ namespace Fluke {
 
 	Fluke189::ValueError Fluke189ResponseAnalyserWrapper::get_SECdisplayError(bool reading2)
 	{
+		if(!hasErrorSECdisplay(reading2))
+		{
+			return Fluke189::VE_NO_ERROR;
+		}
+
 		switch(this->currentAnalyser->currentResponseContainerType)
 		{
 		case Fluke189ResponseAnalyser::QD0:
@@ -719,6 +730,47 @@ namespace Fluke {
 			return -1;
 		}
 	}
+
+	std::string Fluke189ResponseAnalyserWrapper::valueErrorToString(Fluke189::ValueError number)
+	{
+ 		std::string ErrorString;
+		switch(number)
+		{
+		case Fluke189::VE_Display_OFFLINE:
+			ErrorString = "-OFF-";
+		break;
+
+		case Fluke189::VE_LEADS_CONNECTION_WRONG:
+			ErrorString = "LEADS";
+		break;
+
+		case Fluke189::VE_OL_OUTOFRANGE_NOCON:
+			ErrorString = "OL";
+		break;
+
+		case Fluke189::VE_OPEN__NOTHING_CONNECTED:
+			ErrorString = "OPEN";
+		break;
+
+		case Fluke189::VE_FUSE:
+			ErrorString = "FUSE";
+		break;
+
+		case Fluke189::VE_NOT_APPLICABLE:
+			ErrorString = "";
+		break;
+
+		case Fluke189::VE_NO_ERROR:
+			ErrorString="";
+
+		default:
+			ErrorString = "UNKNOWN_ERR";
+		break;
+		}
+
+		return ErrorString;
+	}
+
 
 
 	/*

@@ -1,5 +1,5 @@
 /*
- * Fluke189.h
+ * Fluke189.hpp
  *
  *  Created on: 06.01.2010
  *      Author: cyborg-x1
@@ -67,32 +67,54 @@ public:
 	}
 
 
-	//Get Setup Informations
-	//Command: QS<CR>
 #pragma pack(push,1)
+	/**
+	 * Mask for QS command response container\n
+	 * Showing setup information of the multimeter\n
+	 * Packed in 8 bit wise via pragma\n
+	 */
 	typedef struct
 	{
+		/** Command acknowledge code (without termination)*/
 		char I_CMD_ACK;
+		/** Line feed char (/r) (without termination)*/
 		char n_CR0;
+		/** Holding "QS," (without termination) */
 		char n_QSHeaderInfo_Comma[3];
-
-		unsigned int I_LogInterval : 16; // Interval for Logging Mode deciseconds
-		unsigned int I_dBREFmV     : 8;  // dB Reference 1=V 0=mV
-		unsigned int u_unknown0	   : 8;  // TODO:What does that do? (always 00?)
-		unsigned int I_dBREF	   : 16; // dB Reference
-				 int I_TempOffset  : 16; // Temperature Offset
-		unsigned int I_DegC_nDegF  :  8; // High if Celsius is selected, Low for Fahrenheit
-		unsigned int u_unkown1	   :  8; // TODO: Find out what that is used for (always 00?)
-		unsigned int I_BL_Off	   : 16; // Backlite off time, deciseconds
-		unsigned int I_MMTime	   : 32; // Current time of the multimeter in deciseconds from day 0
-		unsigned int I_Power_Off   : 16; // Power off time in minutes
-		unsigned int I_Frequency   :  8; // Frequency Setting 0=50Hz 1=60Hz
-		unsigned int u_unknown2	   :  8; // TODO: Find out what that is used for (always 00?)
-		unsigned int I_4Digits     :  8; // Digits setting (0=5 digits , 1=4 digits)
-		unsigned int u_unknown3	   :  8; // TODO: Find out what that is used for (always 00?)
-		unsigned int I_Beep_On	   :  8; // Beep setting (0=off, 1=on)
-		unsigned int u_ending1	   : 32; // TODO: Find out what the ending is used for (always 0x 00 90 01 c0 00 00 ??? )
-		unsigned int u_ending2	   : 16; // ^^
+		/**Interval for Logging Mode deciseconds*/
+		unsigned int I_LogInterval : 16;
+		/** dB Reference 1=V 0=mV*/
+		unsigned int I_dBREFmV     : 8;
+		/** TODO: What does that do? (always 00?) */
+		unsigned int u_unknown0	   : 8;
+		/** dB Reference*/
+		unsigned int I_dBREF	   : 16;
+		/** Temperature Offset*/
+				 int I_TempOffset  : 16;
+		/** High if Celsius is selected, Low for Fahrenheit*/
+		unsigned int I_DegC_nDegF  :  8;
+		/** TODO: Find out what that is used for (always 00?)*/
+		unsigned int u_unkown1	   :  8;
+		/** Backlite off time, deciseconds*/
+		unsigned int I_BL_Off	   : 16;
+		/** Current time of the multimeter in deciseconds from day 0*/
+		unsigned int I_MMTime	   : 32;
+		/** Power off time in minutes*/
+		unsigned int I_Power_Off   : 16;
+		/** Frequency Setting 0=50Hz 1=60Hz*/
+		unsigned int I_Frequency   :  8;
+		/** TODO: Find out what that is used for (always 00?)*/
+		unsigned int u_unknown2	   :  8;
+		/** Digits setting (0=5 digits , 1=4 digits)*/
+		unsigned int I_4Digits     :  8;
+		/** TODO: Find out what that is used for (always 00?)*/
+		unsigned int u_unknown3	   :  8;
+		/** Beep setting (0=off, 1=on)*/
+		unsigned int I_Beep_On	   :  8;
+		/** TODO: Find out what the ending is used for*/
+		unsigned int u_ending1	   : 32;
+		/** TODO: Find out what the ending is used for*/
+		unsigned int u_ending2	   : 16;
 	} cmdr_QS_t;
 #pragma pack(pop)
 
@@ -443,6 +465,8 @@ public:
 		VE_FUSE						=0x1B,
 		VE_LEADS_CONNECTION_WRONG	=0x1D,
 		VE_OL_OUTOFRANGE_NOCON		=0x21,
+		//Usage in class functions only:
+		VE_NO_ERROR					=0,
 		VE_NOT_APPLICABLE			=0xFF,
 	};
 
@@ -535,7 +559,12 @@ public:
 		AMS_NOT_APPLICABLE,
 	};
 
-
+	enum Analyse_Etch
+	{
+		AE_NOT_APPLICABLE,
+		AE_FALLING_ETCH,
+		AE_RISING_ETCH,
+	};
 
 	typedef struct
 	{
@@ -595,6 +624,15 @@ private:
 
 
 class Fluke189ResponseAnalyser;
+
+
+
+/**
+ * This Wrapper holds the functions for the different data sets.
+ * The class to this function is only used to store the current SerialResponseContainer and its type.
+ * The member functions of this Wrapper are called by Fluke189ResponseAnalyser.
+ * This class can only be constructed by Fluke189ResponseAnalyser because its constructor is private.
+ */
 class Fluke189ResponseAnalyserWrapper
 {
 	friend class Fluke189ResponseAnalyser;
@@ -609,57 +647,122 @@ public:
 
 	/**
 	 * Checks if a error in measurement is present in the current primary reading
-	 * @param[in] reading2 use reading2 instead of reading 1
-	 * @return \b<true> if the primary display value has an error
+	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
+	 * @return <b>true</b> if the primary display value has an error
 	 */
 	bool hasErrorPRIdisplay(bool reading2);
 
 	/**
 	 * Checks if a error in measurement is present in the current secondary reading
-	 * @param[in] reading2 use reading2 instead of reading 1
-	 * @return \b<true> if the secondary display value has an error
+	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
+	 * @return <b>true</b> if the secondary display value has an error
 	 */
 	bool hasErrorSECdisplay(bool reading2);
 
 	/**
-	 * This function reads out the error number if there is a error
-	 * @param[in] reading2 use reading2 instead of reading 1
-	 * @return Error Numbers according to Fluke189::ValueError
+	 * This function returns the ErrorValue of the primary reading
+	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
+	 * @return Error numbers according to Fluke189::ValueError
 	 */
 	Fluke189::ValueError get_PRIdisplayError(bool reading2);
+
+	/**
+	 * This function returns the ErrorValue of the secondary reading
+	 * @param[in] reading2 If <b>true</b> second secondary reading will be used (QD0 only).
+	 * @return Error numbers according to Fluke189::ValueError
+	 */
 	Fluke189::ValueError get_SECdisplayError(bool reading2);
 
 	/**
 	 * Returns the error string according to the ValueError number
-	 * @param[in] the error number
-	 * @return human readable error string
+	 * @param[in] number ValueError
+	 * @return A human readable error string
 	 */
-	std::string getValueErrorString(Fluke::Fluke189::ValueError number);
+	std::string valueErrorToString(Fluke::Fluke189::ValueError number);
 
 
 	/**
 	 * Shows the current mode switch setting
-	 * @return number of mode switch or 0(stuck between to positions)
+	 * @return Number of mode switch or 0 when stuck between two positions
 	 */
-	Fluke189::Analyse_ModeSwitchSetting get_ModeSwitchSetting();
+	Fluke189::Analyse_ModeSwitchSetting get_ModeSwitchSetting();  //TODO
 
 
+	/**
+	 * Get physical unit of the primary reading.
+	 * @return Physical unit of the current reading according to Fluke189::Analyse_UnitsUint
+	 */
+	Fluke189::Analyse_UnitsUint get_primaryUnit(); //TODO
 
+	/**
+	 * Get physical unit of the secondary reading.
+	 * @return Physical unit of the current reading according to Fluke189::Analyse_UnitsUint
+	 */
+	Fluke189::Analyse_UnitsUint get_secondaryUnit(); //TODO
+
+
+	/**
+	 * Get current type of the primary reading (AC, DC, AC+DC, not applicable)
+	 * @return CurrentType according to Fluke189::Analyse_CurrentType
+	 */
+	Fluke189::Analyse_CurrentType get_CurrentType(); //TODO
+
+	/**
+	 * Get current etch information (rising, falling, not applicable)
+	 * @return etch information according to Fluke189::Analyse_Etch
+	 */
+	Fluke189::Analyse_Etch get_EtchInfo(); //TODO
 };
 
-
+/**
+ * This class is used to analyze the response container.
+ * \n Currently supported are: \n RCT_QD0, RCT_QD2, RCT_QD4 \n
+ * All functions are implemented in a wrapper for operator[].\n
+ * \n A common usage should look like this:\n
+ * FlukeResponseAnalyser(container); \n
+ * container[datasetnumber].function;\n
+ * For containers which do not have repetitive information use:
+ * datasetnumber = 0;
+ * Other numbers will result to a cerr message and will be ignored.
+ *
+ * Header Informations in some containers are also called with operator[]
+ * but the integer value of the function will be ignored.
+ *
+ */
 class Fluke189ResponseAnalyser
 {
 	friend class Fluke189ResponseAnalyserWrapper;
 
+	//This are ResponseContainerTypes for internal usage
+	enum ResponseContainerType
+	{
+		QD0,
+		QD2,
+		QD4,
+	};
+
+	//This variable stores the current ResponseContainerType
+	ResponseContainerType currentResponseContainerType;
+	//This stores the address of the current container
+	void* container;
+
 
 public:
+	/** Constructor for a QD0 response container*/
 	Fluke189ResponseAnalyser(Fluke189::RCT_QD0& container);
+	/** Constructor for a QD2 response container*/
 	Fluke189ResponseAnalyser(Fluke189::RCT_QD2& container);
+	/** Constructor for a QD4 response container*/
 	Fluke189ResponseAnalyser(Fluke189::RCT_QD4& container);
 
+
+	/** Destructor for ResponseAnalyser*/
 	virtual ~Fluke189ResponseAnalyser(){};
 
+	/**
+	 * This function will return a Fluke189ResponseAnalyserWrapper which
+	 * holds the analysis functions.
+	 */
 	Fluke189ResponseAnalyserWrapper operator[](unsigned int datasetnumber)
 	{
 		if(this->currentResponseContainerType == QD0 && datasetnumber != 0)
@@ -671,17 +774,7 @@ public:
 	};
 
 
-private:
 
-	enum ResponseContainerType
-	{
-		QD0,
-		QD2,
-		QD4,
-	};
-
-	ResponseContainerType currentResponseContainerType;
-	void* container;
 };
 
 
@@ -733,7 +826,7 @@ private:
 
 
 //Function for getting error string of a value error number
-std::string getFluke189ValueErrorString(unsigned int DisplayErrorNo);
+std::string getFluke189ValueErrorString(unsigned int DisplayErrorNo);  //integrated
 
 //Function for extracting additional Data out of a SerialResponse of command QD 0
 Fluke::Fluke189::analysedInfo_t Fluke189AnalyseQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
@@ -746,7 +839,8 @@ typedef struct fluke189Value_t
 	{
 		strUnit=' ';
 	}
-	signed   int intValue;		//Value from Fluke 189 (integer)
+	/** Value from Fluke 189 (integer)*/
+	signed   int intValue;
 	unsigned int intDecimal;	//Place of Decimal Point
 	signed   int intPrefix;		//Prefix
 	std::string  strUnit;		//Unit: V, A, S, s etc...
