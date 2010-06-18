@@ -1,0 +1,194 @@
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t}{
+\section{Fluke::Fluke189::cmdr\_\-QD0\_\-t Struct Reference}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t}\index{Fluke::Fluke189::cmdr\_\-QD0\_\-t@{Fluke::Fluke189::cmdr\_\-QD0\_\-t}}
+}
+
+
+{\ttfamily \#include $<$Fluke189.hpp$>$}\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+char \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_ab46dd039cec29950bccb5090537d6272}{I\_\-CMD\_\-ACK}
+\item 
+char \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a052cc7ae576b3634f2eb8e1a4587c29e}{n\_\-CR0}
+\item 
+char \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_adbec2e8d0ea53d60baa33f2bad91e272}{n\_\-QDHeaderInfo\_\-Comma} \mbox{[}3\mbox{]}
+\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_af559256ee7d41725c494325e3f3016dd}{
+unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_af559256ee7d41725c494325e3f3016dd}{I\_\-Time0}:32}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_af559256ee7d41725c494325e3f3016dd}
+
+\begin{DoxyCompactList}\small\item\em Time(1st occurrence). \item\end{DoxyCompactList}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_aba21dd1e16208242209255d66d97b841}{
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>signed \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a456bd8fa7ab036aaff914b18c0fcb06e}{I\_priValue0}:32\\
+\>\>{\em Primary Value (1st occurrence). }\\
+\hypertarget{unionFluke_1_1Fluke189_1_1cmdr__QD0__t_1_1@0_a04d77721d1361380ba7fe50fd9410688}{
+\>struct \{\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a35294accd1c61dbfd2f4bf31c4344636}{I\_ErrorNoPV0}:8\\
+\>\>\>{\em 8 bit error code (if error == 1) }\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int}:22\\
+\>\>\>{\em unneeded bits for error }\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a3f6963e2fffce4e15d70d39b78d57a76}{I\_ErrorPV0}:2\\
+\>\>\>{\em error when value == 1 (no error: when 3 (negative) or 0 (positive)) }\\
+\>\} }
+\label{unionFluke_1_1Fluke189_1_1cmdr__QD0__t_1_1@0_a04d77721d1361380ba7fe50fd9410688}
+\\
+\}; }
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_aba21dd1e16208242209255d66d97b841}
+\\
+
+\end{tabbing}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a553620a1c27ecee3040af36b450fc702}{
+unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a553620a1c27ecee3040af36b450fc702}{I\_\-priDecimal0}:8}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a553620a1c27ecee3040af36b450fc702}
+
+\begin{DoxyCompactList}\small\item\em Primary decimal point location(1st occurrence). \item\end{DoxyCompactList}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_ad3c88ba7e8144cb07c3cb54940f1bcd9}{
+signed \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_ad3c88ba7e8144cb07c3cb54940f1bcd9}{I\_\-priSI\_\-Prefix0}:8}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_ad3c88ba7e8144cb07c3cb54940f1bcd9}
+
+\begin{DoxyCompactList}\small\item\em Primary SI-\/Prefix (1st occurrence). \item\end{DoxyCompactList}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_aea7c6fbbad1fa7c6071268a55430ff0a}{
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>signed \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a94e8cd3d213ebf0ef3cf1a3a2170aea9}{I\_secValue0}:32\\
+\>\>{\em Secondary display value. }\\
+\hypertarget{unionFluke_1_1Fluke189_1_1cmdr__QD0__t_1_1@2_af582f073fd3f0a048988de045421c0d4}{
+\>struct \{\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_ab35cfd1de4afbdcaa23b6f15df6e4b09}{I\_ErrorNoSV0}:8\\
+\>\>\>{\em 8 bit error code (if error == 1) }\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int}:22\\
+\>\>\>{\em unneeded bits for Error }\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a2c13179c9983253819b95115a9662428}{I\_ErrorSV0}:2\\
+\>\>\>{\em Error when value == 1 (no error: when 3 (negative) or 0 (positive)). }\\
+\>\} }
+\label{unionFluke_1_1Fluke189_1_1cmdr__QD0__t_1_1@2_af582f073fd3f0a048988de045421c0d4}
+\\
+\}; }
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_aea7c6fbbad1fa7c6071268a55430ff0a}
+\\
+
+\end{tabbing}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a47c07f7ccb922b0081471811993862cb}{
+unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a47c07f7ccb922b0081471811993862cb}{I\_\-secDecimal}:8}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a47c07f7ccb922b0081471811993862cb}
+
+\begin{DoxyCompactList}\small\item\em Secondary decimal point location. \item\end{DoxyCompactList}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a3bc502dcc711f5c308028b588e57e226}{
+signed \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a3bc502dcc711f5c308028b588e57e226}{I\_\-secSi\_\-Prefix}:8}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a3bc502dcc711f5c308028b588e57e226}
+
+\begin{DoxyCompactList}\small\item\em Secondary SI-\/Prefix //TODO: Check if it is different from first any time... \item\end{DoxyCompactList}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_ad9cbcb0e11faf94895144f56a4963020}{
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>signed \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_afdcb84ab9c16b00e53c76233958f111a}{I\_secValue1}:32\\
+\>\>{\em Secondary display value (2. occurrence). }\\
+\hypertarget{unionFluke_1_1Fluke189_1_1cmdr__QD0__t_1_1@4_aef3a87eaf080aeb4e188412d7374875f}{
+\>struct \{\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_ad55da63cb78cc807d7bf2e5e7d74375d}{I\_ErrorNoSV1}:8\\
+\>\>\>{\em 8 bit Error code (if error == 1) }\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int}:22\\
+\>\>\>{\em unneeded bits for error }\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a2323b5d82a3f4c70f29f54f6f6ca1fea}{I\_ErrorSV1}:2\\
+\>\>\>{\em Error when value == 1 (no error: when 3 (negative) or 0 (positive)). }\\
+\>\} }
+\label{unionFluke_1_1Fluke189_1_1cmdr__QD0__t_1_1@4_aef3a87eaf080aeb4e188412d7374875f}
+\\
+\}; }
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_ad9cbcb0e11faf94895144f56a4963020}
+\\
+
+\end{tabbing}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a8212cc3a02e4fe9f6fe64edefb63fdec}{
+unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a8212cc3a02e4fe9f6fe64edefb63fdec}{I\_\-Time1}:32}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a8212cc3a02e4fe9f6fe64edefb63fdec}
+
+\begin{DoxyCompactList}\small\item\em Time(2nd occurrence). \item\end{DoxyCompactList}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a9d06cf52b3ede32eb83b223938d9784a}{
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>signed \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ce7ba734d1feffd605b311b95476c8a}{I\_priValue1}:32\\
+\>\>{\em Primary Value (2nd occurrence). }\\
+\hypertarget{unionFluke_1_1Fluke189_1_1cmdr__QD0__t_1_1@6_a5fcd886231f77c169fd7fd4778af0fe7}{
+\>struct \{\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a3eb1c2f2ea8e6c5aee5e7b67bed0b3b1}{I\_ErrorNoPV1}:8\\
+\>\>\>{\em 8 bit error code (if error == 1) }\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int}:22\\
+\>\>\>{\em unneeded bits for Error }\\
+\>\>unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_ab190ef0974fb96864719275328a55f0f}{I\_ErrorPV1}:2\\
+\>\>\>{\em Error when value == 1 (no error: when 3 (negative) or 0 (positive)). }\\
+\>\} }
+\label{unionFluke_1_1Fluke189_1_1cmdr__QD0__t_1_1@6_a5fcd886231f77c169fd7fd4778af0fe7}
+\\
+\}; }
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a9d06cf52b3ede32eb83b223938d9784a}
+\\
+
+\end{tabbing}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a2b023d452326d0c3b714befc51e769e9}{
+unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a2b023d452326d0c3b714befc51e769e9}{I\_\-priDecimal1}:8}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a2b023d452326d0c3b714befc51e769e9}
+
+\begin{DoxyCompactList}\small\item\em Primary decimal point location (2nd occurrence) This is 0xf when in ViewMem with no Logs \char`\"{}-\/-\/-\/-\/-\/\char`\"{}. \item\end{DoxyCompactList}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_afbe593e8475da6b924318bdb9b13117f}{
+signed \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_afbe593e8475da6b924318bdb9b13117f}{I\_\-priSI\_\-Prefix1}:8}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_afbe593e8475da6b924318bdb9b13117f}
+
+\begin{DoxyCompactList}\small\item\em Primary SI-\/Prefix (2nd occurrence). \item\end{DoxyCompactList}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a3a8552b047596e62890977125cda5447}{
+\hyperlink{structFluke_1_1Fluke189_1_1qdInfo__t}{qdInfo\_\-t} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a3a8552b047596e62890977125cda5447}{I\_\-QDInfo}}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a3a8552b047596e62890977125cda5447}
+
+\begin{DoxyCompactList}\small\item\em Settings information. \item\end{DoxyCompactList}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a8255c6d6c66768208d4a020146369013}{
+unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a8255c6d6c66768208d4a020146369013}{u\_\-byte0}:8}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a8255c6d6c66768208d4a020146369013}
+
+\begin{DoxyCompactList}\small\item\em TODO:Find out what that is for //always 1. \item\end{DoxyCompactList}\item 
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a835768e5aabd53d41e1e7a4d10fdde1f}{
+unsigned \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{int} \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a835768e5aabd53d41e1e7a4d10fdde1f}{u\_\-byte1}:8}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a835768e5aabd53d41e1e7a4d10fdde1f}
+
+\begin{DoxyCompactList}\small\item\em TODO:Find out what that is for //always 0. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Mask for QD0 command response container\par
+ Showing setup information of the multimeter\par
+ Packed in 8 bit wise via pragma\par
+ 
+
+\subsection{Member Data Documentation}
+\hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_ab46dd039cec29950bccb5090537d6272}{
+\index{Fluke::Fluke189::cmdr\_\-QD0\_\-t@{Fluke::Fluke189::cmdr\_\-QD0\_\-t}!I\_\-CMD\_\-ACK@{I\_\-CMD\_\-ACK}}
+\index{I\_\-CMD\_\-ACK@{I\_\-CMD\_\-ACK}!Fluke::Fluke189::cmdr_QD0_t@{Fluke::Fluke189::cmdr\_\-QD0\_\-t}}
+\subsubsection[{I\_\-CMD\_\-ACK}]{\setlength{\rightskip}{0pt plus 5cm}char {\bf Fluke::Fluke189::cmdr\_\-QD0\_\-t::I\_\-CMD\_\-ACK}}}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_ab46dd039cec29950bccb5090537d6272}
+Command acknowledge code (without termination) \hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}{
+\index{Fluke::Fluke189::cmdr\_\-QD0\_\-t@{Fluke::Fluke189::cmdr\_\-QD0\_\-t}!int@{int}}
+\index{int@{int}!Fluke::Fluke189::cmdr_QD0_t@{Fluke::Fluke189::cmdr\_\-QD0\_\-t}}
+\subsubsection[{int}]{\setlength{\rightskip}{0pt plus 5cm}unsigned {\bf Fluke::Fluke189::cmdr\_\-QD0\_\-t::int}}}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a6ab6a1621f14f0fe83e89daadd9ba787}
+
+
+unneeded bits for error unneeded bits for Error \hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a052cc7ae576b3634f2eb8e1a4587c29e}{
+\index{Fluke::Fluke189::cmdr\_\-QD0\_\-t@{Fluke::Fluke189::cmdr\_\-QD0\_\-t}!n\_\-CR0@{n\_\-CR0}}
+\index{n\_\-CR0@{n\_\-CR0}!Fluke::Fluke189::cmdr_QD0_t@{Fluke::Fluke189::cmdr\_\-QD0\_\-t}}
+\subsubsection[{n\_\-CR0}]{\setlength{\rightskip}{0pt plus 5cm}char {\bf Fluke::Fluke189::cmdr\_\-QD0\_\-t::n\_\-CR0}}}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_a052cc7ae576b3634f2eb8e1a4587c29e}
+Line feed char (/r) (without termination) \hypertarget{structFluke_1_1Fluke189_1_1cmdr__QD0__t_adbec2e8d0ea53d60baa33f2bad91e272}{
+\index{Fluke::Fluke189::cmdr\_\-QD0\_\-t@{Fluke::Fluke189::cmdr\_\-QD0\_\-t}!n\_\-QDHeaderInfo\_\-Comma@{n\_\-QDHeaderInfo\_\-Comma}}
+\index{n\_\-QDHeaderInfo\_\-Comma@{n\_\-QDHeaderInfo\_\-Comma}!Fluke::Fluke189::cmdr_QD0_t@{Fluke::Fluke189::cmdr\_\-QD0\_\-t}}
+\subsubsection[{n\_\-QDHeaderInfo\_\-Comma}]{\setlength{\rightskip}{0pt plus 5cm}char {\bf Fluke::Fluke189::cmdr\_\-QD0\_\-t::n\_\-QDHeaderInfo\_\-Comma}\mbox{[}3\mbox{]}}}
+\label{structFluke_1_1Fluke189_1_1cmdr__QD0__t_adbec2e8d0ea53d60baa33f2bad91e272}
+Holding \char`\"{}QS,\char`\"{} (without termination) 
+
+The documentation for this struct was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+src/Fluke189.hpp\end{DoxyCompactItemize}

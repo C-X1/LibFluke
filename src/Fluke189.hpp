@@ -118,9 +118,17 @@ public:
 	} cmdr_QS_t;
 #pragma pack(pop)
 
+	/**Declaration of the serial ResponseConTainer for QS command*/
 	typedef SerialResponse<cmdr_QS_t> RCT_QS;
 
 
+	/**Executing this command will send the QS command to the device
+	 *
+	 * @param [in] TerminatedSubstrings If \b true this will insert string terminations for the header information in the container
+	 *
+	 *
+	 * @return Container from type RCT_QS
+	 */
 	RCT_QS CMD_QS(bool TerminatedSubstrings,void* progressbar_object ,void (*progressbar_function)(void* progressbar_object ,unsigned int current_byte, unsigned int byte_amount))
 	{
 		RCT_QS Response = this->SendCommand<cmdr_QS_t>("QS\r",this->DelayResponse_us, this->DelayChar_us, 34, 0, 0, false, 0, progressbar_object ,*progressbar_function);
@@ -134,132 +142,179 @@ public:
 
 
 #pragma pack(push,1)
-	//QD Information Field
+	/**
+	 * QD Information Field
+	 * Holds information over various settings and states.
+	 * It's part of the function responses of QD0 QD2 and QD4
+	 */
 	typedef struct
 	{
-				bool I_S_Auto		 		 :1;  //High if Auto Hold
-				bool I_S_Hold				 :1;  //High if Hold or Auto Hold
-				bool I_S_Log				 :1;  //High if Log Mode
-				bool I_S_Avg		 		 :1;  //High if MinMax:AVG (also Fast)
-				bool I_S_Max		 		 :1;  //High if MinMax:MAX (also Fast)
-				bool I_S_Min		 		 :1;  //High if MinMax:MIN (also Fast)
-				bool I_S_Fast		 	     :1;  //High if Fast MinMax
-				bool I_LowBattery	 		 :1;  //High if LowBattery is on
-
-				bool I_SetupOrViewMem 		 :1;  //Seems to be one when in Setup or in ViewMem
-				bool I_S_Delta		 		 :1;  //High if Delta is on
-				bool I_S_Percent     		 :1;  //High if Percent is on
-		unsigned int I_MEMclr		 		 :2;  //In ViewMem its 3 if there are saves or logs, if not its 00, if Clr? is displayed its 1
-		unsigned int I_AutoRange	 		 :1;  //1 when Auto Range
-		unsigned int I_ManualRange			 :1;  //1 when Manual Range
-				bool I_ShiftDisplayed        :1;  //Is 1 as long the Shift sign is displayed in screen [__]
-
-		unsigned int I_DBREF_Set	 		 :16; //dBRef Value STD:600
-
-		unsigned int I_MeasureMode	 		 :6;  //Mode (ACV DCV etc...)
-		unsigned int I_Hz_Percent_ms 		 :2;  //(Hz=1 %=2 ms=3)
-
-				bool I_MinMaxMode	 		 :1;  //High if MinMax Mode(also Fast)
-				bool I_Fast			  		 :1;  //High if Fast
-				bool u_bit1 		 		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
-		unsigned int I_MinMaxAvg	 		 :2;  //(1=Max 2=Min 3=AVG)
-				bool u_bit2			 		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
-				bool I_RisingEtch	 		 :1;  //High if rising etch displayed
-				bool I_FallingEtch	 		 :1;  //High if falling etch displayed
-
-		unsigned int I_SubState_ACDC 		 :2;  //Substates of V mV mA uA (DC Modes ONLY)
-				bool u_bit3		 	  		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
-				bool I_Hold			   		 :1;  //High if Hold     (Low on AutoHold)
-				bool I_AutoHold		 	 	 :1;  //High if AutoHold (Low on Hold)
-				bool u_bit4			 		 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
-				bool I_dBRef_V_nm	 		 :1;  //High if V selected for dB_Ref, Low if m selected
-				bool I_DegC_nDegF	 		 :1;  //High if Celsius is selected, Low for Fahrenheit
-
-				bool I_Delta				 :1;  //High if Delta(Low if Delta Percent)
-				bool I_DeltaPercent			 :1;  //High if DeltaPercent(Low if Delta)
-				bool u_bit5					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
-				bool I_Unit_dB_AC			 :1;  //High if(Prim is dB and Sec AC) only V and mV (AC)
-				bool I_Unit_AC_dB			 :1;  //High if(Prim is AC and Sec dB) only V and mV (AC)
-				bool u_bit6					 :1;  //TODO: Find a use for this: always 0 (Maybe Cal?)
-				bool I_FourDigitMode		 :1;  //Only four digits selected in setup when 1
-				bool I_RangeDisplayed	 	 :1;  //Bit is one when Range is displayed (manual or auto)
-												  //I am a bit unsure about this...
-												  //Bit is 0 when in Setup and in Temperature Mode or displaying Questions/Status
-				                                  //(Range Selection changeable when 1?)
-
-		unsigned int I_SelectedRange 	 	 :8;  //Range Mode
-		unsigned int I_CurrentView   		 :8;  //Displays Data of what is on screen currently 1=Measure, 2=Setup, 22=Setup(Timesetting) ...
+				/**High if Auto Hold*/
+				bool I_S_Auto		 		 :1;
+				/**High if Hold or Auto Hold*/
+				bool I_S_Hold				 :1;
+				/**High if Log Mode*/
+				bool I_S_Log				 :1;
+				/**High if MinMax:AVG (also Fast)*/
+				bool I_S_Avg		 		 :1;
+				/**High if MinMax:MAX (also Fast)*/
+				bool I_S_Max		 		 :1;
+				/**High if MinMax:MIN (also Fast)*/
+				bool I_S_Min		 		 :1;
+				/**High if Fast MinMax*/
+				bool I_S_Fast		 	     :1;
+				/**High if LowBattery is on*/
+				bool I_LowBattery	 		 :1;
+				/**Seems to be one when in Setup or in ViewMem*/
+				bool I_SetupOrViewMem 		 :1;
+				/**High if Delta is on*/
+				bool I_S_Delta		 		 :1;
+				/**High if Percent is on*/
+				bool I_S_Percent     		 :1;
+				/** In ViewMem its 3 if there are saves or logs, if not its 00, if Clr? is displayed its 1*/
+		unsigned int I_MEMclr		 		 :2;
+				/**High when Auto Range*/
+		unsigned int I_AutoRange	 		 :1;
+				/**High when Manual Range*/
+		unsigned int I_ManualRange			 :1;
+				/**Is 1 as long the Shift sign is displayed in screen [__]*/
+				bool I_ShiftDisplayed        :1;
+				/**Is 1 as long the Shift sign is displayed in screen [__]*/
+		unsigned int I_DBREF_Set	 		 :16;
+				/**Mode (ACV DCV etc...)*/
+		unsigned int I_MeasureMode	 		 :6;
+				/**(Hz=1 %=2 ms=3)*/
+		unsigned int I_Hz_Percent_ms 		 :2;
+				/**High if MinMax Mode(also Fast)*/
+				bool I_MinMaxMode	 		 :1;
+				/**High if Fast*/
+				bool I_Fast			  		 :1;
+				/**TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				bool u_bit1 		 		 :1;
+				/**(1=Max 2=Min 3=AVG)*/
+		unsigned int I_MinMaxAvg	 		 :2;
+				/**TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				bool u_bit2			 		 :1;
+				/**High if rising etch displayed*/
+				bool I_RisingEtch	 		 :1;
+				/**High if falling etch displayed*/
+				bool I_FallingEtch	 		 :1;
+				/**Substates of V mV mA uA (DC Modes ONLY)*/
+		unsigned int I_SubState_ACDC 		 :2;
+				/** TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				bool u_bit3		 	  		 :1;
+				/**High if Hold     (Low on AutoHold)*/
+				bool I_Hold			   		 :1;
+				/**High if AutoHold (Low on Hold)*/
+				bool I_AutoHold		 	 	 :1;
+				/**TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				bool u_bit4			 		 :1;
+				/**High if V selected for dB_Ref, Low if m selected*/
+				bool I_dBRef_V_nm	 		 :1;
+				/**High if Celsius is selected, Low for Fahrenheit*/
+				bool I_DegC_nDegF	 		 :1;
+				/**High if Delta(Low if Delta Percent)*/
+				bool I_Delta				 :1;
+				/**High if DeltaPercent(Low if Delta)*/
+				bool I_DeltaPercent			 :1;
+				/**TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				bool u_bit5					 :1;
+				/**High if(Prim is dB and Sec AC) only V and mV (AC)*/
+				bool I_Unit_dB_AC			 :1;
+				/**High if(Prim is AC and Sec dB) only V and mV (AC)*/
+				bool I_Unit_AC_dB			 :1;
+				/**TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				bool u_bit6					 :1;
+				/**Only four digits selected in setup when 1*/
+				bool I_FourDigitMode		 :1;
+				/**
+				 * Bit is one when Range is displayed (manual or auto)
+				 * I am a bit unsure about this..
+				 * Bit is 0 when in Setup and in Temperature Mode or displaying Questions/Status
+				 * (Range Selection changeable when 1?)
+				 */
+				bool I_RangeDisplayed	 	 :1;
+				/**Range Mode*/
+		unsigned int I_SelectedRange 	 	 :8;
+				/**Displays Data of what is on screen currently 1=Measure, 2=Setup, 22=Setup(Timesetting)*/
+		unsigned int I_CurrentView   		 :8;
 	} qdInfo_t;
 #pragma pack(pop)
 
 
 
-	//Get Current Reading
-	//Command QD 0<CR>
 #pragma pack(push,1)
+	/**
+	 * Mask for QD0 command response container\n
+	 * Showing setup information of the multimeter\n
+	 * Packed in 8 bit wise via pragma\n
+	 */
 	typedef struct{
+		/** Command acknowledge code (without termination)*/
 		char I_CMD_ACK;
+		/** Line feed char (/r) (without termination)*/
 		char n_CR0;
+		/** Holding "QS," (without termination) */
 		char n_QDHeaderInfo_Comma[3];
 
 
-		unsigned int I_Time0				 :32; //Time(1st Occur.)
+		unsigned int I_Time0				 :32; ///<Time(1st occurrence)
 		union
 		{
-		  signed int I_priValue0			 :32; //Primary Value	 (1st Occur.)
+		  signed int I_priValue0			 :32; ///<Primary Value	 (1st occurrence)
 		  struct
 		  {
-			unsigned int I_ErrorNoPV0		 :8;  //8 Bit Error Code (If Error == 1)
-			unsigned int 					 :22; //unneeded bits for Error
-			unsigned int I_ErrorPV0			 :2;  //Error when value == 1 (NoError: is 3 when negative or 0 when positiv)
+			unsigned int I_ErrorNoPV0		 :8;  ///<8 bit error code (if error == 1)
+			unsigned int 					 :22; ///<unneeded bits for error
+			unsigned int I_ErrorPV0			 :2;  ///<error when value == 1 (no error: when 3 (negative) or 0 (positive))
 		  };
 		};
-		unsigned int I_priDecimal0  		 :8;  //Pri. Dec. Pnt Loc.(1st Occur.)
-		  signed int I_priSI_Prefix0		 :8;  //Pri. SI-Prefix 	 (1st Occur.)
+		unsigned int I_priDecimal0  		 :8;  ///<Primary decimal point location(1st occurrence)
+		  signed int I_priSI_Prefix0		 :8;  ///<Primary SI-Prefix (1st occurrence)
 		union
 		{
-		  signed int I_secValue0    		 :32; //Sec. Disp. Value
+		  signed int I_secValue0    		 :32; ///<Secondary display value
 		  struct
 		  {
-			unsigned int I_ErrorNoSV0		 :8;  //8 Bit Error Code (If Error == 1)
-			unsigned int 					 :22; //unneeded bits for Error
-			unsigned int I_ErrorSV0 		 :2;  //Error when value == 1 (NoError: is 3 when negative or 0 when positiv)
+			unsigned int I_ErrorNoSV0		 :8;  ///<8 bit error code (if error == 1)
+			unsigned int 					 :22; ///<unneeded bits for Error
+			unsigned int I_ErrorSV0 		 :2;  ///<Error when value == 1 (no error: when 3 (negative) or 0 (positive))
 		   };
 		 };
-		unsigned int I_secDecimal			 :8;  //Sec. Disp. Dec. Pnt Locaction
-		  signed int I_secSi_Prefix	 		 :8;  //Sec. Disp. Prefix TODO: Check if correct
+		unsigned int I_secDecimal			 :8;  ///<Secondary decimal point location
+		  signed int I_secSi_Prefix	 		 :8;  ///<Secondary SI-Prefix //TODO: Check if it is different from first any time...
 
 		union
 		{
-		  signed int I_secValue1     	     :32; //Sec. Disp. Value (2. Occurence)
+		  signed int I_secValue1     	     :32; ///<Secondary display value (2. occurrence)
 		  struct
 		  {
-			unsigned int I_ErrorNoSV1 	     :8;  //8 Bit Error Code (If Error == 1)
-			unsigned int 					 :22; //unneeded bits for Error
-			unsigned int I_ErrorSV1 		 :2;  //Error when value == 1 (NoError: is 3 when negative or 0 when positiv)
+			unsigned int I_ErrorNoSV1 	     :8;  ///<8 bit Error code (if error == 1)
+			unsigned int 					 :22; ///<unneeded bits for error
+			unsigned int I_ErrorSV1 		 :2;  ///<Error when value == 1 (no error: when 3 (negative) or 0 (positive))
 		   };
 		 };
 
-		unsigned int I_Time1				 :32; //Time(2nd Occur.)
+		unsigned int I_Time1				 :32; ///<Time(2nd occurrence)
 
 		union
 		{
-		  signed int I_priValue1			 :32; //Primary Value	 (2nd Occur.)
+		  signed int I_priValue1			 :32; ///<Primary Value	 (2nd occurrence)
 		  struct
 		  {
-			unsigned int I_ErrorNoPV1	 	 :8;  //8 Bit Error Code (If Error == 1)
-			unsigned int 					 :22; //unneeded bits for Error
-			unsigned int I_ErrorPV1 		 :2;  //Error when value == 1 (NoError: is 3 when negative or 0 when positiv)
+			unsigned int I_ErrorNoPV1	 	 :8;  ///<8 bit error code (if error == 1)
+			unsigned int 					 :22; ///<unneeded bits for Error
+			unsigned int I_ErrorPV1 		 :2;  ///<Error when value == 1 (no error: when 3 (negative) or 0 (positive))
 		  };
 		};
 
-		unsigned int I_priDecimal1  		 :8;  //Pri. Dec. Pnt Loc.(2nd Occur.) //is 0xf when in ViewMem with no Logs "-----"
-		  signed int I_priSI_Prefix1 		 :8;  //Pri. SI-Prefix 	 (2nd Occur.)
+		unsigned int I_priDecimal1  		 :8;  ///<Primary decimal point location (2nd occurrence) This is 0xf when in ViewMem with no Logs "-----"
+		  signed int I_priSI_Prefix1 		 :8;  ///<Primary SI-Prefix	(2nd occurrence)
 
-		  qdInfo_t I_QDInfo;
+		  qdInfo_t I_QDInfo;					  ///<Settings information
 
-		unsigned int u_byte0         		 :8;  //TODO:Find out what that is for //always 1
-		unsigned int u_byte1         		 :8;  //TODO:Find out what that is for //always 0
+		unsigned int u_byte0         		 :8;  ///<TODO:Find out what that is for //always 1
+		unsigned int u_byte1         		 :8;  ///<TODO:Find out what that is for //always 0
 	} cmdr_QD0_t;
 #pragma pack(pop)
 

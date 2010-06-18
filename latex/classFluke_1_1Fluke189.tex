@@ -1,0 +1,232 @@
+\hypertarget{classFluke_1_1Fluke189}{
+\section{Fluke::Fluke189 Class Reference}
+\label{classFluke_1_1Fluke189}\index{Fluke::Fluke189@{Fluke::Fluke189}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structFluke_1_1Fluke189_1_1analysedInfo__t}{analysedInfo\_\-t}
+\item 
+struct \hyperlink{structFluke_1_1Fluke189_1_1cmdr__ID__t}{cmdr\_\-ID\_\-t}
+\item 
+struct \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t}{cmdr\_\-QD0\_\-t}
+\item 
+struct \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD2__t}{cmdr\_\-QD2\_\-t}
+\item 
+struct \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD4__t}{cmdr\_\-QD4\_\-t}
+\item 
+struct \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QS__t}{cmdr\_\-QS\_\-t}
+\item 
+struct \hyperlink{structFluke_1_1Fluke189_1_1qd2__set__t}{qd2\_\-set\_\-t}
+\item 
+struct \hyperlink{structFluke_1_1Fluke189_1_1qd4__set__t}{qd4\_\-set\_\-t}
+\item 
+struct \hyperlink{structFluke_1_1Fluke189_1_1qdInfo__t}{qdInfo\_\-t}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries CMD\_\-ACK} \{ {\bfseries CA\_\-ERR\_\-ACK} =  '0', 
+{\bfseries CA\_\-ERR\_\-FAIL} =  '1', 
+{\bfseries CA\_\-ERR\_\-NODATA} =  '5'
+ \}
+\item 
+enum {\bfseries Range} \{ \par
+{\bfseries RANGE\_\-1} = 0x01, 
+{\bfseries RANGE\_\-10} = 0x41, 
+{\bfseries RANGE\_\-100} = 0x81, 
+{\bfseries RANGE\_\-1000} = 0xc1, 
+\par
+{\bfseries RANGE\_\-5} = 0x21, 
+{\bfseries RANGE\_\-50} = 0x61, 
+{\bfseries RANGE\_\-500} = 0xA1, 
+{\bfseries RANGE\_\-5000} = 0xE1
+ \}
+\item 
+enum {\bfseries RangeMode} \{ {\bfseries RANGEMODE\_\-AUTO} = 0xA0, 
+{\bfseries RANGEMODE\_\-MANUAL} = 0xC0, 
+{\bfseries RANGEMODE\_\-NONE} = 0x80
+ \}
+\item 
+enum {\bfseries ValueError} \{ \par
+{\bfseries VE\_\-Display\_\-OFFLINE} = 0x01, 
+{\bfseries VE\_\-OPEN\_\-\_\-NOTHING\_\-CONNECTED} = 0x16, 
+{\bfseries VE\_\-FUSE} = 0x1B, 
+{\bfseries VE\_\-LEADS\_\-CONNECTION\_\-WRONG} = 0x1D, 
+\par
+{\bfseries VE\_\-OL\_\-OUTOFRANGE\_\-NOCON} = 0x21, 
+{\bfseries VE\_\-NO\_\-ERROR} = 0, 
+{\bfseries VE\_\-NOT\_\-APPLICABLE} = 0xFF
+ \}
+\item 
+enum {\bfseries MeasureMode} \{ \par
+{\bfseries MM\_\-POS\_\-BETW\_\-2\_\-MODES} = 0x000, 
+{\bfseries MM\_\-AC\_\-Volt} = 0x001, 
+{\bfseries MM\_\-AC\_\-mVolt} = 0x002, 
+{\bfseries MM\_\-DC\_\-Volt} = 0x003, 
+\par
+{\bfseries MM\_\-DC\_\-mVolt} = 0x004, 
+{\bfseries MM\_\-R\_\-Ohm} = 0x009, 
+{\bfseries MM\_\-R\_\-BEEP\_\-Ohm} = 0x00b, 
+{\bfseries MM\_\-CAP\_\-Farad} = 0x00c, 
+\par
+{\bfseries MM\_\-Diode\_\-Volt} = 0x00d, 
+{\bfseries MM\_\-Temp\_\-Celsius} = 0x01a, 
+{\bfseries MM\_\-Temp\_\-Fahrenheit} = 0x01b, 
+{\bfseries MM\_\-AC\_\-Ampere} = 0x00e, 
+\par
+{\bfseries MM\_\-AC\_\-uAmpere} = 0x010, 
+{\bfseries MM\_\-DC\_\-Ampere} = 0x011, 
+{\bfseries MM\_\-DC\_\-uAmpere} = 0x013, 
+{\bfseries MM\_\-DC\_\-V\_\-Submode} = 0x005, 
+\par
+{\bfseries MM\_\-DC\_\-mV\_\-Submode} = 0x006, 
+{\bfseries MM\_\-DC\_\-A\_\-Submode} = 0x014, 
+{\bfseries MM\_\-DC\_\-mA\_\-Submode} = 0x016
+ \}
+\item 
+enum {\bfseries CurrentView} \{ \par
+{\bfseries CV\_\-DisplayingMeasure} = 0x01, 
+{\bfseries CV\_\-InSetup\_\-noTimeSet} = 0x02, 
+{\bfseries CV\_\-InSetup\_\-TimeSet} = 0x22, 
+{\bfseries CV\_\-Showing\_\-CLR\_\-Saves} = 0x03, 
+\par
+{\bfseries CV\_\-Showing\_\-CLR\_\-Log} = 0x05, 
+{\bfseries CV\_\-ViewMem\_\-NoData} = 0x06
+ \}
+\item 
+enum {\bfseries Analyse\_\-UnitsUint} \{ \par
+{\bfseries AU\_\-None}, 
+{\bfseries AU\_\-AC\_\-V}, 
+{\bfseries AU\_\-DC\_\-V}, 
+{\bfseries AU\_\-ACDC\_\-V}, 
+\par
+{\bfseries AU\_\-Volts}, 
+{\bfseries AU\_\-Ampere}, 
+{\bfseries AU\_\-dBm}, 
+{\bfseries AU\_\-dB\_\-V}, 
+\par
+{\bfseries AU\_\-Hz}, 
+{\bfseries AU\_\-Seconds}, 
+{\bfseries AU\_\-Percent}, 
+{\bfseries AU\_\-Ohm}, 
+\par
+{\bfseries AU\_\-Siemens}, 
+{\bfseries AU\_\-Farad}, 
+{\bfseries AU\_\-Celsius}, 
+{\bfseries AU\_\-Fahrenheit}
+ \}
+\item 
+enum {\bfseries Analyse\_\-CurrentType} \{ {\bfseries ACT\_\-NoCurrentType}, 
+{\bfseries ACT\_\-AlternatingCurrent}, 
+{\bfseries ACT\_\-DirectCurrent}, 
+{\bfseries ACT\_\-DirectandAlternatingCurrent}
+ \}
+\item 
+enum {\bfseries Analyse\_\-ModeSwitchSetting} \{ \par
+{\bfseries AMS\_\-Error}, 
+{\bfseries AMS\_\-VAC}, 
+{\bfseries AMS\_\-mVAC}, 
+{\bfseries AMS\_\-VDC}, 
+\par
+{\bfseries AMS\_\-mVDC}, 
+{\bfseries AMS\_\-OhmSiemens}, 
+{\bfseries AMS\_\-CapDiode}, 
+{\bfseries AMS\_\-Temp}, 
+\par
+{\bfseries AMS\_\-AACmAAC}, 
+{\bfseries AMS\_\-uAC}, 
+{\bfseries AMS\_\-ADCmADC}, 
+{\bfseries AMS\_\-uADC}, 
+\par
+{\bfseries AMS\_\-VIEWMEM}, 
+{\bfseries AMS\_\-NOT\_\-APPLICABLE}
+ \}
+\item 
+enum {\bfseries Analyse\_\-Etch} \{ {\bfseries AE\_\-NOT\_\-APPLICABLE}, 
+{\bfseries AE\_\-FALLING\_\-ETCH}, 
+{\bfseries AE\_\-RISING\_\-ETCH}
+ \}
+\item 
+\hypertarget{classFluke_1_1Fluke189_a07788d6f33a7dd54b3a66373b5addded}{
+typedef SerialResponse$<$ \hyperlink{structFluke_1_1Fluke189_1_1cmdr__ID__t}{cmdr\_\-ID\_\-t} $>$ {\bfseries RCT\_\-ID}}
+\label{classFluke_1_1Fluke189_a07788d6f33a7dd54b3a66373b5addded}
+
+\item 
+typedef SerialResponse$<$ \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QS__t}{cmdr\_\-QS\_\-t} $>$ \hyperlink{classFluke_1_1Fluke189_a9fee860a536aaaa113af0248791e9fef}{RCT\_\-QS}
+\item 
+\hypertarget{classFluke_1_1Fluke189_a9a5b405bb506cd2482de2f8bb0bea189}{
+typedef SerialResponse$<$ \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD0__t}{cmdr\_\-QD0\_\-t} $>$ {\bfseries RCT\_\-QD0}}
+\label{classFluke_1_1Fluke189_a9a5b405bb506cd2482de2f8bb0bea189}
+
+\item 
+\hypertarget{classFluke_1_1Fluke189_a6dcb8bdb7e09aba26dd95d49f56690cf}{
+typedef SerialResponse$<$ \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD2__t}{cmdr\_\-QD2\_\-t} $>$ {\bfseries RCT\_\-QD2}}
+\label{classFluke_1_1Fluke189_a6dcb8bdb7e09aba26dd95d49f56690cf}
+
+\item 
+\hypertarget{classFluke_1_1Fluke189_a82ebb2c4106833e320c8b18b968a5e22}{
+typedef SerialResponse$<$ \hyperlink{structFluke_1_1Fluke189_1_1cmdr__QD4__t}{cmdr\_\-QD4\_\-t} $>$ {\bfseries RCT\_\-QD4}}
+\label{classFluke_1_1Fluke189_a82ebb2c4106833e320c8b18b968a5e22}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classFluke_1_1Fluke189_aa08fa7232a4af887744b63f59959b050}{
+RCT\_\-ID {\bfseries CMD\_\-ID} (bool TerminatedSubstrings, void $\ast$progressbar\_\-object, void($\ast$progressbar\_\-function)(void $\ast$progressbar\_\-object, unsigned int current\_\-byte, unsigned int byte\_\-amount))}
+\label{classFluke_1_1Fluke189_aa08fa7232a4af887744b63f59959b050}
+
+\item 
+\hyperlink{classFluke_1_1Fluke189_a9fee860a536aaaa113af0248791e9fef}{RCT\_\-QS} \hyperlink{classFluke_1_1Fluke189_a5747ae5dbcc0d078566dd8ff28c3d6b5}{CMD\_\-QS} (bool TerminatedSubstrings, void $\ast$progressbar\_\-object, void($\ast$progressbar\_\-function)(void $\ast$progressbar\_\-object, unsigned int current\_\-byte, unsigned int byte\_\-amount))
+\item 
+\hypertarget{classFluke_1_1Fluke189_ac33f3b840c907949b5b7e479f65c11d5}{
+RCT\_\-QD0 {\bfseries CMD\_\-QD0} (bool TerminatedSubstrings, void $\ast$progressbar\_\-object, void($\ast$progressbar\_\-function)(void $\ast$progressbar\_\-object, unsigned int current\_\-byte, unsigned int byte\_\-amount))}
+\label{classFluke_1_1Fluke189_ac33f3b840c907949b5b7e479f65c11d5}
+
+\item 
+\hypertarget{classFluke_1_1Fluke189_afca3f8241ae8dc89691b0fb8f5d3cbad}{
+RCT\_\-QD2 {\bfseries CMD\_\-QD2} (bool TerminatedSubstrings, void $\ast$progressbar\_\-object, void($\ast$progressbar\_\-function)(void $\ast$progressbar\_\-object, unsigned int current\_\-byte, unsigned int byte\_\-amount))}
+\label{classFluke_1_1Fluke189_afca3f8241ae8dc89691b0fb8f5d3cbad}
+
+\item 
+\hypertarget{classFluke_1_1Fluke189_a4e942819669368247858a39003f2bf9f}{
+RCT\_\-QD4 {\bfseries CMD\_\-QD4} (bool TerminatedSubstrings, void $\ast$progressbar\_\-object, void($\ast$progressbar\_\-function)(void $\ast$progressbar\_\-object, unsigned int current\_\-byte, unsigned int byte\_\-amount))}
+\label{classFluke_1_1Fluke189_a4e942819669368247858a39003f2bf9f}
+
+\item 
+\hypertarget{classFluke_1_1Fluke189_a2a8bd6a44e96762e278809e016033e58}{
+{\bfseries Fluke189} (std::string filename)}
+\label{classFluke_1_1Fluke189_a2a8bd6a44e96762e278809e016033e58}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Typedef Documentation}
+\hypertarget{classFluke_1_1Fluke189_a9fee860a536aaaa113af0248791e9fef}{
+\index{Fluke::Fluke189@{Fluke::Fluke189}!RCT\_\-QS@{RCT\_\-QS}}
+\index{RCT\_\-QS@{RCT\_\-QS}!Fluke::Fluke189@{Fluke::Fluke189}}
+\subsubsection[{RCT\_\-QS}]{\setlength{\rightskip}{0pt plus 5cm}typedef SerialResponse$<${\bf cmdr\_\-QS\_\-t}$>$ {\bf Fluke::Fluke189::RCT\_\-QS}}}
+\label{classFluke_1_1Fluke189_a9fee860a536aaaa113af0248791e9fef}
+Declaration of the serial ResponseConTainer for QS command 
+
+\subsection{Member Function Documentation}
+\hypertarget{classFluke_1_1Fluke189_a5747ae5dbcc0d078566dd8ff28c3d6b5}{
+\index{Fluke::Fluke189@{Fluke::Fluke189}!CMD\_\-QS@{CMD\_\-QS}}
+\index{CMD\_\-QS@{CMD\_\-QS}!Fluke::Fluke189@{Fluke::Fluke189}}
+\subsubsection[{CMD\_\-QS}]{\setlength{\rightskip}{0pt plus 5cm}{\bf RCT\_\-QS} Fluke::Fluke189::CMD\_\-QS (bool {\em TerminatedSubstrings}, \/  void $\ast$ {\em progressbar\_\-object}, \/  void($\ast$)(void $\ast$progressbar\_\-object, unsigned int current\_\-byte, unsigned int byte\_\-amount) {\em progressbar\_\-function})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classFluke_1_1Fluke189_a5747ae5dbcc0d078566dd8ff28c3d6b5}
+Executing this command will send the QS command to the device
+
+
+\begin{DoxyParams}{Parameters}
+\item[\mbox{$\leftarrow$} {\em TerminatedSubstrings}]If {\bfseries true} this will insert string terminations for the header information in the container\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Container from type RCT\_\-QS 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/Fluke189.hpp\item 
+src/Fluke189.cpp\end{DoxyCompactItemize}
