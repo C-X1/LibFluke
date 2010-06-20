@@ -66,6 +66,7 @@ public:
 		return Response;
 	}
 
+	//Query Setup QS
 
 #pragma pack(push,1)
 	/**
@@ -140,6 +141,9 @@ public:
 		return Response;
 	}
 
+//
+//QUERY DATA
+//
 
 #pragma pack(push,1)
 	/**
@@ -243,6 +247,8 @@ public:
 
 
 
+//Query Data 0: Current reading
+
 #pragma pack(push,1)
 	/**
 	 * Mask for QD0 command response container\n
@@ -337,26 +343,32 @@ public:
 
 
 
-	//Get Logs
-	//Command QD 2<CR>
+//Query Data 2: Get logs
 
 #pragma pack(push, 1) //Pragma packing width 1
 
+	/**
+	 * This is a data mask for the repetitive information in the QD2 response
+	 * Packed in 8 bit wise via pragma\n
+	 */
 	typedef struct
 	{
-		unsigned int I_TimeBeg	 :32; 	//Beginning timestamp for entry in units of 0.1s
-        unsigned int I_Decimal   :8; 	//Decimal point location
-        signed int I_SI_Prefix	 :8;    //Units.  -1 for milli, 1 for kilo, etc.
-        signed int I_MinValue    :32;	//Lowest value for this time period
-        signed int I_MaxValue    :32;	//Maximum value for this time period
-        signed int I_SummedValue :32;	//Actual value, sum of N
-        unsigned int u_byte0 	 :32;   //?, always all 0 in my tests
-        unsigned int I_NumberSum :32;   //Number of values which were summed
-        unsigned int I_Status	 :8;     //Status - 0x05 for normal, 0x85 for last entry, other //values for range changes or other oddities
-        unsigned int u_byte1     :8;	//? - always 0x01 in my tests
-        unsigned int I_TimeEnd	 :32; 	//Ending timestamp for this entry
+		unsigned int I_TimeBeg	 :32; 	///<Beginning timestamp for entry in units of 0.1s
+        unsigned int I_Decimal   :8; 	///<Decimal point location
+        signed int I_SI_Prefix	 :8;    ///<Units.  -1 for milli, 1 for kilo, etc.
+        signed int I_MinValue    :32;	///<Lowest value for this time period
+        signed int I_MaxValue    :32;	///<Maximum value for this time period
+        signed int I_SummedValue :32;	///<Actual value, sum of N
+        unsigned int u_byte0 	 :32;   ///<?, always all 0 in my tests
+        unsigned int I_NumberSum :32;   ///<Number of values which were summed
+        unsigned int I_Status	 :8;    ///<Status - 0x05 for normal, 0x85 for last entry, other //values for range changes or other oddities
+        unsigned int u_byte1     :8;	///<? - always 0x01 in my tests
+        unsigned int I_TimeEnd	 :32; 	///<Ending timestamp for this entry
      }qd2_set_t;
 
+    /**
+     * This is the complete data mask for the QD2 response
+     */
 	typedef struct
 	{
 		char 		 I_CMD_ACK;
@@ -392,19 +404,8 @@ public:
 	}
 
 
+//Query Data 4: Get Single Saves
 
-
-
-
-
-
-
-
-
-
-
-	//Get Single Saves
-	//Command QD 4<CR>
 
 #pragma pack(push, 1) //Pragma packing width 1
 	typedef struct
@@ -482,8 +483,8 @@ public:
 	}
 
 
-		//TODO Add Function for generating a simple list... //extra field for prefix or direct calculated to Unit
-		//Time, ValuePri, ValuePriUnit, PrefixPri, ValueSec, ValueSecUnit, PrefixSec
+
+
 
 	//Fluke Protocol Field Enums
 	enum CMD_ACK //Command Acknowledge and Error Codes
