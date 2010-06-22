@@ -574,166 +574,31 @@ namespace Fluke {
 
 
 	/*
-	 * ResponseAnalyserWrapper Functions
+	 * ResponseAnalyser Functions
 	 */
-	Fluke189::ValueError Fluke189ResponseAnalyserWrapper::get_PRIdisplayError(bool reading2)  //TODO ADD NO ERROR!!!
+	Fluke189DataResponseAnalyser::Fluke189DataResponseAnalyser(Fluke189::RCT_QD0& container)
 	{
-		if(!hasErrorPRIdisplay(reading2))
-		{
-			return Fluke189::VE_NO_ERROR;
-		}
-
-
-		switch(this->currentAnalyser->currentResponseContainerType)
-		{
-		case Fluke189ResponseAnalyser::QD0:
-				Fluke189::RCT_QD0* container0;
-				container0=(Fluke189::RCT_QD0*)this->currentAnalyser->container;
-				if(reading2)
-				{
-					return (Fluke189::ValueError)container0->Data()->I_ErrorNoPV0;
-				}
-				else
-				{
-					return (Fluke189::ValueError)container0->Data()->I_ErrorNoPV1;
-				}
-			break;
-
-		case Fluke189ResponseAnalyser::QD4:
-				Fluke189::RCT_QD4* container4;
-				container4=(Fluke189::RCT_QD4*)this->currentAnalyser->container;
-				if(reading2)
-				{
-					return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorNoPV0;
-				}
-				else
-				{
-					return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorNoPV1;
-				}
-			break;
-
-		default:
-			std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
-			return Fluke189::VE_NOT_APPLICABLE;
-		}
+		this->container=&container;
+		this->currentResponseContainerType=QD0;
+	}
+	Fluke189DataResponseAnalyser::Fluke189DataResponseAnalyser(Fluke189::RCT_QD2& container)
+	{
+		this->container=&container;
+		this->currentResponseContainerType=QD2;
+	}
+	Fluke189DataResponseAnalyser::Fluke189DataResponseAnalyser(Fluke189::RCT_QD4& container)
+	{
+		this->container=&container;
+		this->currentResponseContainerType=QD4;
 	}
 
 
-	Fluke189::ValueError Fluke189ResponseAnalyserWrapper::get_SECdisplayError(bool reading2)
+	/*
+	 * Fluke189ResponseAnalyserWrapper functions
+	 */
+	std::string Fluke189DataResponseAnalyserWrapper::valueErrorToString(Fluke189::ValueError number)
 	{
-		if(!hasErrorSECdisplay(reading2))
-		{
-			return Fluke189::VE_NO_ERROR;
-		}
-
-		switch(this->currentAnalyser->currentResponseContainerType)
-		{
-		case Fluke189ResponseAnalyser::QD0:
-				Fluke189::RCT_QD0* container0;
-				container0=(Fluke189::RCT_QD0*)this->currentAnalyser->container;
-				if(reading2)
-				{
-					return (Fluke189::ValueError)container0->Data()->I_ErrorNoSV0;
-				}
-				else
-				{
-					return (Fluke189::ValueError)container0->Data()->I_ErrorNoSV1;
-				}
-			break;
-
-		case Fluke189ResponseAnalyser::QD4:
-				Fluke189::RCT_QD4* container4;
-				container4=(Fluke189::RCT_QD4*)this->currentAnalyser->container;
-				if(reading2)std::cerr<<"For QD4 there is no second value of the secondary display, ignoring..."<<std::endl;
-				return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorNoSV;
-			break;
-
-		default:
-			std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
-			return Fluke189::VE_NOT_APPLICABLE;
-		}
-	}
-
-
-	Fluke189::Analyse_ModeSwitchSetting Fluke189ResponseAnalyserWrapper::get_ModeSwitchSetting()
-	{
-		if(this->currentAnalyser->currentResponseContainerType==Fluke189ResponseAnalyser::QD0)
-		{
-
-		}
-		std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
-		return Fluke189::AMS_NOT_APPLICABLE;
-	}
-
-	bool Fluke189ResponseAnalyserWrapper::hasErrorPRIdisplay(bool reading2)
-	{
-		switch(this->currentAnalyser->currentResponseContainerType)
-		{
-		case Fluke189ResponseAnalyser::QD0:
-				Fluke189::RCT_QD0* container0;
-				container0=(Fluke189::RCT_QD0*)this->currentAnalyser->container;
-				if(reading2)
-				{
-					return (Fluke189::ValueError)container0->Data()->I_ErrorPV0==1;
-				}
-				else
-				{
-					return (Fluke189::ValueError)container0->Data()->I_ErrorPV1==1;
-				}
-			break;
-
-		case Fluke189ResponseAnalyser::QD4:
-				Fluke189::RCT_QD4* container4;
-				container4=(Fluke189::RCT_QD4*)this->currentAnalyser->container;
-				if(reading2)
-				{
-					return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorPV0==1;
-				}
-				else
-				{
-					return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorPV1==1;
-				}
-			break;
-
-		default:
-			std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
-			return -1;
-		}
-	}
-
-	bool Fluke189ResponseAnalyserWrapper::hasErrorSECdisplay(bool reading2)
-	{
-		switch(this->currentAnalyser->currentResponseContainerType)
-		{
-		case Fluke189ResponseAnalyser::QD0:
-				Fluke189::RCT_QD0* container0;
-				container0=(Fluke189::RCT_QD0*)this->currentAnalyser->container;
-				if(reading2)
-				{
-					return (Fluke189::ValueError)container0->Data()->I_ErrorSV0==1;
-				}
-				else
-				{
-					return (Fluke189::ValueError)container0->Data()->I_ErrorSV1==1;
-				}
-			break;
-
-		case Fluke189ResponseAnalyser::QD4:
-				Fluke189::RCT_QD4* container4;
-				container4=(Fluke189::RCT_QD4*)this->currentAnalyser->container;
-				if(reading2)std::cerr<<"For QD4 there is no second value of the secondary display, ignoring..."<<std::endl;
-				return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorSV==1;
-			break;
-
-		default:
-			std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
-			return -1;
-		}
-	}
-
-	std::string Fluke189ResponseAnalyserWrapper::valueErrorToString(Fluke189::ValueError number)
-	{
- 		std::string ErrorString;
+		std::string ErrorString;
 		switch(number)
 		{
 		case Fluke189::VE_Display_OFFLINE:
@@ -772,25 +637,347 @@ namespace Fluke {
 	}
 
 
-
 	/*
-	 * ResponseAnalyser Functions
+	 * Fluke189ResponseAnalyserWrapperQD0 functions
 	 */
-	Fluke189ResponseAnalyser::Fluke189ResponseAnalyser(Fluke189::RCT_QD0& container)
+	bool Fluke189DataResponseAnalyserWrapperQD0::hasErrorPRIdisplay(bool reading2)
 	{
-		this->container=&container;
-		this->currentResponseContainerType=QD0;
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		if(reading2)
+		{
+			return (Fluke189::ValueError)container->Data()->I_ErrorPV0==1;
+		}
+		else
+		{
+			return (Fluke189::ValueError)container->Data()->I_ErrorPV1==1;
+		}
 	}
-	Fluke189ResponseAnalyser::Fluke189ResponseAnalyser(Fluke189::RCT_QD2& container)
+
+	bool Fluke189DataResponseAnalyserWrapperQD0::hasErrorSECdisplay(bool reading2)
 	{
-		this->container=&container;
-		this->currentResponseContainerType=QD2;
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		if(reading2)
+		{
+			return (Fluke189::ValueError)container->Data()->I_ErrorSV0==1;
+		}
+		else
+		{
+			return (Fluke189::ValueError)container->Data()->I_ErrorSV1==1;
+		}
 	}
-	Fluke189ResponseAnalyser::Fluke189ResponseAnalyser(Fluke189::RCT_QD4& container)
+
+
+	Fluke189::ValueError Fluke189DataResponseAnalyserWrapperQD0::get_PRIdisplayError(bool reading2)
 	{
-		this->container=&container;
-		this->currentResponseContainerType=QD4;
+		if(!hasErrorPRIdisplay(reading2))
+		{
+			return Fluke189::VE_NO_ERROR;
+		}
+
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		if(reading2)
+		{
+			return (Fluke189::ValueError)container->Data()->I_ErrorNoPV0;
+		}
+		else
+		{
+			return (Fluke189::ValueError)container->Data()->I_ErrorNoPV1;
+		}
+
 	}
+
+
+	Fluke189::ValueError Fluke189DataResponseAnalyserWrapperQD0::get_SECdisplayError(bool reading2)
+	{
+		if(!hasErrorSECdisplay(reading2))
+		{
+			return Fluke189::VE_NO_ERROR;
+		}
+
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		if(reading2)
+		{
+			return (Fluke189::ValueError)container->Data()->I_ErrorNoSV0;
+		}
+		else
+		{
+			return (Fluke189::ValueError)container->Data()->I_ErrorNoSV1;
+		}
+	}
+
+	Fluke189::Analyse_ModeSwitchSetting Fluke189DataResponseAnalyserWrapperQD0::get_ModeSwitchSetting()
+	{
+
+	}
+
+	Fluke189::Analyse_UnitsUint Fluke189DataResponseAnalyserWrapperQD0::get_primaryUnit()
+	{
+
+	}
+
+	Fluke189::Analyse_UnitsUint Fluke189DataResponseAnalyserWrapperQD0::get_secondaryUnit()
+	{
+
+	}
+
+	Fluke189::Analyse_CurrentType Fluke189DataResponseAnalyserWrapperQD0::get_CurrentType()
+	{
+
+	}
+
+	Fluke189::Analyse_Etch Fluke189DataResponseAnalyserWrapperQD0::get_EtchInfo()
+	{
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////OLD STUFF // TODO [REMOVE] AFTER COPY
+
+//	/*
+//	 * ResponseAnalyserWrapper Functions
+//	 */
+//	Fluke189::ValueError Fluke189ResponseAnalyserWrapper::get_PRIdisplayError(bool reading2)  //TODO ADD NO ERROR!!!
+//	{
+//		if(!hasErrorPRIdisplay(reading2))
+//		{
+//			return Fluke189::VE_NO_ERROR;
+//		}
+//
+//
+//		switch(this->currentAnalyser->currentResponseContainerType)
+//		{
+//		case Fluke189ResponseAnalyser::QD0:
+//				Fluke189::RCT_QD0* container0;
+//				container0=(Fluke189::RCT_QD0*)this->currentAnalyser->container;
+//				if(reading2)
+//				{
+//					return (Fluke189::ValueError)container0->Data()->I_ErrorNoPV0;
+//				}
+//				else
+//				{
+//					return (Fluke189::ValueError)container0->Data()->I_ErrorNoPV1;
+//				}
+//			break;
+//
+//		case Fluke189ResponseAnalyser::QD4:
+//				Fluke189::RCT_QD4* container4;
+//				container4=(Fluke189::RCT_QD4*)this->currentAnalyser->container;
+//				if(reading2)
+//				{
+//					return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorNoPV0;
+//				}
+//				else
+//				{
+//					return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorNoPV1;
+//				}
+//			break;
+//
+//		default:
+//			std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
+//			return Fluke189::VE_NOT_APPLICABLE;
+//		}
+//	}
+//
+//
+//	Fluke189::ValueError Fluke189ResponseAnalyserWrapper::get_SECdisplayError(bool reading2)
+//	{
+//		if(!hasErrorSECdisplay(reading2))
+//		{
+//			return Fluke189::VE_NO_ERROR;
+//		}
+//
+//		switch(this->currentAnalyser->currentResponseContainerType)
+//		{
+//		case Fluke189ResponseAnalyser::QD0:
+//				Fluke189::RCT_QD0* container0;
+//				container0=(Fluke189::RCT_QD0*)this->currentAnalyser->container;
+//				if(reading2)
+//				{
+//					return (Fluke189::ValueError)container0->Data()->I_ErrorNoSV0;
+//				}
+//				else
+//				{
+//					return (Fluke189::ValueError)container0->Data()->I_ErrorNoSV1;
+//				}
+//			break;
+//
+//		case Fluke189ResponseAnalyser::QD4:
+//				Fluke189::RCT_QD4* container4;
+//				container4=(Fluke189::RCT_QD4*)this->currentAnalyser->container;
+//				if(reading2)std::cerr<<"For QD4 there is no second value of the secondary display, ignoring..."<<std::endl;
+//				return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorNoSV;
+//			break;
+//
+//		default:
+//			std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
+//			return Fluke189::VE_NOT_APPLICABLE;
+//		}
+//	}
+//
+//
+//	Fluke189::Analyse_ModeSwitchSetting Fluke189ResponseAnalyserWrapper::get_ModeSwitchSetting()
+//	{
+//		if(this->currentAnalyser->currentResponseContainerType==Fluke189ResponseAnalyser::QD0)
+//		{
+//
+//		}
+//		std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
+//		return Fluke189::AMS_NOT_APPLICABLE;
+//	}
+//
+//	bool Fluke189ResponseAnalyserWrapper::hasErrorPRIdisplay(bool reading2)
+//	{
+//		switch(this->currentAnalyser->currentResponseContainerType)
+//		{
+//		case Fluke189ResponseAnalyser::QD0:
+//				Fluke189::RCT_QD0* container0;
+//				container0=(Fluke189::RCT_QD0*)this->currentAnalyser->container;
+//				if(reading2)
+//				{
+//					return (Fluke189::ValueError)container0->Data()->I_ErrorPV0==1;
+//				}
+//				else
+//				{
+//					return (Fluke189::ValueError)container0->Data()->I_ErrorPV1==1;
+//				}
+//			break;
+//
+//		case Fluke189ResponseAnalyser::QD4:
+//				Fluke189::RCT_QD4* container4;
+//				container4=(Fluke189::RCT_QD4*)this->currentAnalyser->container;
+//				if(reading2)
+//				{
+//					return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorPV0==1;
+//				}
+//				else
+//				{
+//					return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorPV1==1;
+//				}
+//			break;
+//
+//		default:
+//			std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
+//			return -1;
+//		}
+//	}
+//
+//	bool Fluke189ResponseAnalyserWrapper::hasErrorSECdisplay(bool reading2)
+//	{
+//		switch(this->currentAnalyser->currentResponseContainerType)
+//		{
+//		case Fluke189ResponseAnalyser::QD0:
+//				Fluke189::RCT_QD0* container0;
+//				container0=(Fluke189::RCT_QD0*)this->currentAnalyser->container;
+//				if(reading2)
+//				{
+//					return (Fluke189::ValueError)container0->Data()->I_ErrorSV0==1;
+//				}
+//				else
+//				{
+//					return (Fluke189::ValueError)container0->Data()->I_ErrorSV1==1;
+//				}
+//			break;
+//
+//		case Fluke189ResponseAnalyser::QD4:
+//				Fluke189::RCT_QD4* container4;
+//				container4=(Fluke189::RCT_QD4*)this->currentAnalyser->container;
+//				if(reading2)std::cerr<<"For QD4 there is no second value of the secondary display, ignoring..."<<std::endl;
+//				return (Fluke189::ValueError)container4->Data()->dsets[this->datasetnumber].I_ErrorSV==1;
+//			break;
+//
+//		default:
+//			std::cerr<<"This function is not applicable for that kind of response"<<std::endl;
+//			return -1;
+//		}
+//	}
+//
+//	std::string Fluke189ResponseAnalyserWrapper::valueErrorToString(Fluke189::ValueError number)
+//	{
+// 		std::string ErrorString;
+//		switch(number)
+//		{
+//		case Fluke189::VE_Display_OFFLINE:
+//			ErrorString = "-OFF-";
+//		break;
+//
+//		case Fluke189::VE_LEADS_CONNECTION_WRONG:
+//			ErrorString = "LEADS";
+//		break;
+//
+//		case Fluke189::VE_OL_OUTOFRANGE_NOCON:
+//			ErrorString = "OL";
+//		break;
+//
+//		case Fluke189::VE_OPEN__NOTHING_CONNECTED:
+//			ErrorString = "OPEN";
+//		break;
+//
+//		case Fluke189::VE_FUSE:
+//			ErrorString = "FUSE";
+//		break;
+//
+//		case Fluke189::VE_NOT_APPLICABLE:
+//			ErrorString = "";
+//		break;
+//
+//		case Fluke189::VE_NO_ERROR:
+//			ErrorString="";
+//
+//		default:
+//			ErrorString = "UNKNOWN_ERR";
+//		break;
+//		}
+//
+//		return ErrorString;
+//	}
+
+
+
 
 
 

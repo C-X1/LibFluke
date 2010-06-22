@@ -14,6 +14,7 @@
 #include <sstream>
 #include <iostream>
 #include <string>
+#include <exception>
 
 #include <inttypes.h>
 #include <vector>
@@ -679,28 +680,119 @@ private:
 
 
 
-class Fluke189ResponseAnalyser;
+class Fluke189DataResponseAnalyser;
 
 
 
 /**
- * This Wrapper holds the functions for the different data sets.
- * The class to this function is only used to store the current SerialResponseContainer and its type.
- * The member functions of this Wrapper are called by Fluke189ResponseAnalyser.
- * This class can only be constructed by Fluke189ResponseAnalyser because its constructor is private.
+ * This Wrapper is the superclass for the different data sets.
+ * The class to creating a subclass of this is only used to store the current SerialResponseContainer and its type.
+ * The member functions of this Wrapper are called by Fluke189ResponseAnalyser::operator[](unsigned int)
+ * This class is a superclass so it can not be constructed.
  */
-class Fluke189ResponseAnalyserWrapper
+class Fluke189DataResponseAnalyserWrapper
 {
-	friend class Fluke189ResponseAnalyser;
+protected:
+
+	friend class Fluke189DataResponseAnalyser;
 	unsigned int datasetnumber;
-	Fluke189ResponseAnalyser* currentAnalyser;
-	Fluke189ResponseAnalyserWrapper(unsigned int datasetnumber, Fluke189ResponseAnalyser* currentAnalyser)
-	: datasetnumber(datasetnumber), currentAnalyser(currentAnalyser){};
-
-
+	void* currentContainer;
 
 public:
+	/*
+	 * Constructor
+	 */
+	Fluke189DataResponseAnalyserWrapper(unsigned int datasetnumber, void* currentContainer)
+	: datasetnumber(datasetnumber), currentContainer(currentContainer){};
 
+	~Fluke189DataResponseAnalyserWrapper(){};
+
+	/**
+	 * Checks if a error in measurement is present in the current primary reading
+	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
+	 * @return <b>true</b> if the primary display value has an error
+	 */
+	virtual bool hasErrorPRIdisplay(bool reading2) = 0;
+
+	/**
+	 * Checks if a error in measurement is present in the current secondary reading
+	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
+	 * @return <b>true</b> if the secondary display value has an error
+	 */
+	virtual bool hasErrorSECdisplay(bool reading2) = 0;
+
+	/**
+	 * This function returns the ErrorValue of the primary reading
+	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
+	 * @return Error numbers according to Fluke189::ValueError
+	 */
+	virtual Fluke189::ValueError get_PRIdisplayError(bool reading2) = 0;
+
+	/**
+	 * This function returns the ErrorValue of the secondary reading
+	 * @param[in] reading2 If <b>true</b> second secondary reading will be used (QD0 only).
+	 * @return Error numbers according to Fluke189::ValueError
+	 */
+	virtual Fluke189::ValueError get_SECdisplayError(bool reading2) = 0;
+
+	/**
+	 * Returns the error string according to the ValueError number
+	 * @param[in] number ValueError
+	 * @return A human readable error string
+	 */
+	std::string valueErrorToString(Fluke::Fluke189::ValueError number);
+
+
+	/**
+	 * Shows the current mode switch setting
+	 * @return Number of mode switch or 0 when stuck between two positions
+	 */
+	virtual Fluke189::Analyse_ModeSwitchSetting get_ModeSwitchSetting() = 0;
+
+
+	/**
+	 * Get physical unit of the primary reading.
+	 * @return Physical unit of the current reading according to Fluke189::Analyse_UnitsUint
+	 */
+	virtual Fluke189::Analyse_UnitsUint get_primaryUnit() = 0;
+
+	/**
+	 * Get physical unit of the secondary reading.
+	 * @return Physical unit of the current reading according to Fluke189::Analyse_UnitsUint
+	 */
+	virtual Fluke189::Analyse_UnitsUint get_secondaryUnit() = 0;
+
+
+	/**
+	 * Get current type of the primary reading (AC, DC, AC+DC, not applicable)
+	 * @return CurrentType according to Fluke189::Analyse_CurrentType
+	 */
+	virtual Fluke189::Analyse_CurrentType get_CurrentType() = 0;
+
+	/**
+	 * Get current etch information (rising, falling, not applicable)
+	 * @return etch information according to Fluke189::Analyse_Etch
+	 */
+	virtual Fluke189::Analyse_Etch get_EtchInfo() = 0;
+};
+
+
+
+/**
+ * This is the subclass which holds the real functions for analyzing the response of QD0 command
+ * Can only be constructed from Fluke189ResponseAnalyser(private constructor)
+ * The deconstruction is also done by Fluke189ResponseAnalyser (private destructor)
+ */
+class Fluke189DataResponseAnalyserWrapperQD0 : public Fluke189DataResponseAnalyserWrapper
+{
+	friend class Fluke189DataResponseAnalyser;
+
+	Fluke189DataResponseAnalyserWrapperQD0(unsigned int datasetnumber, void* currentContainer)
+	: Fluke189DataResponseAnalyserWrapper(datasetnumber, currentContainer){};
+
+	~Fluke189DataResponseAnalyserWrapperQD0(){};
+
+public:
 	/**
 	 * Checks if a error in measurement is present in the current primary reading
 	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
@@ -730,45 +822,39 @@ public:
 	Fluke189::ValueError get_SECdisplayError(bool reading2);
 
 	/**
-	 * Returns the error string according to the ValueError number
-	 * @param[in] number ValueError
-	 * @return A human readable error string
-	 */
-	std::string valueErrorToString(Fluke::Fluke189::ValueError number);
-
-
-	/**
 	 * Shows the current mode switch setting
 	 * @return Number of mode switch or 0 when stuck between two positions
 	 */
-	Fluke189::Analyse_ModeSwitchSetting get_ModeSwitchSetting();  //TODO
+	Fluke189::Analyse_ModeSwitchSetting get_ModeSwitchSetting();
 
 
 	/**
 	 * Get physical unit of the primary reading.
 	 * @return Physical unit of the current reading according to Fluke189::Analyse_UnitsUint
 	 */
-	Fluke189::Analyse_UnitsUint get_primaryUnit(); //TODO
+	Fluke189::Analyse_UnitsUint get_primaryUnit();
 
 	/**
 	 * Get physical unit of the secondary reading.
 	 * @return Physical unit of the current reading according to Fluke189::Analyse_UnitsUint
 	 */
-	Fluke189::Analyse_UnitsUint get_secondaryUnit(); //TODO
+	Fluke189::Analyse_UnitsUint get_secondaryUnit();
 
 
 	/**
 	 * Get current type of the primary reading (AC, DC, AC+DC, not applicable)
 	 * @return CurrentType according to Fluke189::Analyse_CurrentType
 	 */
-	Fluke189::Analyse_CurrentType get_CurrentType(); //TODO
+	Fluke189::Analyse_CurrentType get_CurrentType();
 
 	/**
 	 * Get current etch information (rising, falling, not applicable)
 	 * @return etch information according to Fluke189::Analyse_Etch
 	 */
-	Fluke189::Analyse_Etch get_EtchInfo(); //TODO
+	Fluke189::Analyse_Etch get_EtchInfo();
 };
+
+
 
 /**
  * This class is used to analyze the response container.
@@ -785,9 +871,9 @@ public:
  * but the integer value of the function will be ignored.
  *
  */
-class Fluke189ResponseAnalyser
+class Fluke189DataResponseAnalyser
 {
-	friend class Fluke189ResponseAnalyserWrapper;
+	//TODO [DELETE] friend class Fluke189ResponseAnalyserWrapper;
 
 	//This are ResponseContainerTypes for internal usage
 	enum ResponseContainerType
@@ -802,31 +888,53 @@ class Fluke189ResponseAnalyser
 	//This stores the address of the current container
 	void* container;
 
+	//This is vector stores the addresses to the created Fluke189ResponseAnalyserWrappers
+	std::vector<Fluke189DataResponseAnalyserWrapper*> delAtDeconstruction;
 
 public:
 	/** Constructor for a QD0 response container*/
-	Fluke189ResponseAnalyser(Fluke189::RCT_QD0& container);
+	Fluke189DataResponseAnalyser(Fluke189::RCT_QD0& container);
 	/** Constructor for a QD2 response container*/
-	Fluke189ResponseAnalyser(Fluke189::RCT_QD2& container);
+	Fluke189DataResponseAnalyser(Fluke189::RCT_QD2& container);
 	/** Constructor for a QD4 response container*/
-	Fluke189ResponseAnalyser(Fluke189::RCT_QD4& container);
+	Fluke189DataResponseAnalyser(Fluke189::RCT_QD4& container);
 
 
-	/** Destructor for ResponseAnalyser*/
-	virtual ~Fluke189ResponseAnalyser(){};
+	/** The destructor for the class ResponseAnalyser will automatically delete all created wrappers at its own destruction*/
+	virtual ~Fluke189DataResponseAnalyser()
+	{
+		std::vector<Fluke189DataResponseAnalyserWrapper*>::iterator itDel = this->delAtDeconstruction.begin();
+		for(;itDel<this->delAtDeconstruction.end(); itDel++ )
+		{
+			if(*itDel != 0) delete *itDel;
+		}
+	};
 
 	/**
 	 * This function will return a Fluke189ResponseAnalyserWrapper which
 	 * holds the analysis functions.
 	 */
-	Fluke189ResponseAnalyserWrapper operator[](unsigned int datasetnumber)
+	Fluke189DataResponseAnalyserWrapper* operator[](unsigned int datasetnumber)
 	{
-		if(this->currentResponseContainerType == QD0 && datasetnumber != 0)
+		Fluke189DataResponseAnalyserWrapper* wrapper;
+		if(this->currentResponseContainerType==QD0)
 		{
-			std::cerr<<"Your are using Fluke189ResponseAnalyser with QD0 and a data set field != 0"
-					   "\nBut QD0 has only one -> ignoring ... "<<std::endl;
+			if(datasetnumber != 0)throw std::range_error("There is no repetitive data for this type!");
+			wrapper=new Fluke189DataResponseAnalyserWrapperQD0(datasetnumber, this->container);
+			this->delAtDeconstruction.push_back(wrapper);
 		}
-		return Fluke189ResponseAnalyserWrapper(datasetnumber,this);
+		else
+		{
+			throw std::runtime_error("Unknown/not implemented container type");
+		}
+
+		 if(! *this->delAtDeconstruction.rend())
+		 {
+			 throw std::runtime_error("FlukeResponseAnalyserWrapper could not be created");
+		 }
+
+		return  wrapper;
+
 	};
 
 
