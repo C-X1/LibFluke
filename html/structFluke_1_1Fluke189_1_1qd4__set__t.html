@@ -18,6 +18,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul>
       <li><a href="index.html"><span>Main&nbsp;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
       <li>
@@ -38,6 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div class="tabs">
     <ul>
       <li><a href="annotated.html"><span>Class&nbsp;List</span></a></li>
+      <li><a href="hierarchy.html"><span>Class&nbsp;Hierarchy</span></a></li>
       <li><a href="functions.html"><span>Class&nbsp;Members</span></a></li>
     </ul>
   </div>
@@ -46,66 +48,141 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <h1>Fluke::Fluke189::qd4_set_t Struct Reference</h1><!-- doxytag: class="Fluke::Fluke189::qd4_set_t" -->
+<p><code>#include &lt;<a class="el" href="Fluke189_8hpp_source.html">Fluke189.hpp</a>&gt;</code></p>
+
 <p><a href="structFluke_1_1Fluke189_1_1qd4__set__t-members.html">List of all members.</a></p>
 <table border="0" cellpadding="0" cellspacing="0">
 <tr><td colspan="2"><h2>Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aee3686bfee0729b20df1d66d009da4ab"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::I_Time0" ref="aee3686bfee0729b20df1d66d009da4ab" args="" -->
-unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_Time0</b>:32</td></tr>
+unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#aee3686bfee0729b20df1d66d009da4ab">I_Time0</a>:32</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Time(1st occurrence). <br/></td></tr>
 <tr><td class="memItemLeft" ><a class="anchor" id="ad963c55283b354d2a9c3acddaf758f8a"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::@17" ref="ad963c55283b354d2a9c3acddaf758f8a" args="" -->
 union {</td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;signed int&nbsp;&nbsp;&nbsp;<b>I_priValue0</b>:32</td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;signed int&nbsp;&nbsp;&nbsp;<a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#aeda9cc12bf24e9dfd3c0d323d6a51088">I_priValue0</a>:32</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Primary value (1st occurrence). <br/></td></tr>
 <tr><td class="memItemLeft" ><a class="anchor" id="a92cff7cc8958e2c744bafa02110ea380"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::@16::@23" ref="a92cff7cc8958e2c744bafa02110ea380" args="" -->
 &nbsp;&nbsp;&nbsp;struct {</td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<b>I_ErrorNoPV0</b>:8</td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a79cd4e12a07f007e359d0f182fab195f">I_ErrorNoPV0</a>:8</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">8 bit error code (If error == 1) <br/></td></tr>
 <tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned&nbsp;&nbsp;&nbsp;<b>int</b>:22</td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<b>I_ErrorPV0</b>:2</td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a745c3328d1373bcbd4eb073fa22f7ed9">I_ErrorPV0</a>:2</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Error when value == 1. <br/></td></tr>
 <tr><td class="memItemLeft" valign="top">&nbsp;&nbsp;&nbsp;}&nbsp;</td><td class="memItemRight" valign="bottom"></td></tr>
 <tr><td class="memItemLeft" valign="top">};&nbsp;</td><td class="memItemRight" valign="bottom"></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad1db6cbca231348faee26e998c23c83f"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::I_priDecimal0" ref="ad1db6cbca231348faee26e998c23c83f" args="" -->
-unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_priDecimal0</b>:8</td></tr>
+unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#ad1db6cbca231348faee26e998c23c83f">I_priDecimal0</a>:8</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Primary decimal point location(1st occurrence). <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab2debfb496c7b2291aa2a0c2f9e64a36"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::I_priSI_Prefix0" ref="ab2debfb496c7b2291aa2a0c2f9e64a36" args="" -->
-signed int&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_priSI_Prefix0</b>:8</td></tr>
+signed int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#ab2debfb496c7b2291aa2a0c2f9e64a36">I_priSI_Prefix0</a>:8</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Primary SI-prefix (1st occurrence). <br/></td></tr>
 <tr><td class="memItemLeft" ><a class="anchor" id="aa0258bec3aa99697734c74288d97ca0d"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::@19" ref="aa0258bec3aa99697734c74288d97ca0d" args="" -->
 union {</td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;signed int&nbsp;&nbsp;&nbsp;<b>I_secValue</b>:32</td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;signed int&nbsp;&nbsp;&nbsp;<a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#afed27e1ec511c3e13435d9835f67f413">I_secValue</a>:32</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Secondary value. <br/></td></tr>
 <tr><td class="memItemLeft" ><a class="anchor" id="add9aa0b0c6890b3f1a9142a5548117dd"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::@18::@25" ref="add9aa0b0c6890b3f1a9142a5548117dd" args="" -->
 &nbsp;&nbsp;&nbsp;struct {</td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<b>I_ErrorNoSV</b>:8</td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a41c449e44d08e383cb524b87df4284b7">I_ErrorNoSV</a>:8</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">8 bit error code (If error == 1) <br/></td></tr>
 <tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned&nbsp;&nbsp;&nbsp;<b>int</b>:22</td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<b>I_ErrorSV</b>:2</td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a1d78f04d7a1681603d57a1e826e57694">I_ErrorSV</a>:2</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Error when value == 1. <br/></td></tr>
 <tr><td class="memItemLeft" valign="top">&nbsp;&nbsp;&nbsp;}&nbsp;</td><td class="memItemRight" valign="bottom"></td></tr>
 <tr><td class="memItemLeft" valign="top">};&nbsp;</td><td class="memItemRight" valign="bottom"></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf3534576d91d4407a0c91285238fa8a"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::I_secDecimal" ref="abf3534576d91d4407a0c91285238fa8a" args="" -->
-unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_secDecimal</b>:8</td></tr>
+unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#abf3534576d91d4407a0c91285238fa8a">I_secDecimal</a>:8</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Secondary value decimal point location. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae1eb2feca7319511af7e74ab0fbfebfe"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::I_secSi_Prefix" ref="ae1eb2feca7319511af7e74ab0fbfebfe" args="" -->
-signed int&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_secSi_Prefix</b>:8</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35c68a594812dba53791a2e32dbfacb6"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::u_unknown0" ref="a35c68a594812dba53791a2e32dbfacb6" args="" -->
-unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>u_unknown0</b>:16</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa49bec7dfd9d22c392297cdff277afd9"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::u_unknown1" ref="aa49bec7dfd9d22c392297cdff277afd9" args="" -->
-unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>u_unknown1</b>:16</td></tr>
+signed int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#ae1eb2feca7319511af7e74ab0fbfebfe">I_secSi_Prefix</a>:8</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Secondary value prefix. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a35c68a594812dba53791a2e32dbfacb6">u_unknown0</a>:16</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#aa49bec7dfd9d22c392297cdff277afd9">u_unknown1</a>:16</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a56f0e04d0604a0e6f9f0c4389f8da294"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::I_Time1" ref="a56f0e04d0604a0e6f9f0c4389f8da294" args="" -->
-unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_Time1</b>:32</td></tr>
+unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a56f0e04d0604a0e6f9f0c4389f8da294">I_Time1</a>:32</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Time (2nd occurrence). <br/></td></tr>
 <tr><td class="memItemLeft" ><a class="anchor" id="a1ee7630d64119d29d73457bf816ce128"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::@21" ref="a1ee7630d64119d29d73457bf816ce128" args="" -->
 union {</td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;signed int&nbsp;&nbsp;&nbsp;<b>I_priValue1</b>:32</td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;signed int&nbsp;&nbsp;&nbsp;<a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a60568fea5707cef9782a1506a18ecc7a">I_priValue1</a>:32</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Primary value (2nd occurrence). <br/></td></tr>
 <tr><td class="memItemLeft" ><a class="anchor" id="a806be220ce8ec9f1cdbae3491eaaf38a"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::@20::@27" ref="a806be220ce8ec9f1cdbae3491eaaf38a" args="" -->
 &nbsp;&nbsp;&nbsp;struct {</td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<b>I_ErrorNoPV1</b>:8</td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#ac6f71b0ff2f8aa01ece86260884998f0">I_ErrorNoPV1</a>:8</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">8 bit error code (If error == 1) <br/></td></tr>
 <tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned&nbsp;&nbsp;&nbsp;<b>int</b>:22</td></tr>
-<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<b>I_ErrorPV1</b>:2</td></tr>
+<tr><td class="memItemLeft" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unsigned int&nbsp;&nbsp;&nbsp;<a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a9b443a12b8a7bade550b389b707dabf4">I_ErrorPV1</a>:2</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Error when value == 1. <br/></td></tr>
 <tr><td class="memItemLeft" valign="top">&nbsp;&nbsp;&nbsp;}&nbsp;</td><td class="memItemRight" valign="bottom"></td></tr>
 <tr><td class="memItemLeft" valign="top">};&nbsp;</td><td class="memItemRight" valign="bottom"></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9d41acc560b8a0217f14376b4a315014"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::I_priDecimal1" ref="a9d41acc560b8a0217f14376b4a315014" args="" -->
-unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_priDecimal1</b>:8</td></tr>
+unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a9d41acc560b8a0217f14376b4a315014">I_priDecimal1</a>:8</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Primary decimal point location (2nd occurrence). <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f0fcb678d3912ca366b8779eb39b22d"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::I_priSI_Prefix1" ref="a8f0fcb678d3912ca366b8779eb39b22d" args="" -->
-signed int&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_priSI_Prefix1</b>:8</td></tr>
+signed int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a8f0fcb678d3912ca366b8779eb39b22d">I_priSI_Prefix1</a>:8</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Primary SI-prefix (2nd occurrence). <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acfe06a8a79a95b251f766d2408a60fb6"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::I_QDInfo" ref="acfe06a8a79a95b251f766d2408a60fb6" args="" -->
-<a class="el" href="structFluke_1_1Fluke189_1_1qdInfo__t.html">qdInfo_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_QDInfo</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ac5798f6713dc4b811b2388d9374c74"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::u_unknown2" ref="a7ac5798f6713dc4b811b2388d9374c74" args="" -->
-unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>u_unknown2</b>:8</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a08bcc1ec254053f32250beb7ae3e7219"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::I_DataEnding" ref="a08bcc1ec254053f32250beb7ae3e7219" args="" -->
-unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_DataEnding</b>:8</td></tr>
+<a class="el" href="structFluke_1_1Fluke189_1_1qdInfo__t.html">qdInfo_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#acfe06a8a79a95b251f766d2408a60fb6">I_QDInfo</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Standard settings and mode information. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a7ac5798f6713dc4b811b2388d9374c74">u_unknown2</a>:8</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a08bcc1ec254053f32250beb7ae3e7219">I_DataEnding</a>:8</td></tr>
 </table>
+<hr/><a name="_details"></a><h2>Detailed Description</h2>
+<p>Data mask of the container for QD4 command data sets (packed 8bit wise) </p>
+<hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="a08bcc1ec254053f32250beb7ae3e7219"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::I_DataEnding" ref="a08bcc1ec254053f32250beb7ae3e7219" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a08bcc1ec254053f32250beb7ae3e7219">Fluke::Fluke189::qd4_set_t::I_DataEnding</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000020">Todo:</a></b></dt><dd>Find a way to calculate this ending byte (always the same series) </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a35c68a594812dba53791a2e32dbfacb6"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::u_unknown0" ref="a35c68a594812dba53791a2e32dbfacb6" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a35c68a594812dba53791a2e32dbfacb6">Fluke::Fluke189::qd4_set_t::u_unknown0</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000017">Todo:</a></b></dt><dd>FIND OUT::Most times 0x0013 sometimes 0x0001 or 0x0002 WTF? </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aa49bec7dfd9d22c392297cdff277afd9"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::u_unknown1" ref="aa49bec7dfd9d22c392297cdff277afd9" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#aa49bec7dfd9d22c392297cdff277afd9">Fluke::Fluke189::qd4_set_t::u_unknown1</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000018">Todo:</a></b></dt><dd>Make it change to find its purpose </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7ac5798f6713dc4b811b2388d9374c74"></a><!-- doxytag: member="Fluke::Fluke189::qd4_set_t::u_unknown2" ref="a7ac5798f6713dc4b811b2388d9374c74" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="structFluke_1_1Fluke189_1_1qd4__set__t.html#a7ac5798f6713dc4b811b2388d9374c74">Fluke::Fluke189::qd4_set_t::u_unknown2</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000019">Todo:</a></b></dt><dd>Find out how to change this always 0x01 </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/<a class="el" href="Fluke189_8hpp_source.html">Fluke189.hpp</a></li>
 </ul>
@@ -115,7 +192,7 @@ unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_DataEnding<
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Typedefs</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&nbsp;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&nbsp;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&nbsp;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&nbsp;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&nbsp;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&nbsp;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&nbsp;</span>Enumerator</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -124,7 +201,7 @@ unsigned int&nbsp;</td><td class="memItemRight" valign="bottom"><b>I_DataEnding<
 </iframe>
 </div>
 
-<hr size="1"/><address style="text-align: right;"><small>Generated on Fri Jun 18 16:04:02 2010 for LibFluke by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Sun Jun 27 18:06:28 2010 for LibFluke by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

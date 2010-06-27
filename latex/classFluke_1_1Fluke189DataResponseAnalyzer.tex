@@ -1,0 +1,69 @@
+\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzer}{
+\section{Fluke::Fluke189DataResponseAnalyzer Class Reference}
+\label{classFluke_1_1Fluke189DataResponseAnalyzer}\index{Fluke::Fluke189DataResponseAnalyzer@{Fluke::Fluke189DataResponseAnalyzer}}
+}
+
+
+{\ttfamily \#include $<$Fluke189.hpp$>$}\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classFluke_1_1Fluke189DataResponseAnalyzer_a37d9cf81e6d7eee9ea5cf3cd77306dad}{Fluke189DataResponseAnalyzer} (\hyperlink{classFluke_1_1Fluke189_a9a5b405bb506cd2482de2f8bb0bea189}{Fluke189::RCT\_\-QD0} \&container)
+\item 
+\hyperlink{classFluke_1_1Fluke189DataResponseAnalyzer_a7dd45e9e69f5dbc486c619e33275af58}{Fluke189DataResponseAnalyzer} (\hyperlink{classFluke_1_1Fluke189_a6dcb8bdb7e09aba26dd95d49f56690cf}{Fluke189::RCT\_\-QD2} \&container)
+\item 
+\hyperlink{classFluke_1_1Fluke189DataResponseAnalyzer_a2501e803c1b0f92dee5d1c1249be62bc}{Fluke189DataResponseAnalyzer} (\hyperlink{classFluke_1_1Fluke189_a82ebb2c4106833e320c8b18b968a5e22}{Fluke189::RCT\_\-QD4} \&container)
+\item 
+virtual \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzer_a8340ad62d9d5f3364482064eea967cef}{$\sim$Fluke189DataResponseAnalyzer} ()
+\item 
+\hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper}{Fluke189DataResponseAnalyzerWrapper} $\ast$ \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzer_ac946623b6b04e9ddb858a1d20fc753da}{operator\mbox{[}$\,$\mbox{]}} (unsigned int datasetnumber)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class is used to analyze the response container. \par
+ Currently supported are: \par
+ RCT\_\-QD0, RCT\_\-QD2, RCT\_\-QD4 \par
+ All functions are implemented in a wrapper for operator\mbox{[}\mbox{]}.\par
+ \par
+ A common usage should look like this:\par
+ FlukeResponseAnalyser(container); \par
+ container\mbox{[}datasetnumber\mbox{]}.function;\par
+ For containers which do not have repetitive information use: datasetnumber = 0; Other numbers will result to a cerr message and will be ignored.
+
+Header Informations in some containers are also called with operator\mbox{[}\mbox{]} but the integer value of the function will be ignored. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzer_a37d9cf81e6d7eee9ea5cf3cd77306dad}{
+\index{Fluke::Fluke189DataResponseAnalyzer@{Fluke::Fluke189DataResponseAnalyzer}!Fluke189DataResponseAnalyzer@{Fluke189DataResponseAnalyzer}}
+\index{Fluke189DataResponseAnalyzer@{Fluke189DataResponseAnalyzer}!Fluke::Fluke189DataResponseAnalyzer@{Fluke::Fluke189DataResponseAnalyzer}}
+\subsubsection[{Fluke189DataResponseAnalyzer}]{\setlength{\rightskip}{0pt plus 5cm}Fluke::Fluke189DataResponseAnalyzer::Fluke189DataResponseAnalyzer ({\bf Fluke189::RCT\_\-QD0} \& {\em container})}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzer_a37d9cf81e6d7eee9ea5cf3cd77306dad}
+Constructor for a QD0 response container \hypertarget{classFluke_1_1Fluke189DataResponseAnalyzer_a7dd45e9e69f5dbc486c619e33275af58}{
+\index{Fluke::Fluke189DataResponseAnalyzer@{Fluke::Fluke189DataResponseAnalyzer}!Fluke189DataResponseAnalyzer@{Fluke189DataResponseAnalyzer}}
+\index{Fluke189DataResponseAnalyzer@{Fluke189DataResponseAnalyzer}!Fluke::Fluke189DataResponseAnalyzer@{Fluke::Fluke189DataResponseAnalyzer}}
+\subsubsection[{Fluke189DataResponseAnalyzer}]{\setlength{\rightskip}{0pt plus 5cm}Fluke::Fluke189DataResponseAnalyzer::Fluke189DataResponseAnalyzer ({\bf Fluke189::RCT\_\-QD2} \& {\em container})}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzer_a7dd45e9e69f5dbc486c619e33275af58}
+Constructor for a QD2 response container \hypertarget{classFluke_1_1Fluke189DataResponseAnalyzer_a2501e803c1b0f92dee5d1c1249be62bc}{
+\index{Fluke::Fluke189DataResponseAnalyzer@{Fluke::Fluke189DataResponseAnalyzer}!Fluke189DataResponseAnalyzer@{Fluke189DataResponseAnalyzer}}
+\index{Fluke189DataResponseAnalyzer@{Fluke189DataResponseAnalyzer}!Fluke::Fluke189DataResponseAnalyzer@{Fluke::Fluke189DataResponseAnalyzer}}
+\subsubsection[{Fluke189DataResponseAnalyzer}]{\setlength{\rightskip}{0pt plus 5cm}Fluke::Fluke189DataResponseAnalyzer::Fluke189DataResponseAnalyzer ({\bf Fluke189::RCT\_\-QD4} \& {\em container})}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzer_a2501e803c1b0f92dee5d1c1249be62bc}
+Constructor for a QD4 response container \hypertarget{classFluke_1_1Fluke189DataResponseAnalyzer_a8340ad62d9d5f3364482064eea967cef}{
+\index{Fluke::Fluke189DataResponseAnalyzer@{Fluke::Fluke189DataResponseAnalyzer}!$\sim$Fluke189DataResponseAnalyzer@{$\sim$Fluke189DataResponseAnalyzer}}
+\index{$\sim$Fluke189DataResponseAnalyzer@{$\sim$Fluke189DataResponseAnalyzer}!Fluke::Fluke189DataResponseAnalyzer@{Fluke::Fluke189DataResponseAnalyzer}}
+\subsubsection[{$\sim$Fluke189DataResponseAnalyzer}]{\setlength{\rightskip}{0pt plus 5cm}virtual Fluke::Fluke189DataResponseAnalyzer::$\sim$Fluke189DataResponseAnalyzer ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzer_a8340ad62d9d5f3364482064eea967cef}
+The destructor for the class ResponseAnalyser will automatically delete all created wrappers at its own destruction 
+
+\subsection{Member Function Documentation}
+\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzer_ac946623b6b04e9ddb858a1d20fc753da}{
+\index{Fluke::Fluke189DataResponseAnalyzer@{Fluke::Fluke189DataResponseAnalyzer}!operator\mbox{[}\mbox{]}@{operator[]}}
+\index{operator\mbox{[}\mbox{]}@{operator[]}!Fluke::Fluke189DataResponseAnalyzer@{Fluke::Fluke189DataResponseAnalyzer}}
+\subsubsection[{operator[]}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Fluke189DataResponseAnalyzerWrapper}$\ast$ Fluke::Fluke189DataResponseAnalyzer::operator\mbox{[}$\,$\mbox{]} (unsigned int {\em datasetnumber})\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzer_ac946623b6b04e9ddb858a1d20fc753da}
+This function will return a Fluke189ResponseAnalyserWrapper which holds the analysis functions. 
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+src/Fluke189.hpp\item 
+src/Fluke189.cpp\end{DoxyCompactItemize}

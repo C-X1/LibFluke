@@ -10,19 +10,12 @@
 using namespace LibSerial;
 namespace Fluke {
 
-	/**
-	 * Constuctor for class Fluke189
-	 * @param[in] Interface file name
-	 */
+
 	Fluke189::Fluke189(std::string filename){
 		SetupInterface();
 		this->SetDeviceFilename(filename);
 	}
 
-	/**
-	 * Destructor for class Fluke189
-	 * (empty)
-	 */
 	Fluke189::~Fluke189() {}
 
 	void Fluke189::SetupInterface( void )

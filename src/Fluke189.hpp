@@ -1,9 +1,11 @@
-/*
- * Fluke189.hpp
+/**
+ * @mainpage
  *
- *  Created on: 06.01.2010
- *      Author: cyborg-x1
+ *
  */
+
+
+
 
 #ifndef FLUKE189_H_
 #define FLUKE189_H_
@@ -25,6 +27,17 @@
 using namespace LibSerial;
 namespace Fluke {
 
+
+/**
+ * Class for accessing a Fluke189 multimeter\n
+ *
+ * Initialization Example:\n
+ * Fluke::Fluke189 Device("/dev/ttyUSB0");\n
+ *
+ * Sending a command:\n
+ * @todo finish this Fluke189 description, add examples and notice other classes...
+ *
+ */
 class Fluke189: public LibSerial::SerialDevice
 {
 public:
@@ -41,19 +54,29 @@ public:
 	//Get Device Name, Firmware Version, ID Number
 	//Command: ID<CR>
 
+	/**
+	 * This struct is used as datamask for the ID command
+	 */
 	typedef struct {
-		char I_CMD_ACK;
-		char n_CR0;
-		char I_DeviceName[9];
-		char n_CommaAndSpace0[2];
-		char I_FirmwareVersion[5];
-		char n_Comma0;
-		char I_ID [10];
-		char n_CR1;
+		char I_CMD_ACK; 			///< Acknowledge code (0=ok, 1=Error)
+		char n_CR0;  				///< carriage return
+		char I_DeviceName[9];       ///< Fluke189
+		char n_CommaAndSpace0[2];   ///< just a comma and a space char
+		char I_FirmwareVersion[5];  ///< Firmware version string
+		char n_Comma0;				///< a comma
+		char I_ID [10];             ///< string of ID number of the multimeter
+		char n_CR1;                 ///< second carriage return
 	} cmdr_ID_t;
 
+	/**
+	 * Type of the container for the ID command
+	 */
 	typedef  SerialResponse<cmdr_ID_t> RCT_ID;
 
+
+	/**
+	 *
+	 */
 	RCT_ID CMD_ID(bool TerminatedSubstrings,void* progressbar_object ,void (*progressbar_function)(void* progressbar_object ,unsigned int current_byte, unsigned int byte_amount))
 	{
 		RCT_ID Response = this->SendCommand<cmdr_ID_t>("ID\r",this->DelayResponse_us, this->DelayChar_us, 30, 0, 0, false, 0, progressbar_object ,*progressbar_function);
@@ -87,7 +110,7 @@ public:
 		unsigned int I_LogInterval : 16;
 		/** dB Reference 1=V 0=mV*/
 		unsigned int I_dBREFmV     : 8;
-		/** TODO: What does that do? (always 00?) */
+		/** @todo What does that do? (always 00?) */
 		unsigned int u_unknown0	   : 8;
 		/** dB Reference*/
 		unsigned int I_dBREF	   : 16;
@@ -95,7 +118,7 @@ public:
 				 int I_TempOffset  : 16;
 		/** High if Celsius is selected, Low for Fahrenheit*/
 		unsigned int I_DegC_nDegF  :  8;
-		/** TODO: Find out what that is used for (always 00?)*/
+		/** @todo Find out what that is used for (always 00?)*/
 		unsigned int u_unkown1	   :  8;
 		/** Backlite off time, deciseconds*/
 		unsigned int I_BL_Off	   : 16;
@@ -105,27 +128,27 @@ public:
 		unsigned int I_Power_Off   : 16;
 		/** Frequency Setting 0=50Hz 1=60Hz*/
 		unsigned int I_Frequency   :  8;
-		/** TODO: Find out what that is used for (always 00?)*/
+		/** @todo Find out what that is used for (always 00?)*/
 		unsigned int u_unknown2	   :  8;
 		/** Digits setting (0=5 digits , 1=4 digits)*/
 		unsigned int I_4Digits     :  8;
-		/** TODO: Find out what that is used for (always 00?)*/
+		/** @todo Find out what that is used for (always 00?)*/
 		unsigned int u_unknown3	   :  8;
 		/** Beep setting (0=off, 1=on)*/
 		unsigned int I_Beep_On	   :  8;
-		/** TODO: Find out what the ending is used for*/
+		/** @todo Find out what the ending is used for*/
 		unsigned int u_ending1	   : 32;
-		/** TODO: Find out what the ending is used for*/
+		/** @todo Find out what the ending is used for*/
 		unsigned int u_ending2	   : 16;
 	} cmdr_QS_t;
 #pragma pack(pop)
 
-	/**Declaration of the serial ResponseConTainer for QS command*/
+	/**Type of the container for QS command*/
 	typedef SerialResponse<cmdr_QS_t> RCT_QS;
 
 
-	/**Executing this command will send the QS command to the device
-	 *
+	/**
+	 * Executing this command will send the QS command to the device
 	 * @param [in] TerminatedSubstrings If \b true this will insert string terminations for the header information in the container
 	 *
 	 *
@@ -194,11 +217,11 @@ public:
 				bool I_MinMaxMode	 		 :1;
 				/**High if Fast*/
 				bool I_Fast			  		 :1;
-				/**TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				/** @todo Find a use for this: always 0 (Maybe Cal?)*/
 				bool u_bit1 		 		 :1;
 				/**(1=Max 2=Min 3=AVG)*/
 		unsigned int I_MinMaxAvg	 		 :2;
-				/**TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				/** @todo Find a use for this: always 0 (Maybe Cal?)*/
 				bool u_bit2			 		 :1;
 				/**High if rising etch displayed*/
 				bool I_RisingEtch	 		 :1;
@@ -206,13 +229,13 @@ public:
 				bool I_FallingEtch	 		 :1;
 				/**Substates of V mV mA uA (DC Modes ONLY)*/
 		unsigned int I_SubState_ACDC 		 :2;
-				/** TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				/** @todo Find a use for this: always 0 (Maybe Cal?)*/
 				bool u_bit3		 	  		 :1;
 				/**High if Hold     (Low on AutoHold)*/
 				bool I_Hold			   		 :1;
 				/**High if AutoHold (Low on Hold)*/
 				bool I_AutoHold		 	 	 :1;
-				/**TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				/** @todo Find a use for this: always 0 (Maybe Cal?)*/
 				bool u_bit4			 		 :1;
 				/**High if V selected for dB_Ref, Low if m selected*/
 				bool I_dBRef_V_nm	 		 :1;
@@ -222,13 +245,13 @@ public:
 				bool I_Delta				 :1;
 				/**High if DeltaPercent(Low if Delta)*/
 				bool I_DeltaPercent			 :1;
-				/**TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				/** @todo Find a use for this: always 0 (Maybe Cal?)*/
 				bool u_bit5					 :1;
 				/**High if(Prim is dB and Sec AC) only V and mV (AC)*/
 				bool I_Unit_dB_AC			 :1;
 				/**High if(Prim is AC and Sec dB) only V and mV (AC)*/
 				bool I_Unit_AC_dB			 :1;
-				/**TODO: Find a use for this: always 0 (Maybe Cal?)*/
+				/** @todo Find a use for this: always 0 (Maybe Cal?)*/
 				bool u_bit6					 :1;
 				/**Only four digits selected in setup when 1*/
 				bool I_FourDigitMode		 :1;
@@ -289,7 +312,7 @@ public:
 		   };
 		 };
 		unsigned int I_secDecimal			 :8;  ///<Secondary decimal point location
-		  signed int I_secSi_Prefix	 		 :8;  ///<Secondary SI-Prefix //TODO: Check if it is different from first any time...
+		  signed int I_secSi_Prefix	 		 :8;  ///<Secondary SI-Prefix @todo Check if it is different from first any time...
 
 		union
 		{
@@ -320,11 +343,14 @@ public:
 
 		  qdInfo_t I_QDInfo;					  ///<Settings information
 
-		unsigned int u_byte0         		 :8;  ///<TODO:Find out what that is for //always 1
-		unsigned int u_byte1         		 :8;  ///<TODO:Find out what that is for //always 0
+		unsigned int u_byte0         		 :8;  ///<@todo Find out what that is for //always 1
+		unsigned int u_byte1         		 :8;  ///<@todo Find out what that is for //always 0
 	} cmdr_QD0_t;
 #pragma pack(pop)
 
+	/**
+	 * Type of the container for the QD0 command
+	 */
 	typedef SerialResponse<cmdr_QD0_t> RCT_QD0;
 
 
@@ -372,24 +398,26 @@ public:
      */
 	typedef struct
 	{
-		char 		 I_CMD_ACK;
-		char 		 n_CR0;
-		char		 n_QDHeaderInfo_Comma[3];
+		char 		 I_CMD_ACK;               ///< Command acknowledgement
+		char 		 n_CR0;					  ///< Carriage return
+		char		 n_QDHeaderInfo_Comma[3]; ///< holds QD,
 
-		unsigned int I_DataCount       	 :16; //995 max
+		unsigned int I_DataCount       	 :16; ///< number of stored SAVE data sets
 
-		unsigned int I_InitalValue   	 :32; //Value on start of logging
-		unsigned int I_InitDecimal	 	 :8;  //Initial Disp. Dec. Pnt Locaction
-		  signed int I_InitPrefix    	 :8;  //Initial SI-Prefix
+		unsigned int I_InitalValue   	 :32; ///< Measurement value at startup
+		unsigned int I_InitDecimal	 	 :8;  ///< Decimal point location for the startup measurement
+		  signed int I_InitPrefix    	 :8;  ///< Prefix for the startup measurement
 
-		  qdInfo_t I_QDInfo;
+		  qdInfo_t I_QDInfo;				  ///< Struct for standard status informations
 
-		qd2_set_t dsets[1];
+		qd2_set_t dsets[1];					  ///< Struct for a single data set
 	} cmdr_QD2_t;
 
 #pragma pack(pop) //Reset pack pragma
 
-
+	/**
+	 * Type of the container for QD2 command
+	 */
 	typedef  SerialResponse<cmdr_QD2_t> RCT_QD2;
 
 
@@ -409,67 +437,77 @@ public:
 
 
 #pragma pack(push, 1) //Pragma packing width 1
+	/**
+	 * Data mask of the container for QD4 command data sets
+	 * (packed 8bit wise)
+	 */
 	typedef struct
 			{
-				unsigned int I_Time0		 :32; //Time(1st Occur.)
+				unsigned int I_Time0		 :32; ///<Time(1st occurrence)
 				union
 				{
-				  signed int I_priValue0	 :32; //Primary Value	 (1st Occur.)
+				  signed int I_priValue0	 :32; ///<Primary value (1st occurrence)
 				  struct
 				  {
-					unsigned int I_ErrorNoPV0:8;  //8 Bit Error Code (If Error == 1)
-					unsigned int 			 :22; //unneeded bits for Error
-					unsigned int I_ErrorPV0	 :2;  //Error when value == 1
+					unsigned int I_ErrorNoPV0:8;  ///<8 bit error code (If error == 1)
+					unsigned int 			 :22; //unneeded for error
+					unsigned int I_ErrorPV0	 :2;  ///<Error when value == 1
 				  };
 				};
-				unsigned int I_priDecimal0   :8;  //Pri. Dec. Pnt Loc.(1st Occur.)
-				  signed int I_priSI_Prefix0 :8;  //Pri. SI-Prefix 	 (1st Occur.)
+				unsigned int I_priDecimal0   :8;  ///<Primary decimal point location(1st occurrence)
+				  signed int I_priSI_Prefix0 :8;  ///<Primary SI-prefix 	 (1st occurrence)
 				union
 				{
-				  signed int I_secValue		 :32; //Sec. Disp. Value
+				  signed int I_secValue		 :32; ///<Secondary value
 				  struct
 				  {
-					unsigned int I_ErrorNoSV :8;  //8 Bit Error Code (If Error == 1)
+					unsigned int I_ErrorNoSV :8;  ///<8 bit error code (If error == 1)
 					unsigned int 			 :22; //unneeded bits for Error
-					unsigned int I_ErrorSV	 :2;  //Error when value == 1
+					unsigned int I_ErrorSV	 :2;  ///<Error when value == 1
 				   };
 				 };
-				unsigned int I_secDecimal	 :8;  //Sec. Disp. Dec. Pnt Locaction
-				  signed int I_secSi_Prefix	 :8;  //Sec. Disp. Prefix TODO: Check if correct
-				unsigned int u_unknown0		 :16; //TODO::FIND OUT::Most times 0x0013 sometimes 0x0001 or 0x0002 WTF?
-				unsigned int u_unknown1		 :16; //TODO::Make it change to find its purpose
-				unsigned int I_Time1		 :32; //Time(2nd Occur.)
+				unsigned int I_secDecimal	 :8;  ///<Secondary value decimal point location
+				  signed int I_secSi_Prefix	 :8;  ///<Secondary value prefix
+				unsigned int u_unknown0		 :16; ///<@todo FIND OUT::Most times 0x0013 sometimes 0x0001 or 0x0002 WTF?
+				unsigned int u_unknown1		 :16; ///<@todo Make it change to find its purpose
+				unsigned int I_Time1		 :32; ///<Time (2nd occurrence)
 				union
 				{
-				  signed int I_priValue1	 :32; //Primary Value	 (2nd Occur.)
+				  signed int I_priValue1	 :32; ///<Primary value	 (2nd occurrence)
 				  struct
 			      {
-				    unsigned int I_ErrorNoPV1:8;  //8 Bit Error Code (If Error == 1)
-					unsigned int 			 :22; //unneeded bits for Error
-					unsigned int I_ErrorPV1	 :2;  //Error when value == 1
+				    unsigned int I_ErrorNoPV1:8;  ///<8 bit error code (If error == 1)
+					unsigned int 			 :22; //unneeded bits for error
+					unsigned int I_ErrorPV1	 :2;  ///<Error when value == 1
 				  };
 				};
-				unsigned int I_priDecimal1	 :8;  //Pri. Dec. Pnt Loc.(2nd Occur.)
+				unsigned int I_priDecimal1	 :8;  ///<Primary decimal point location (2nd occurrence)
 
-				  signed int I_priSI_Prefix1 :8;  //Pri. SI-Prefix 	 (2nd Occur.)
+				  signed int I_priSI_Prefix1 :8;  ///<Primary SI-prefix (2nd occurrence)
 
-				  qdInfo_t I_QDInfo;
+				  qdInfo_t I_QDInfo;			 ///< Standard settings and mode information
 
-				unsigned int u_unknown2	    :8; //TODO: Find out how to change this always 0x01<ending>
-				unsigned int I_DataEnding	:8;	 //TODO: Find a way to calculate this ending byte (always the same series)
+				unsigned int u_unknown2	    :8;  ///<@todo Find out how to change this always 0x01
+				unsigned int I_DataEnding	:8;	 ///<@todo Find a way to calculate this ending byte (always the same series)
 			}qd4_set_t;
 
+	/**
+	 * This is the main mask for the QD4 container
+	 */
 	typedef struct
 	{
-		char I_CMD_ACK;
-		char n_CR0;
-		char n_QDHeaderInfo_Comma[3];
-		unsigned int I_DataCount:8;
-		qd4_set_t dsets[1];
+		char I_CMD_ACK;					///< Command Acknowledge
+		char n_CR0;						///< Carriage Return
+		char n_QDHeaderInfo_Comma[3];   ///< QD,
+		unsigned int I_DataCount:8;     ///< Amount of following data sets
+		qd4_set_t dsets[1]; 			///< Data set array
 	} cmdr_QD4_t;
 	#pragma pack(pop) //Reset pack pragma
 
 
+	/**
+	 * Type of the QD4 container
+	 */
 	typedef  SerialResponse<cmdr_QD4_t> RCT_QD4;
 
 	RCT_QD4 CMD_QD4(bool TerminatedSubstrings, void* progressbar_object ,void (*progressbar_function)(void* progressbar_object ,unsigned int current_byte, unsigned int byte_amount))
@@ -488,14 +526,20 @@ public:
 
 
 	//Fluke Protocol Field Enums
-	enum CMD_ACK //Command Acknowledge and Error Codes
+
+	/**
+	 * Command Acknowledge Values
+	 */
+	enum CMD_ACK
 	{
-		CA_ERR_ACK   =  '0',
-		CA_ERR_FAIL  =  '1',
-		CA_ERR_NODATA=  '5',
+		CA_ERR_ACK   =  '0', ///< Acknowledge (no Error)
+		CA_ERR_FAIL  =  '1', ///< Error
+		CA_ERR_NODATA=  '5', ///< This is returned when executing a QD for logs or saves and the memory is empty
 	};
 
-
+	/**
+	 * Ranges of the multimeter
+	 */
 	enum Range
 	{
 		RANGE_1		=0x01,
@@ -508,6 +552,9 @@ public:
 		RANGE_5000	=0xE1,
 	};
 
+	/**
+	 * Range modes of the multimeter
+	 */
 	enum RangeMode
 	{
 		RANGEMODE_AUTO	=0xA0,
@@ -515,6 +562,9 @@ public:
 		RANGEMODE_NONE	=0x80,
 	};
 
+	/**
+	 * Display Errors
+	 */
 	enum ValueError
 	{
 		VE_Display_OFFLINE			=0x01,
@@ -527,6 +577,9 @@ public:
 		VE_NOT_APPLICABLE			=0xFF,
 	};
 
+	/**
+	 * Different Measure modes
+	 */
 	enum MeasureMode
 	{
 		MM_POS_BETW_2_MODES	=0x000,
@@ -550,40 +603,18 @@ public:
 		MM_DC_mA_Submode	=0x016,
 	};
 
+	/**
+	 * The return values for what is shown on the multimeter
+	 */
 	enum CurrentView
 	{
-		CV_DisplayingMeasure=0x01,
-		CV_InSetup_noTimeSet=0x02,
-	    CV_InSetup_TimeSet=0x22,
-	    CV_Showing_CLR_Saves=0x03,
-	    CV_Showing_CLR_Log=0x05,
-	    CV_ViewMem_NoData=0x06,
+		CV_DisplayingMeasure=0x01, ///< Just displaying a reading
+		CV_InSetup_noTimeSet=0x02, ///< Displaying setup screen (A time setting: intervall, poweroff etc)
+	    CV_InSetup_TimeSet=0x22,   ///< Displaying setup screen (no time setting)
+	    CV_Showing_CLR_Saves=0x03, ///< Clr? (saves) is displayed on screen
+	    CV_Showing_CLR_Log=0x05,   ///< Clr? (log) is displayed on screen
+	    CV_ViewMem_NoData=0x06,    ///< ViewMem with no data is displayed
 	};
-
-
-	typedef struct
-	{
-		//Units information
-
-		//primary
-		unsigned int i_priUnit;			//Integer number for unit (prim Disp.)
-		 std::string s_priUnit;			//Unit string(prim Disp.)
-		unsigned int i_priCurrentType;	//Integer number for current type AC DC AC+DC(prim Disp.)
-	     std::string s_priCurrentType;	//string for current type(prim Disp.)
-
-		//secondary
-        unsigned int i_secUnit;			//Integer number for unit (sec. Disp)
-		 std::string s_secUnit;			//Unit string(sec. Disp)
-		unsigned int i_secCurrentType;	//Integer number for current type AC DC AC+DC(sec. Disp)
-		 std::string s_secCurrentType;	//string for current type(sec. Disp)
-
-		//Special
-			    bool b_Logging;			//true if currently logging
-			    bool b_ViewMem;			//true if in ViewMem
-			    bool b_ModeSwitchERR;	//true if switch is stuck between two modes
-
-
-	} analysedInfo_t;
 
 
 
@@ -597,8 +628,17 @@ private:
 
 public:
 
-	Fluke189();
+
+	/**
+	 * Constuctor for class Fluke189
+	 * @param[in] filename Interface file name
+	 */
 	Fluke189(std::string filename);
+
+	/**
+	 * Destructor for class Fluke189
+	 * (empty)
+	 */
 	virtual ~Fluke189();
 
 
@@ -633,16 +673,18 @@ class Fluke189DataResponseAnalyzerWrapper
 protected:
 
 	friend class Fluke189DataResponseAnalyzer;
-	unsigned int datasetnumber;
-	void* currentContainer;
+	unsigned int datasetnumber; ///<helds the number of the current data set
+	void* currentContainer;     ///<helds the address of a supported container type
 
 public:
 
 
 
 
-	/*
+	/**
 	 * Constructor
+	 * param[in] datasetnumber Number of the data set to be edited
+	 * param[in] currentContainer Points to the current data set container
 	 */
 	Fluke189DataResponseAnalyzerWrapper(unsigned int datasetnumber, void* currentContainer)
 	: datasetnumber(datasetnumber), currentContainer(currentContainer){};
@@ -654,6 +696,10 @@ public:
 	 * DATA STRUCTS*
 	 ***************/
 
+
+	/**
+	 * Return values of the analysis for the position of the mode switch
+	 */
 	enum ModeSwitchSetting
 	{
 		MS_Unknown			=0,
@@ -672,6 +718,9 @@ public:
 		MS_STUCKBETW2POS  	=99,
 	};
 
+	/**
+	 * Returned units by analysis
+	 */
 	enum Unit
 	{
 		AU_None,
@@ -702,6 +751,9 @@ public:
 
 	};
 
+	/**
+	 * Voltage Types (AC, DC, AC+DC)
+	 */
 	enum CurrentType
 	{
 		ACT_NoCurrentType,
@@ -711,7 +763,9 @@ public:
 	};
 
 
-
+	/**
+	 * Etch information (falling etch, rising etch, not applicable)
+	 */
 	enum Etch
 	{
 		AE_NOT_APPLICABLE,
@@ -720,32 +774,31 @@ public:
 	};
 
 
-
-
-
-
-
+	/**
+	 * This struct is returned from Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo and holds
+	 * additional data which results from qdInfo_t analysis
+	 */
 	typedef struct
 	{
 		//Units information
 
 		//primary
-		        Unit i_priUnit;			//Integer number for unit (prim Disp.)
-		 std::string s_priUnit;			//Unit string(prim Disp.)
-		 CurrentType i_priCurrentType;	//Integer number for current type AC DC AC+DC(prim Disp.)
-	     std::string s_priCurrentType;	//string for current type(prim Disp.)
+		        Unit i_priUnit;			///<Unit (primary Display) (enum Unit)
+		 std::string s_priUnit;			///<Unit string(primary Display)
+		 CurrentType i_priCurrentType;	///<Integer number for current type AC DC AC+DC(primary Display)
+	     std::string s_priCurrentType;	///<String for current type(primary Display)
 
 		//secondary
-                Unit i_secUnit;			//Integer number for unit (sec. Disp)
-		 std::string s_secUnit;			//Unit string(sec. Disp)
-		 CurrentType i_secCurrentType;	//Integer number for current type AC DC AC+DC(sec. Disp)
-		 std::string s_secCurrentType;	//string for current type(sec. Disp)
+                Unit i_secUnit;			///<Integer number for unit (sec. Disp) (enum Unit)
+		 std::string s_secUnit;			///<Unit string(sec. Disp)
+		 CurrentType i_secCurrentType;	///<Integer number for current type AC DC AC+DC(sec. Disp)
+		 std::string s_secCurrentType;	///<string for current type(sec. Disp)
 
 		//Special Modes
-			    bool b_Logging;			//true if currently logging
-			    bool b_ViewMem;			//true if in ViewMem
-			    bool b_ModeSwitchERR;	//true if switch is stuck between two modes
-	     ModeSwitchSetting i_ModeSwitchPos;   //position of mode switch
+			    bool b_Logging;			///<True if currently logging
+			    bool b_ViewMem;			///<True if in ViewMem (and CLR is not displayed)
+			    bool b_ModeSwitchERR;	///<True if switch is stuck between two modes
+   ModeSwitchSetting i_ModeSwitchPos;   ///<Position of mode switch
 
 	} analyzedInfo_t;
 
@@ -760,8 +813,8 @@ public:
 	 * It containes the primary and secondary units, current types and shows if the multimeter is currently in logging or viewmem mode\n
 	 * <b>ATTENTION:</b> Currently its not possible to be sure that the multimeter is in viewmem. If "Clr?" is displayed the return value will
 	 * fall back to the mode which was selected when the log/save was stored.
-	 * @todo: find a fix for the recognize viemem correctly bug
-	 * @param[in] Struct containing setup for the current reading
+	 * @todo find a fix for the recognize viemem correctly bug
+	 * @param[in] qdInfo Struct containing setup for the current reading
 	 * @return Struct containing additional information.
 	 */
 	analyzedInfo_t analyzeQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
@@ -1072,7 +1125,7 @@ public:
 std::string getFluke189ValueErrorString(unsigned int DisplayErrorNo);  //integrated
 
 //Function for extracting additional Data out of a SerialResponse of command QD 0
-Fluke::Fluke189::analysedInfo_t Fluke189AnalyseQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
+//Fluke::Fluke189::analysedInfo_t Fluke189AnalyseQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
 
 
 //Struct to store values with their unit
