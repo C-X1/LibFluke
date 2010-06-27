@@ -10,18 +10,20 @@
 using namespace LibSerial;
 namespace Fluke {
 
-	Fluke189::Fluke189() {
-		SetupInterface();
-	}
-
+	/**
+	 * Constuctor for class Fluke189
+	 * @param[in] Interface file name
+	 */
 	Fluke189::Fluke189(std::string filename){
 		SetupInterface();
 		this->SetDeviceFilename(filename);
 	}
 
-	Fluke189::~Fluke189() {
-		// TODO Auto-generated destructor stub
-	}
+	/**
+	 * Destructor for class Fluke189
+	 * (empty)
+	 */
+	Fluke189::~Fluke189() {}
 
 	void Fluke189::SetupInterface( void )
 	{
@@ -41,344 +43,27 @@ namespace Fluke {
 	}
 
 
-	Fluke189::analysedInfo_t Fluke189AnalyseQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo)
+
+
+
+
+	/*
+	 * ResponseAnalyzer Functions
+	 */
+	Fluke189DataResponseAnalyzer::Fluke189DataResponseAnalyzer(Fluke189::RCT_QD0& container)
 	{
-		Fluke189::analysedInfo_t info;
-
-		//Primary Unit and Secondary Unit
-		switch(qdInfo->I_MeasureMode)
-		{
-		//Off or Empty MemoryView
-		case 0:
-			info.i_priUnit=Fluke189::AU_None;
-			info.s_priUnit="";
-			info.i_priCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_priCurrentType="";
-
-			info.i_secUnit=Fluke189::AU_None;
-			info.s_secUnit="";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-		break;
-
-		// V~  /  dB + V~  / V~ + dB
-		case 1: case 2:
-			if(qdInfo->I_Unit_dB_AC)
-			{
-				info.i_priUnit=(qdInfo->I_dBRef_V_nm)?Fluke189::AU_dB_V:Fluke189::AU_dBm;
-				info.s_priUnit=(qdInfo->I_dBRef_V_nm)?"dB V":"dBm";
-				info.i_priCurrentType=Fluke189::ACT_NoCurrentType;
-				info.s_priCurrentType="";
-
-				info.i_secUnit=Fluke189::AU_Volts;
-				info.s_secUnit="V";
-				info.i_secCurrentType=Fluke189::ACT_AlternatingCurrent;
-				info.s_secCurrentType="~";
-			}
-			else if(qdInfo->I_Unit_AC_dB)
-			{
-				info.i_priUnit=Fluke189::AU_Volts;
-				info.s_priUnit="V";
-				info.i_priCurrentType=Fluke189::ACT_AlternatingCurrent;
-				info.s_priCurrentType="~";
-
-				info.i_secUnit=(qdInfo->I_dBRef_V_nm)?Fluke189::AU_dB_V:Fluke189::AU_dBm;
-				info.s_secUnit=(qdInfo->I_dBRef_V_nm)?"dB V":"dBm";
-				info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-				info.s_secCurrentType="";
-			}
-			else
-			{
-				info.i_priUnit=Fluke189::AU_Volts;
-				info.s_priUnit="V";
-				info.i_priCurrentType=Fluke189::ACT_AlternatingCurrent;
-				info.s_priCurrentType="~";
-
-				info.i_secUnit=Fluke189::AU_None;
-				info.s_secUnit="";
-				info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-				info.s_secCurrentType="";
-			}
-		break;
-
-		// V=
-		case 3: case 4:
-			info.i_priUnit=Fluke189::AU_Volts;
-			info.s_priUnit="V";
-			info.i_priCurrentType=Fluke189::ACT_DirectCurrent;
-			info.s_priCurrentType="=";
-
-			info.i_secUnit=Fluke189::AU_None;
-			info.s_secUnit="";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-		break;
-
-		// V= Substates
-		case 5: case 6:
-			if(qdInfo->I_SubState_ACDC==1)
-			{
-				info.i_priUnit=Fluke189::AU_Volts;
-				info.s_priUnit="V";
-				info.i_priCurrentType=Fluke189::ACT_AlternatingCurrent;
-				info.s_priCurrentType="~";
-
-				info.i_secUnit=Fluke189::AU_Volts;
-				info.s_secUnit="V";
-				info.i_secCurrentType=Fluke189::ACT_DirectCurrent;
-				info.s_secCurrentType="=";
-			}
-			else if (qdInfo->I_SubState_ACDC==2)
-			{
-				info.i_priUnit=Fluke189::AU_Volts;
-				info.s_priUnit="V";
-				info.i_priCurrentType=Fluke189::ACT_DirectCurrent;
-				info.s_priCurrentType="=";
-
-				info.i_secUnit=Fluke189::AU_Volts;
-				info.s_secUnit="V";
-				info.i_secCurrentType=Fluke189::ACT_AlternatingCurrent;
-				info.s_secCurrentType="~";
-			}
-			else if (qdInfo->I_SubState_ACDC==3)
-			{
-				info.i_priUnit=Fluke189::AU_ACDC_V;
-				info.s_priUnit="V";
-				info.i_priCurrentType=Fluke189::ACT_DirectandAlternatingCurrent;
-				info.s_priCurrentType="≃";
-
-				info.i_secUnit=Fluke189::AU_None;
-				info.s_secUnit="";
-				info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-				info.s_secCurrentType="";
-			}
-		break;
-
-		//Ohm
-		case 9: case 11:
-			info.i_priUnit=Fluke189::AU_Ohm;
-			info.s_priUnit="Ohm";
-			info.i_priCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_priCurrentType="";
-			info.i_secUnit=Fluke189::AU_None;
-			info.s_secUnit="";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-		break;
-
-		//nS
-		case 10:
-			info.i_priUnit=Fluke189::AU_Siemens;
-			info.s_priUnit="S";
-			info.i_priCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_priCurrentType="";
-
-			info.i_secUnit=Fluke189::AU_None;
-			info.s_secUnit="";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-		break;
-
-		//Cap
-		case 12:
-			info.i_priUnit=Fluke189::AU_Farad;
-			info.s_priUnit="F";
-			info.i_priCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_priCurrentType="";
-
-			info.i_secUnit=Fluke189::AU_None;
-			info.s_secUnit="";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-		break;
-
-		//Diode
-		case 13:
-			info.i_priUnit=Fluke189::AU_DC_V;
-			info.s_priUnit="V=";
-			info.i_priCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_priCurrentType="";
-
-			info.i_secUnit=Fluke189::AU_None;
-			info.s_secUnit="";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-		break;
-
-		case 26:
-			info.i_priUnit=Fluke189::AU_Celsius;
-			info.s_priUnit="°C";
-			info.i_priCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_priCurrentType="";
-
-			info.i_secUnit=Fluke189::AU_Celsius;
-			info.s_secUnit="°C";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-		break;
-
-
-		case 27:
-			info.i_priUnit=Fluke189::AU_Fahrenheit;
-			info.s_priUnit="°F";
-			info.i_priCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_priCurrentType="";
-
-			info.i_secUnit=Fluke189::AU_Fahrenheit;
-			info.s_secUnit="°F";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-		break;
-
-		case 14: case 15: case 16:
-			info.i_priUnit=Fluke189::AU_Ampere;
-			info.s_priUnit="A";
-			info.i_priCurrentType=Fluke189::ACT_AlternatingCurrent;
-			info.s_priCurrentType="~";
-
-			info.i_secUnit=Fluke189::AU_None;
-			info.s_secUnit="";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-		break;
-
-
-		case 17: case 18: case 19:
-			info.i_priUnit=Fluke189::AU_Ampere;
-			info.s_priUnit="A";
-			info.i_priCurrentType=Fluke189::ACT_DirectCurrent;
-			info.s_priCurrentType="=";
-
-			info.i_secUnit=Fluke189::AU_None;
-			info.s_secUnit="";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-		break;
-
-		//A= Substates
-		case 20: case 22: case 21:
-			if(qdInfo->I_SubState_ACDC==1)
-			{
-				info.i_priUnit=Fluke189::AU_Ampere;
-				info.s_priUnit="A";
-				info.i_priCurrentType=Fluke189::ACT_AlternatingCurrent;
-				info.s_priCurrentType="~";
-
-				info.i_secUnit=Fluke189::AU_Ampere;
-				info.s_secUnit="A";
-				info.i_secCurrentType=Fluke189::ACT_DirectCurrent;
-				info.s_secCurrentType="=";
-			}
-			else if (qdInfo->I_SubState_ACDC==2)
-			{
-				info.i_priUnit=Fluke189::AU_Ampere;
-				info.s_priUnit="A";
-				info.i_priCurrentType=Fluke189::ACT_DirectCurrent;
-				info.s_priCurrentType="=";
-
-				info.i_secUnit=Fluke189::AU_Ampere;
-				info.s_secUnit="A";
-				info.i_secCurrentType=Fluke189::ACT_AlternatingCurrent;
-				info.s_secCurrentType="~";
-			}
-			else if (qdInfo->I_SubState_ACDC==3)
-			{
-				info.i_priUnit=Fluke189::AU_Ampere;
-				info.s_priUnit="A";
-				info.i_priCurrentType=Fluke189::ACT_DirectandAlternatingCurrent;
-				info.s_priCurrentType="≃";
-
-				info.i_secUnit=Fluke189::AU_None;
-				info.s_secUnit="";
-				info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-				info.s_secCurrentType="";
-			}
-
-		break;
-
-
-		}
-		//Hz % ms
-		switch(qdInfo->I_Hz_Percent_ms)
-		{
-		case 1: //Hz
-			info.i_secUnit=info.i_priUnit;
-			info.s_secUnit=info.s_priUnit;
-			info.i_secCurrentType=info.i_priCurrentType;
-			info.s_secCurrentType=info.s_priCurrentType;
-			info.i_priCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_priCurrentType="";
-
-			info.i_priUnit=Fluke189::AU_Hz;
-			info.s_priUnit="Hz";
-		break;
-		case 2:	//%
-			info.i_priUnit=Fluke189::AU_Percent;
-			info.s_priUnit="%";
-			info.i_priCurrentType=Fluke189::ACT_DirectCurrent;
-			info.s_priCurrentType="";
-
-			info.i_secUnit=Fluke189::AU_Hz;
-			info.s_secUnit="Hz";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-
-		break;
-		case 3: //ms
-			info.i_priUnit=Fluke189::AU_Seconds;
-			info.s_priUnit="s";
-			info.i_priCurrentType=Fluke189::ACT_DirectCurrent;
-			info.s_priCurrentType="";
-
-			info.i_secUnit=Fluke189::AU_Hz;
-			info.s_secUnit="Hz";
-			info.i_secCurrentType=Fluke189::ACT_NoCurrentType;
-			info.s_secCurrentType="";
-		break;
-		}
-
-		//Min Max Avg Mode
-		if(qdInfo->I_MinMaxMode)
-		{
-			//Secondary unit becomes primary unit(showing current value)
-			info.i_secUnit=info.i_priUnit;
-			info.s_secUnit=info.s_priUnit;
-			info.i_secCurrentType=info.i_priCurrentType;
-			info.s_secCurrentType=info.s_priCurrentType;
-		}
-
-		//Delta and Delta Percent
-		if(qdInfo->I_Delta)
-		{
-			//Secondary unit becomes primary unit (showing start value)
-			info.i_secUnit=info.i_priUnit;
-			info.s_secUnit=info.s_priUnit;
-			info.i_secCurrentType=info.i_priCurrentType;
-			info.s_secCurrentType=info.s_priCurrentType;
-		}
-		else if(qdInfo->I_DeltaPercent)
-		{
-			//secondary unit becomes primary and primary changes to percent
-			info.i_secUnit=info.i_priUnit;
-			info.s_secUnit=info.s_priUnit;
-			info.i_secCurrentType=info.i_priCurrentType;
-			info.s_secCurrentType=info.s_priCurrentType;
-			info.i_priUnit=Fluke189::AU_Percent;
-			info.s_priUnit="%";
-		}
-
-		//Does the multimeter log new data atm?
-		info.b_Logging=qdInfo->I_MEMclr != 3 && qdInfo->I_S_Log &&qdInfo->I_CurrentView != 6 ;
-
-		//Are we in ViewMode? If no data CurrentView==6 else MEMclr==3 //TODO (change into enum symbols)
-		info.b_ViewMem=qdInfo->I_CurrentView == 6 || qdInfo->I_MEMclr == 3;
-
-		//Check if mode switch is stuck between two positions
-		info.b_ModeSwitchERR=qdInfo->I_MeasureMode == 0 && qdInfo->I_CurrentView == 1;
-
-
-
-		return info;
+		this->container=&container;
+		this->currentResponseContainerType=QD0;
+	}
+	Fluke189DataResponseAnalyzer::Fluke189DataResponseAnalyzer(Fluke189::RCT_QD2& container)
+	{
+		this->container=&container;
+		this->currentResponseContainerType=QD2;
+	}
+	Fluke189DataResponseAnalyzer::Fluke189DataResponseAnalyzer(Fluke189::RCT_QD4& container)
+	{
+		this->container=&container;
+		this->currentResponseContainerType=QD4;
 	}
 
  	std::string getFluke189ValueErrorString(unsigned int DisplayErrorNo) //TODO DELETE
@@ -574,29 +259,402 @@ namespace Fluke {
 
 
 	/*
-	 * ResponseAnalyser Functions
+	 * Fluke189ResponseAnalyzerWrapper functions
 	 */
-	Fluke189DataResponseAnalyser::Fluke189DataResponseAnalyser(Fluke189::RCT_QD0& container)
+
+
+	Fluke189DataResponseAnalyzerWrapper::analyzedInfo_t Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo)
 	{
-		this->container=&container;
-		this->currentResponseContainerType=QD0;
-	}
-	Fluke189DataResponseAnalyser::Fluke189DataResponseAnalyser(Fluke189::RCT_QD2& container)
-	{
-		this->container=&container;
-		this->currentResponseContainerType=QD2;
-	}
-	Fluke189DataResponseAnalyser::Fluke189DataResponseAnalyser(Fluke189::RCT_QD4& container)
-	{
-		this->container=&container;
-		this->currentResponseContainerType=QD4;
+		Fluke189DataResponseAnalyzerWrapper::analyzedInfo_t info;
+
+			//Primary Unit and Secondary Unit
+			switch(qdInfo->I_MeasureMode)
+			{
+			//Off or Empty MemoryView
+			case 0:
+				info.i_priUnit=AU_None;
+				info.s_priUnit="";
+				info.i_priCurrentType=ACT_NoCurrentType;
+				info.s_priCurrentType="";
+
+				info.i_secUnit=AU_None;
+				info.s_secUnit="";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+			break;
+
+			// V~  /  dB + V~  / V~ + dB
+			case 1: case 2:
+				if(qdInfo->I_Unit_dB_AC)
+				{
+					info.i_priUnit=(qdInfo->I_dBRef_V_nm)?AU_dB_V:AU_dBm;
+					info.s_priUnit=(qdInfo->I_dBRef_V_nm)?"dB V":"dBm";
+					info.i_priCurrentType=ACT_NoCurrentType;
+					info.s_priCurrentType="";
+
+					info.i_secUnit=AU_Volts;
+					info.s_secUnit="V";
+					info.i_secCurrentType=ACT_AlternatingCurrent;
+					info.s_secCurrentType="~";
+				}
+				else if(qdInfo->I_Unit_AC_dB)
+				{
+					info.i_priUnit=AU_Volts;
+					info.s_priUnit="V";
+					info.i_priCurrentType=ACT_AlternatingCurrent;
+					info.s_priCurrentType="~";
+
+					info.i_secUnit=(qdInfo->I_dBRef_V_nm)?AU_dB_V:AU_dBm;
+					info.s_secUnit=(qdInfo->I_dBRef_V_nm)?"dB V":"dBm";
+					info.i_secCurrentType=ACT_NoCurrentType;
+					info.s_secCurrentType="";
+				}
+				else
+				{
+					info.i_priUnit=AU_Volts;
+					info.s_priUnit="V";
+					info.i_priCurrentType=ACT_AlternatingCurrent;
+					info.s_priCurrentType="~";
+
+					info.i_secUnit=AU_None;
+					info.s_secUnit="";
+					info.i_secCurrentType=ACT_NoCurrentType;
+					info.s_secCurrentType="";
+				}
+			break;
+
+			// V=
+			case 3: case 4:
+				info.i_priUnit=AU_Volts;
+				info.s_priUnit="V";
+				info.i_priCurrentType=ACT_DirectCurrent;
+				info.s_priCurrentType="=";
+
+				info.i_secUnit=AU_None;
+				info.s_secUnit="";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+			break;
+
+			// V= Substates
+			case 5: case 6:
+				if(qdInfo->I_SubState_ACDC==1)
+				{
+					info.i_priUnit=AU_Volts;
+					info.s_priUnit="V";
+					info.i_priCurrentType=ACT_AlternatingCurrent;
+					info.s_priCurrentType="~";
+
+					info.i_secUnit=AU_Volts;
+					info.s_secUnit="V";
+					info.i_secCurrentType=ACT_DirectCurrent;
+					info.s_secCurrentType="=";
+				}
+				else if (qdInfo->I_SubState_ACDC==2)
+				{
+					info.i_priUnit=AU_Volts;
+					info.s_priUnit="V";
+					info.i_priCurrentType=ACT_DirectCurrent;
+					info.s_priCurrentType="=";
+
+					info.i_secUnit=AU_Volts;
+					info.s_secUnit="V";
+					info.i_secCurrentType=ACT_AlternatingCurrent;
+					info.s_secCurrentType="~";
+				}
+				else if (qdInfo->I_SubState_ACDC==3)
+				{
+					info.i_priUnit=AU_ACDC_V;
+					info.s_priUnit="V";
+					info.i_priCurrentType=ACT_DirectandAlternatingCurrent;
+					info.s_priCurrentType="≃";
+
+					info.i_secUnit=AU_None;
+					info.s_secUnit="";
+					info.i_secCurrentType=ACT_NoCurrentType;
+					info.s_secCurrentType="";
+				}
+			break;
+
+			//Ohm
+			case 9: case 11:
+				info.i_priUnit=AU_Ohm;
+				info.s_priUnit="Ohm";
+				info.i_priCurrentType=ACT_NoCurrentType;
+				info.s_priCurrentType="";
+				info.i_secUnit=AU_None;
+				info.s_secUnit="";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+			break;
+
+			//nS
+			case 10:
+				info.i_priUnit=AU_Siemens;
+				info.s_priUnit="S";
+				info.i_priCurrentType=ACT_NoCurrentType;
+				info.s_priCurrentType="";
+
+				info.i_secUnit=AU_None;
+				info.s_secUnit="";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+			break;
+
+			//Cap
+			case 12:
+				info.i_priUnit=AU_Farad;
+				info.s_priUnit="F";
+				info.i_priCurrentType=ACT_NoCurrentType;
+				info.s_priCurrentType="";
+
+				info.i_secUnit=AU_None;
+				info.s_secUnit="";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+			break;
+
+			//Diode
+			case 13:
+				info.i_priUnit=AU_DC_V;
+				info.s_priUnit="V=";
+				info.i_priCurrentType=ACT_NoCurrentType;
+				info.s_priCurrentType="";
+
+				info.i_secUnit=AU_None;
+				info.s_secUnit="";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+			break;
+
+			case 26:
+				info.i_priUnit=AU_Celsius;
+				info.s_priUnit="°C";
+				info.i_priCurrentType=ACT_NoCurrentType;
+				info.s_priCurrentType="";
+
+				info.i_secUnit=AU_Celsius;
+				info.s_secUnit="°C";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+			break;
+
+
+			case 27:
+				info.i_priUnit=AU_Fahrenheit;
+				info.s_priUnit="°F";
+				info.i_priCurrentType=ACT_NoCurrentType;
+				info.s_priCurrentType="";
+
+				info.i_secUnit=AU_Fahrenheit;
+				info.s_secUnit="°F";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+			break;
+
+			case 14: case 15: case 16:
+				info.i_priUnit=AU_Ampere;
+				info.s_priUnit="A";
+				info.i_priCurrentType=ACT_AlternatingCurrent;
+				info.s_priCurrentType="~";
+
+				info.i_secUnit=AU_None;
+				info.s_secUnit="";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+			break;
+
+
+			case 17: case 18: case 19:
+				info.i_priUnit=AU_Ampere;
+				info.s_priUnit="A";
+				info.i_priCurrentType=ACT_DirectCurrent;
+				info.s_priCurrentType="=";
+
+				info.i_secUnit=AU_None;
+				info.s_secUnit="";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+			break;
+
+			//A= Substates
+			case 20: case 22: case 21:
+				if(qdInfo->I_SubState_ACDC==1)
+				{
+					info.i_priUnit=AU_Ampere;
+					info.s_priUnit="A";
+					info.i_priCurrentType=ACT_AlternatingCurrent;
+					info.s_priCurrentType="~";
+
+					info.i_secUnit=AU_Ampere;
+					info.s_secUnit="A";
+					info.i_secCurrentType=ACT_DirectCurrent;
+					info.s_secCurrentType="=";
+				}
+				else if (qdInfo->I_SubState_ACDC==2)
+				{
+					info.i_priUnit=AU_Ampere;
+					info.s_priUnit="A";
+					info.i_priCurrentType=ACT_DirectCurrent;
+					info.s_priCurrentType="=";
+
+					info.i_secUnit=AU_Ampere;
+					info.s_secUnit="A";
+					info.i_secCurrentType=ACT_AlternatingCurrent;
+					info.s_secCurrentType="~";
+				}
+				else if (qdInfo->I_SubState_ACDC==3)
+				{
+					info.i_priUnit=AU_Ampere;
+					info.s_priUnit="A";
+					info.i_priCurrentType=ACT_DirectandAlternatingCurrent;
+					info.s_priCurrentType="≃";
+
+					info.i_secUnit=AU_None;
+					info.s_secUnit="";
+					info.i_secCurrentType=ACT_NoCurrentType;
+					info.s_secCurrentType="";
+				}
+
+			break;
+
+
+			}
+			//Hz % ms
+			switch(qdInfo->I_Hz_Percent_ms)
+			{
+			case 1: //Hz
+				info.i_secUnit=info.i_priUnit;
+				info.s_secUnit=info.s_priUnit;
+				info.i_secCurrentType=info.i_priCurrentType;
+				info.s_secCurrentType=info.s_priCurrentType;
+				info.i_priCurrentType=ACT_NoCurrentType;
+				info.s_priCurrentType="";
+
+				info.i_priUnit=AU_Hz;
+				info.s_priUnit="Hz";
+			break;
+			case 2:	//%
+				info.i_priUnit=AU_Percent;
+				info.s_priUnit="%";
+				info.i_priCurrentType=ACT_DirectCurrent;
+				info.s_priCurrentType="";
+
+				info.i_secUnit=AU_Hz;
+				info.s_secUnit="Hz";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+
+			break;
+			case 3: //ms
+				info.i_priUnit=AU_Seconds;
+				info.s_priUnit="s";
+				info.i_priCurrentType=ACT_DirectCurrent;
+				info.s_priCurrentType="";
+
+				info.i_secUnit=AU_Hz;
+				info.s_secUnit="Hz";
+				info.i_secCurrentType=ACT_NoCurrentType;
+				info.s_secCurrentType="";
+			break;
+			}
+
+			//Min Max Avg Mode
+			if(qdInfo->I_MinMaxMode)
+			{
+				//Secondary unit becomes primary unit(showing current value)
+				info.i_secUnit=info.i_priUnit;
+				info.s_secUnit=info.s_priUnit;
+				info.i_secCurrentType=info.i_priCurrentType;
+				info.s_secCurrentType=info.s_priCurrentType;
+			}
+
+			//Delta and Delta Percent
+			if(qdInfo->I_Delta)
+			{
+				//Secondary unit becomes primary unit (showing start value)
+				info.i_secUnit=info.i_priUnit;
+				info.s_secUnit=info.s_priUnit;
+				info.i_secCurrentType=info.i_priCurrentType;
+				info.s_secCurrentType=info.s_priCurrentType;
+			}
+			else if(qdInfo->I_DeltaPercent)
+			{
+				//secondary unit becomes primary and primary changes to percent
+				info.i_secUnit=info.i_priUnit;
+				info.s_secUnit=info.s_priUnit;
+				info.i_secCurrentType=info.i_priCurrentType;
+				info.s_secCurrentType=info.s_priCurrentType;
+				info.i_priUnit=AU_Percent;
+				info.s_priUnit="%";
+			}
+
+			//Does the multimeter log new data atm?
+			info.b_Logging=qdInfo->I_MEMclr != 3 && qdInfo->I_S_Log &&qdInfo->I_CurrentView != 6 ;
+
+			//Are we in ViewMode? If no data CurrentView==6 else MEMclr==3 //TODO (change into enum symbols)
+			info.b_ViewMem=qdInfo->I_CurrentView == 6 || qdInfo->I_MEMclr == 3;
+
+			//Check if mode switch is stuck between two positions
+			info.b_ModeSwitchERR=qdInfo->I_MeasureMode == 0 && qdInfo->I_CurrentView == 1;
+
+
+			//Get Mode Switch Position
+			if(!info.b_ViewMem && !info.b_ModeSwitchERR)
+			{
+				switch(qdInfo->I_MeasureMode)
+				{
+				case 1:
+					info.i_ModeSwitchPos=MS_VAC;
+					break;
+				case 2:
+					info.i_ModeSwitchPos=MS_mVAC;
+					break;
+				case 3: case 5:
+					info.i_ModeSwitchPos=MS_VDC;
+					break;
+				case 4: case 6:
+					info.i_ModeSwitchPos=MS_mVDC;
+					break;
+				case 9: case 11: case 10:
+					info.i_ModeSwitchPos=MS_OhmSiemens;
+					break;
+				case 12: case 13:
+					info.i_ModeSwitchPos=MS_CapDiode;
+					break;
+				case 27: case 26:
+					info.i_ModeSwitchPos=MS_Temp;
+					break;
+				case 14: case 15:
+					info.i_ModeSwitchPos=MS_AACmAAC;
+					break;
+				case 16:
+					info.i_ModeSwitchPos=MS_uAAC;
+					break;
+				case 17: case 18: case 21: case 20:
+					info.i_ModeSwitchPos=MS_ADCmADC;
+					break;
+				case 19: case 22:
+					info.i_ModeSwitchPos=MS_uADC;
+					break;
+				default:
+					info.i_ModeSwitchPos=MS_Unknown;
+				}
+			}
+			else
+			{
+				if(info.b_ViewMem) info.i_ModeSwitchPos=MS_VIEWMEM;
+				if(info.b_ModeSwitchERR) info.i_ModeSwitchPos=MS_STUCKBETW2POS;
+			}
+			return info;
 	}
 
 
-	/*
-	 * Fluke189ResponseAnalyserWrapper functions
-	 */
-	std::string Fluke189DataResponseAnalyserWrapper::valueErrorToString(Fluke189::ValueError number)
+
+
+
+
+	std::string Fluke189DataResponseAnalyzerWrapper::valueErrorToString(Fluke189::ValueError number)
 	{
 		std::string ErrorString;
 		switch(number)
@@ -636,11 +694,10 @@ namespace Fluke {
 		return ErrorString;
 	}
 
-
 	/*
-	 * Fluke189ResponseAnalyserWrapperQD0 functions
+	 * Fluke189ResponseAnalyzerWrapperQD0 functions
 	 */
-	bool Fluke189DataResponseAnalyserWrapperQD0::hasErrorPRIdisplay(bool reading2)
+	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorPRIdisplay(bool reading2)
 	{
 		Fluke189::RCT_QD0* container;
 		container=(Fluke189::RCT_QD0*)this->currentContainer;
@@ -654,7 +711,7 @@ namespace Fluke {
 		}
 	}
 
-	bool Fluke189DataResponseAnalyserWrapperQD0::hasErrorSECdisplay(bool reading2)
+	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorSECdisplay(bool reading2)
 	{
 		Fluke189::RCT_QD0* container;
 		container=(Fluke189::RCT_QD0*)this->currentContainer;
@@ -669,7 +726,7 @@ namespace Fluke {
 	}
 
 
-	Fluke189::ValueError Fluke189DataResponseAnalyserWrapperQD0::get_PRIdisplayError(bool reading2)
+	Fluke189::ValueError Fluke189DataResponseAnalyzerWrapperQD0::get_PRIdisplayError(bool reading2)
 	{
 		if(!hasErrorPRIdisplay(reading2))
 		{
@@ -690,7 +747,7 @@ namespace Fluke {
 	}
 
 
-	Fluke189::ValueError Fluke189DataResponseAnalyserWrapperQD0::get_SECdisplayError(bool reading2)
+	Fluke189::ValueError Fluke189DataResponseAnalyzerWrapperQD0::get_SECdisplayError(bool reading2)
 	{
 		if(!hasErrorSECdisplay(reading2))
 		{
@@ -709,29 +766,48 @@ namespace Fluke {
 		}
 	}
 
-	Fluke189::Analyse_ModeSwitchSetting Fluke189DataResponseAnalyserWrapperQD0::get_ModeSwitchSetting()
+	Fluke189DataResponseAnalyzerWrapper::ModeSwitchSetting Fluke189DataResponseAnalyzerWrapperQD0::get_ModeSwitchSetting()
 	{
-
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).i_ModeSwitchPos;
 	}
 
-	Fluke189::Analyse_UnitsUint Fluke189DataResponseAnalyserWrapperQD0::get_primaryUnit()
+	Fluke189DataResponseAnalyzerWrapper::Unit Fluke189DataResponseAnalyzerWrapperQD0::get_primaryUnit()
 	{
-
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).i_priUnit;
 	}
 
-	Fluke189::Analyse_UnitsUint Fluke189DataResponseAnalyserWrapperQD0::get_secondaryUnit()
+	Fluke189DataResponseAnalyzerWrapper::Unit Fluke189DataResponseAnalyzerWrapperQD0::get_secondaryUnit()
 	{
-
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).i_secUnit;
 	}
 
-	Fluke189::Analyse_CurrentType Fluke189DataResponseAnalyserWrapperQD0::get_CurrentType()
+	Fluke189DataResponseAnalyzerWrapper::CurrentType Fluke189DataResponseAnalyzerWrapperQD0::get_primaryCurrentType()
 	{
-
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).i_priCurrentType;
 	}
 
-	Fluke189::Analyse_Etch Fluke189DataResponseAnalyserWrapperQD0::get_EtchInfo()
+	Fluke189DataResponseAnalyzerWrapper::CurrentType Fluke189DataResponseAnalyzerWrapperQD0::get_secondaryCurrentType()
 	{
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).i_secCurrentType;
+	}
 
+	Fluke189DataResponseAnalyzerWrapper::Etch Fluke189DataResponseAnalyzerWrapperQD0::get_EtchInfo()
+	{
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		if(container->Data()->I_QDInfo.I_RisingEtch) return AE_RISING_ETCH;
+		if(container->Data()->I_QDInfo.I_FallingEtch) return AE_FALLING_ETCH;
+		return AE_NOT_APPLICABLE;
 	}
 
 

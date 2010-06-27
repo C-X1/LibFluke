@@ -560,68 +560,6 @@ public:
 	    CV_ViewMem_NoData=0x06,
 	};
 
-	enum Analyse_UnitsUint
-	{
-		AU_None,
-
-		AU_AC_V,
-		AU_DC_V,
-		AU_ACDC_V,
-
-		AU_Volts,
-
-		AU_Ampere,
-
-		AU_dBm,
-		AU_dB_V,
-
-		AU_Hz,
-		AU_Seconds,
-
-		AU_Percent,
-
-		AU_Ohm,
-		AU_Siemens,
-
-		AU_Farad,
-
-		AU_Celsius,
-		AU_Fahrenheit,
-
-	};
-
-	enum Analyse_CurrentType
-	{
-		ACT_NoCurrentType,
-		ACT_AlternatingCurrent,
-		ACT_DirectCurrent,
-		ACT_DirectandAlternatingCurrent
-	};
-
-	enum Analyse_ModeSwitchSetting
-	{
-		AMS_Error,
-		AMS_VAC,
-		AMS_mVAC,
-		AMS_VDC,
-		AMS_mVDC,
-		AMS_OhmSiemens,
-		AMS_CapDiode,
-		AMS_Temp,
-		AMS_AACmAAC,
-		AMS_uAC,
-		AMS_ADCmADC,
-		AMS_uADC,
-		AMS_VIEWMEM,
-		AMS_NOT_APPLICABLE,
-	};
-
-	enum Analyse_Etch
-	{
-		AE_NOT_APPLICABLE,
-		AE_FALLING_ETCH,
-		AE_RISING_ETCH,
-	};
 
 	typedef struct
 	{
@@ -680,7 +618,7 @@ private:
 
 
 
-class Fluke189DataResponseAnalyser;
+class Fluke189DataResponseAnalyzer;
 
 
 
@@ -690,22 +628,157 @@ class Fluke189DataResponseAnalyser;
  * The member functions of this Wrapper are called by Fluke189ResponseAnalyser::operator[](unsigned int)
  * This class is a superclass so it can not be constructed.
  */
-class Fluke189DataResponseAnalyserWrapper
+class Fluke189DataResponseAnalyzerWrapper
 {
 protected:
 
-	friend class Fluke189DataResponseAnalyser;
+	friend class Fluke189DataResponseAnalyzer;
 	unsigned int datasetnumber;
 	void* currentContainer;
 
 public:
+
+
+
+
 	/*
 	 * Constructor
 	 */
-	Fluke189DataResponseAnalyserWrapper(unsigned int datasetnumber, void* currentContainer)
+	Fluke189DataResponseAnalyzerWrapper(unsigned int datasetnumber, void* currentContainer)
 	: datasetnumber(datasetnumber), currentContainer(currentContainer){};
 
-	~Fluke189DataResponseAnalyserWrapper(){};
+	~Fluke189DataResponseAnalyzerWrapper(){};
+
+
+	/***************
+	 * DATA STRUCTS*
+	 ***************/
+
+	enum ModeSwitchSetting
+	{
+		MS_Unknown			=0,
+		MS_VAC				=1,
+		MS_mVAC				=2,
+		MS_VDC				=3,
+		MS_mVDC				=4,
+		MS_OhmSiemens		=5,
+		MS_CapDiode			=6,
+		MS_Temp				=7,
+		MS_AACmAAC			=8,
+		MS_uAAC				=9,
+		MS_ADCmADC			=10,
+		MS_uADC				=11,
+		MS_VIEWMEM			=12,
+		MS_STUCKBETW2POS  	=99,
+	};
+
+	enum Unit
+	{
+		AU_None,
+
+		AU_AC_V,
+		AU_DC_V,
+		AU_ACDC_V,
+
+		AU_Volts,
+
+		AU_Ampere,
+
+		AU_dBm,
+		AU_dB_V,
+
+		AU_Hz,
+		AU_Seconds,
+
+		AU_Percent,
+
+		AU_Ohm,
+		AU_Siemens,
+
+		AU_Farad,
+
+		AU_Celsius,
+		AU_Fahrenheit,
+
+	};
+
+	enum CurrentType
+	{
+		ACT_NoCurrentType,
+		ACT_AlternatingCurrent,
+		ACT_DirectCurrent,
+		ACT_DirectandAlternatingCurrent
+	};
+
+
+
+	enum Etch
+	{
+		AE_NOT_APPLICABLE,
+		AE_FALLING_ETCH,
+		AE_RISING_ETCH,
+	};
+
+
+
+
+
+
+
+	typedef struct
+	{
+		//Units information
+
+		//primary
+		        Unit i_priUnit;			//Integer number for unit (prim Disp.)
+		 std::string s_priUnit;			//Unit string(prim Disp.)
+		 CurrentType i_priCurrentType;	//Integer number for current type AC DC AC+DC(prim Disp.)
+	     std::string s_priCurrentType;	//string for current type(prim Disp.)
+
+		//secondary
+                Unit i_secUnit;			//Integer number for unit (sec. Disp)
+		 std::string s_secUnit;			//Unit string(sec. Disp)
+		 CurrentType i_secCurrentType;	//Integer number for current type AC DC AC+DC(sec. Disp)
+		 std::string s_secCurrentType;	//string for current type(sec. Disp)
+
+		//Special Modes
+			    bool b_Logging;			//true if currently logging
+			    bool b_ViewMem;			//true if in ViewMem
+			    bool b_ModeSwitchERR;	//true if switch is stuck between two modes
+	     ModeSwitchSetting i_ModeSwitchPos;   //position of mode switch
+
+	} analyzedInfo_t;
+
+
+
+	/*****************
+	 * BASE FUNCTIONS*
+	 *****************/
+
+	/**
+	 * Returns a struct with additional information created by analyzing qdInfo.\n
+	 * It containes the primary and secondary units, current types and shows if the multimeter is currently in logging or viewmem mode\n
+	 * <b>ATTENTION:</b> Currently its not possible to be sure that the multimeter is in viewmem. If "Clr?" is displayed the return value will
+	 * fall back to the mode which was selected when the log/save was stored.
+	 * @todo: find a fix for the recognize viemem correctly bug
+	 * @param[in] Struct containing setup for the current reading
+	 * @return Struct containing additional information.
+	 */
+	analyzedInfo_t analyzeQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
+
+	/**
+	 * Returns the error string according to the ValueError number
+	 * @param[in] number ValueError
+	 * @return A human readable error string
+	 */
+	std::string valueErrorToString(Fluke::Fluke189::ValueError number);
+
+
+
+	/********************
+	 * VIRTUAL FUNCTIONS*
+	 ********************/
+
 
 	/**
 	 * Checks if a error in measurement is present in the current primary reading
@@ -736,44 +809,43 @@ public:
 	virtual Fluke189::ValueError get_SECdisplayError(bool reading2) = 0;
 
 	/**
-	 * Returns the error string according to the ValueError number
-	 * @param[in] number ValueError
-	 * @return A human readable error string
-	 */
-	std::string valueErrorToString(Fluke::Fluke189::ValueError number);
-
-
-	/**
 	 * Shows the current mode switch setting
 	 * @return Number of mode switch or 0 when stuck between two positions
 	 */
-	virtual Fluke189::Analyse_ModeSwitchSetting get_ModeSwitchSetting() = 0;
+	virtual ModeSwitchSetting get_ModeSwitchSetting() = 0;
 
 
 	/**
 	 * Get physical unit of the primary reading.
-	 * @return Physical unit of the current reading according to Fluke189::Analyse_UnitsUint
+	 * @return Physical unit of the current reading according to Fluke189DataResponseAnalyzerWrapper::enum Unit
 	 */
-	virtual Fluke189::Analyse_UnitsUint get_primaryUnit() = 0;
+	virtual Unit get_primaryUnit() = 0;
 
 	/**
 	 * Get physical unit of the secondary reading.
-	 * @return Physical unit of the current reading according to Fluke189::Analyse_UnitsUint
+	 * @return Physical unit of the current reading according to Fluke189DataResponseAnalyzerWrapper::enum Unit
 	 */
-	virtual Fluke189::Analyse_UnitsUint get_secondaryUnit() = 0;
+	virtual Unit get_secondaryUnit() = 0;
 
 
 	/**
 	 * Get current type of the primary reading (AC, DC, AC+DC, not applicable)
-	 * @return CurrentType according to Fluke189::Analyse_CurrentType
+	 * @return CurrentType according to Fluke189DataResponseAnalyzerWrapper::CurrentType
 	 */
-	virtual Fluke189::Analyse_CurrentType get_CurrentType() = 0;
+	virtual CurrentType get_primaryCurrentType() = 0;
+
+	/**
+	 * Get current type of the secondary reading (AC, DC, AC+DC, not applicable)
+	 * @return CurrentType according to Fluke189DataResponseAnalyzerWrapper::CurrentType
+	 */
+	virtual CurrentType get_secondaryCurrentType() = 0;
+
 
 	/**
 	 * Get current etch information (rising, falling, not applicable)
-	 * @return etch information according to Fluke189::Analyse_Etch
+	 * @return etch information according to Fluke189DataResponseAnalyzerWrapper::Etch
 	 */
-	virtual Fluke189::Analyse_Etch get_EtchInfo() = 0;
+	virtual Etch get_EtchInfo() = 0;
 };
 
 
@@ -783,14 +855,14 @@ public:
  * Can only be constructed from Fluke189ResponseAnalyser(private constructor)
  * The deconstruction is also done by Fluke189ResponseAnalyser (private destructor)
  */
-class Fluke189DataResponseAnalyserWrapperQD0 : public Fluke189DataResponseAnalyserWrapper
+class Fluke189DataResponseAnalyzerWrapperQD0 : public Fluke189DataResponseAnalyzerWrapper
 {
-	friend class Fluke189DataResponseAnalyser;
+	friend class Fluke189DataResponseAnalyzer;
 
-	Fluke189DataResponseAnalyserWrapperQD0(unsigned int datasetnumber, void* currentContainer)
-	: Fluke189DataResponseAnalyserWrapper(datasetnumber, currentContainer){};
+	Fluke189DataResponseAnalyzerWrapperQD0(unsigned int datasetnumber, void* currentContainer)
+	: Fluke189DataResponseAnalyzerWrapper(datasetnumber, currentContainer){};
 
-	~Fluke189DataResponseAnalyserWrapperQD0(){};
+	~Fluke189DataResponseAnalyzerWrapperQD0(){};
 
 public:
 	/**
@@ -825,34 +897,43 @@ public:
 	 * Shows the current mode switch setting
 	 * @return Number of mode switch or 0 when stuck between two positions
 	 */
-	Fluke189::Analyse_ModeSwitchSetting get_ModeSwitchSetting();
+	ModeSwitchSetting get_ModeSwitchSetting();
 
 
 	/**
 	 * Get physical unit of the primary reading.
-	 * @return Physical unit of the current reading according to Fluke189::Analyse_UnitsUint
+	 * @return Physical unit of the current reading according to Fluke189DataResponseAnalyzerWrapper::enum Unit
 	 */
-	Fluke189::Analyse_UnitsUint get_primaryUnit();
+	Unit get_primaryUnit();
 
 	/**
-	 * Get physical unit of the secondary reading.
-	 * @return Physical unit of the current reading according to Fluke189::Analyse_UnitsUint
+	 * Get physical unit of the secondary reading
+	 * @return Physical unit of the current reading according to  Fluke189DataResponseAnalyzerWrapper::enum Unit
 	 */
-	Fluke189::Analyse_UnitsUint get_secondaryUnit();
+	Unit get_secondaryUnit();
+
 
 
 	/**
 	 * Get current type of the primary reading (AC, DC, AC+DC, not applicable)
-	 * @return CurrentType according to Fluke189::Analyse_CurrentType
+	 * @return CurrentType according to Fluke189DataResponseAnalyzerWrapper::CurrentType
 	 */
-	Fluke189::Analyse_CurrentType get_CurrentType();
+	CurrentType get_primaryCurrentType();
+
+	/**
+	 * Get current type of the secondary reading (AC, DC, AC+DC, not applicable)
+	 * @return CurrentType according to Fluke189DataResponseAnalyzerWrapper::CurrentType
+	 */
+	CurrentType get_secondaryCurrentType();
 
 	/**
 	 * Get current etch information (rising, falling, not applicable)
-	 * @return etch information according to Fluke189::Analyse_Etch
+	 * @return etch information according to enum Fluke189DataResponseAnalyzerWrapper::Etch
 	 */
-	Fluke189::Analyse_Etch get_EtchInfo();
+	Etch get_EtchInfo();
+
 };
+
 
 
 
@@ -871,10 +952,8 @@ public:
  * but the integer value of the function will be ignored.
  *
  */
-class Fluke189DataResponseAnalyser
+class Fluke189DataResponseAnalyzer
 {
-	//TODO [DELETE] friend class Fluke189ResponseAnalyserWrapper;
-
 	//This are ResponseContainerTypes for internal usage
 	enum ResponseContainerType
 	{
@@ -889,21 +968,21 @@ class Fluke189DataResponseAnalyser
 	void* container;
 
 	//This is vector stores the addresses to the created Fluke189ResponseAnalyserWrappers
-	std::vector<Fluke189DataResponseAnalyserWrapper*> delAtDeconstruction;
+	std::vector<Fluke189DataResponseAnalyzerWrapper*> delAtDeconstruction;
 
 public:
 	/** Constructor for a QD0 response container*/
-	Fluke189DataResponseAnalyser(Fluke189::RCT_QD0& container);
+	Fluke189DataResponseAnalyzer(Fluke189::RCT_QD0& container);
 	/** Constructor for a QD2 response container*/
-	Fluke189DataResponseAnalyser(Fluke189::RCT_QD2& container);
+	Fluke189DataResponseAnalyzer(Fluke189::RCT_QD2& container);
 	/** Constructor for a QD4 response container*/
-	Fluke189DataResponseAnalyser(Fluke189::RCT_QD4& container);
+	Fluke189DataResponseAnalyzer(Fluke189::RCT_QD4& container);
 
 
 	/** The destructor for the class ResponseAnalyser will automatically delete all created wrappers at its own destruction*/
-	virtual ~Fluke189DataResponseAnalyser()
+	virtual ~Fluke189DataResponseAnalyzer()
 	{
-		std::vector<Fluke189DataResponseAnalyserWrapper*>::iterator itDel = this->delAtDeconstruction.begin();
+		std::vector<Fluke189DataResponseAnalyzerWrapper*>::iterator itDel = this->delAtDeconstruction.begin();
 		for(;itDel<this->delAtDeconstruction.end(); itDel++ )
 		{
 			if(*itDel != 0) delete *itDel;
@@ -914,13 +993,13 @@ public:
 	 * This function will return a Fluke189ResponseAnalyserWrapper which
 	 * holds the analysis functions.
 	 */
-	Fluke189DataResponseAnalyserWrapper* operator[](unsigned int datasetnumber)
+	Fluke189DataResponseAnalyzerWrapper* operator[](unsigned int datasetnumber)
 	{
-		Fluke189DataResponseAnalyserWrapper* wrapper;
+		Fluke189DataResponseAnalyzerWrapper* wrapper;
 		if(this->currentResponseContainerType==QD0)
 		{
 			if(datasetnumber != 0)throw std::range_error("There is no repetitive data for this type!");
-			wrapper=new Fluke189DataResponseAnalyserWrapperQD0(datasetnumber, this->container);
+			wrapper=new Fluke189DataResponseAnalyzerWrapperQD0(datasetnumber, this->container);
 			this->delAtDeconstruction.push_back(wrapper);
 		}
 		else
