@@ -1,7 +1,7 @@
 /**
  * @mainpage
- *
- *
+ * @todo Add Documentation to mainpage: Examples, Description etc....
+ * @todo Implement another object for min max and average analysis on QD0 packages: Think of name for that object...
  */
 
 
@@ -787,9 +787,9 @@ public:
 
 
 
-	/*****************
-	 * BASE FUNCTIONS*
-	 *****************/
+	/********************************************
+	 * BASE FUNCTIONS USEABLE FOR ALL CONTAINERS*
+	 ********************************************/
 
 	/**
 	 * Returns a struct with additional information created by analyzing qdInfo.\n
@@ -808,6 +808,7 @@ public:
 	 * @return A human readable error string
 	 */
 	std::string valueErrorToString(Fluke::Fluke189::ValueError number);
+
 
 
 
