@@ -90,7 +90,10 @@ public:
 		return Response;
 	}
 
-	//Query Setup QS
+
+//////////////////////
+////Query Setup QS////
+//////////////////////
 
 #pragma pack(push,1)
 	/**
@@ -165,9 +168,9 @@ public:
 		return Response;
 	}
 
-//
-//QUERY DATA
-//
+/////////////////////
+/////QUERY DATA//////
+/////////////////////
 
 #pragma pack(push,1)
 	/**
@@ -270,8 +273,9 @@ public:
 #pragma pack(pop)
 
 
-
-//Query Data 0: Current reading
+/////////////////////////////////
+//Query Data 0: Current reading//
+/////////////////////////////////
 
 #pragma pack(push,1)
 	/**
@@ -369,8 +373,9 @@ public:
 
 
 
-
-//Query Data 2: Get logs
+//////////////////////////
+//Query Data 2: Get logs//
+//////////////////////////
 
 #pragma pack(push, 1) //Pragma packing width 1
 
@@ -432,9 +437,9 @@ public:
 		return Response;
 	}
 
-
-//Query Data 4: Get Single Saves
-
+//////////////////////////////////
+//Query Data 4: Get Single Saves//
+//////////////////////////////////
 
 #pragma pack(push, 1) //Pragma packing width 1
 	/**
@@ -521,11 +526,9 @@ public:
 		return Response;
 	}
 
-
-
-
-
-	//Fluke Protocol Field Enums
+////////////////////////
+//Fluke Protocol Enums//
+////////////////////////
 
 	/**
 	 * Command Acknowledge Values
@@ -623,11 +626,7 @@ private:
 	unsigned int DelayChar_us;
 	unsigned int DelayResponse_us;
 
-
-
-
 public:
-
 
 	/**
 	 * Constuctor for class Fluke189
@@ -641,26 +640,12 @@ public:
 	 */
 	virtual ~Fluke189();
 
-
-
-
-
-
-
-
 private:
 	void SetupInterface( void );
 
-
 };
 
-
-
-
-
 class Fluke189DataResponseAnalyzer;
-
-
 
 /**
  * This Wrapper is the superclass for the different data sets.
@@ -762,7 +747,6 @@ public:
 		ACT_DirectandAlternatingCurrent
 	};
 
-
 	/**
 	 * Etch information (falling etch, rising etch, not applicable)
 	 */
@@ -772,7 +756,6 @@ public:
 		AE_FALLING_ETCH,
 		AE_RISING_ETCH,
 	};
-
 
 	/**
 	 * This struct is returned from Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo and holds
@@ -867,7 +850,6 @@ public:
 	 */
 	virtual ModeSwitchSetting get_ModeSwitchSetting() = 0;
 
-
 	/**
 	 * Get physical unit of the primary reading.
 	 * @return Physical unit of the current reading according to Fluke189DataResponseAnalyzerWrapper::enum Unit
@@ -879,7 +861,6 @@ public:
 	 * @return Physical unit of the current reading according to Fluke189DataResponseAnalyzerWrapper::enum Unit
 	 */
 	virtual Unit get_secondaryUnit() = 0;
-
 
 	/**
 	 * Get current type of the primary reading (AC, DC, AC+DC, not applicable)
@@ -893,15 +874,12 @@ public:
 	 */
 	virtual CurrentType get_secondaryCurrentType() = 0;
 
-
 	/**
 	 * Get current etch information (rising, falling, not applicable)
 	 * @return etch information according to Fluke189DataResponseAnalyzerWrapper::Etch
 	 */
 	virtual Etch get_EtchInfo() = 0;
 };
-
-
 
 /**
  * This is the subclass which holds the real functions for analyzing the response of QD0 command
@@ -986,9 +964,6 @@ public:
 	Etch get_EtchInfo();
 
 };
-
-
-
 
 /**
  * This class is used to analyze the response container.
@@ -1075,82 +1050,6 @@ public:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Function for getting error string of a value error number
-std::string getFluke189ValueErrorString(unsigned int DisplayErrorNo);  //integrated
-
-//Function for extracting additional Data out of a SerialResponse of command QD 0
-//Fluke::Fluke189::analysedInfo_t Fluke189AnalyseQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
-
-
-//Struct to store values with their unit
-typedef struct fluke189Value_t
-{
-	fluke189Value_t()
-	{
-		strUnit=' ';
-	}
-	/** Value from Fluke 189 (integer)*/
-	signed   int intValue;
-	unsigned int intDecimal;	//Place of Decimal Point
-	signed   int intPrefix;		//Prefix
-	std::string  strUnit;		//Unit: V, A, S, s etc...
-	std::string	 strSymbolsAfter;  //Symbols to be placed after value and unit
-	std::string  strSymbolsBefore; //Symbols to be placed before value
-} fluke189Value;
-
-//This function decides if operandSmall is smaller than operandBig
-bool fluke189ValueSmallerThan(fluke189Value_t operandSmall,fluke189Value_t operandBig);
-//This function generates a string out of a fluke189Value
-std::string fluke189ValueToString(fluke189Value_t value);
-
-//This function uses pointers to variables to calculate minimum, maximum and average value
-void fluke189ValueMinMaxAverage(fluke189Value_t current, fluke189Value_t& min, fluke189Value_t& max, fluke189Value_t& avg, long long& stat_average, long& stat_datanumber, bool& reset,std::string& stat_unit);
 
 
 
