@@ -1050,9 +1050,119 @@ public:
 };
 
 
+/**
+ * This class will handle continous logging with the QD0 command
+ * multiple QD0 commands
+ */
+class Fluke189QD0Logging
+{
+public:
+	/**
+	 * Constructor (stub)
+	 */
+	Fluke189QD0Logging(){};
+	/**
+	 * Deconstructor (stub)
+	 */
+	~Fluke189QD0Logging(){};
+
+private:
+
+	/*
+	 * Variables for storing minimum maximum and average value
+	 */
+    //Primary Display
+	long long pri_min;
+	long long pri_max;
+	long long pri_avg;
+    //Secondary Display
+	long long sec_min;
+	long long sec_max;
+	long long sec_avg;
+
+	/*
+	 * Variables for storing current units
+	 */
+
+	 Fluke189DataResponseAnalyzerWrapper::Unit pri_unit;
+	 Fluke189DataResponseAnalyzerWrapper::Unit sec_unit;
 
 
 
+
+
+
+public:
+	 /**
+	  * This function will add the container to the calculated min, max and average values
+	  * @param [in] container The container object
+	  */
+	 void addContainer(Fluke189::RCT_QD0& container);
+
+	 /**
+	  * @return This function will return the long long value of the internal variable pri_min.
+	  */
+	 long long get_Primary_Minimum_LL()
+	 {
+		 return this->pri_min;
+	 };
+
+	 /**
+	  * @return This function will return the long long value of the internal variable pri_max.
+	  */
+	 long long get_Primary_Maximum_LL()
+	 {
+		 return this->pri_max;
+	 }
+
+	 /**
+	  * @return This function will return the long long value of the internal variable pri_avg.
+	  */
+	 long long get_Primary_Average_LL()
+	 {
+		 return this->pri_avg;
+	 }
+
+	 /**
+	  * @return This function will return the long long value of the internal variable sec_min.
+	  */
+	 long long get_Secondary_Minimum_LL()
+	 {
+		 return this->sec_min;
+	 }
+
+	 /**
+	  * @return This function will return the long long value of the internal variable sec_max.
+	  */
+	 long long get_Secondary_Maximum_LL()
+	 {
+		 return this->sec_max;
+	 }
+
+	 /**
+	  * @return This function will return the long long value of the internal variable sec_avg.
+	  */
+	 long long get_Secondary_Average_LL()
+	 {
+		 return this->sec_avg;
+	 }
+
+	 /**
+	  * @return This function will return the unit (type: Fluke189DataResponseAnalyzerWrapper::Unit) value of the internal variable.
+	  */
+	 Fluke189DataResponseAnalyzerWrapper::Unit get_Primary_Unit()
+	 {
+		 return this->pri_unit;
+	 }
+
+	 /**
+	  * @return This function will return the unit (type: Fluke189DataResponseAnalyzerWrapper::Unit) value of the internal variable.
+	  */
+	 Fluke189DataResponseAnalyzerWrapper::Unit get_Secondary_Unit()
+	 {
+		 return this->sec_unit;
+	 }
+};
 
 
 
