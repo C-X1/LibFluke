@@ -1167,7 +1167,9 @@ public:
 	  */
 	 void addContainer(Fluke189::RCT_QD0& container)
 	 {
-		Fluke189DataResponseAnalyzer dra=Fluke189DataResponseAnalyzer(container);
+
+
+		 Fluke189DataResponseAnalyzer dra=Fluke189DataResponseAnalyzer(container);
 
 		 fluke189Value_t current_pri, current_sec;
 
@@ -1179,35 +1181,62 @@ public:
 		 current_sec.Prefix=container.Data()->I_secSi_Prefix;
 		 current_sec.Decimal=container.Data()->I_secDecimal;
 
+
+		 //Check if the unit is the same as before, if not reset min max and avg
+		 bool pri_reset=false, sec_reset=false;
+		 if(dra[0]->get_primaryUnit() != this->pri_unit)
+		 {
+			 this->pri_unit=dra[0]->get_primaryUnit();
+			 this->pri_avg=current_pri.Value;
+			 this->pri_count=1;
+			 this->pri_min=current_pri;
+			 this->pri_max=current_pri;
+			 pri_reset=true;
+			 return;
+		 }
+		 if(dra[0]->get_secondaryUnit() != this->sec_unit)
+		 {
+			 this->sec_unit=dra[0]->get_secondaryUnit();
+			 this->sec_avg=current_pri.Value;
+			 this->sec_count=1;
+			 this->sec_min=current_sec;
+			 this->sec_max=current_sec;
+			 sec_reset=true;
+			 return;
+		 }
+
+
+
+
 		 //Process MINIMUM
 		 //If current is smaller set it to the new min
-		 if(fluke189ValueSmallerThan(current_pri, this->pri_min) && !dra[0]->hasErrorPRIdisplay(0))
+		 if(fluke189ValueSmallerThan(current_pri, this->pri_min) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
 		 {
 			 this->pri_min=current_pri;
 		 }
-		 if(fluke189ValueSmallerThan(current_sec, this->sec_min) && !dra[0]->hasErrorSECdisplay(0))
+		 if(fluke189ValueSmallerThan(current_sec, this->sec_min) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
 		 {
 			 this->sec_min=current_sec;
 		 }
 
 		 //Process MAXIMUM
 		 //If max is smaller than current set current to the new max
-		 if(fluke189ValueSmallerThan(this->pri_max, current_pri) && !dra[0]->hasErrorPRIdisplay(0))
+		 if(fluke189ValueSmallerThan(this->pri_max, current_pri) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
 		 {
 			 this->pri_max=current_pri;
 		 }
-		 if(fluke189ValueSmallerThan(this->sec_min, current_sec) && !dra[0]->hasErrorSECdisplay(0))
+		 if(fluke189ValueSmallerThan(this->sec_min, current_sec) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
 		 {
 			 this->sec_min=current_sec;
 		 }
 
 		 //Process AVERAGE
 		 //@todo Implement AVERAGE
-		 if(!dra[0]->hasErrorPRIdisplay())
+		 if(!dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
 		 {
 			 //		stat_average=(stat_average*stat_datanumber+current.intValue*pow(10,13-(current.intPrefix*(-3)+current.intDecimal)))/(stat_datanumber+1);
 		 }
-		 if(!dra[0]->hasErrorSECdisplay())
+		 if(!dra[0]->hasErrorSECdisplay(0) && !sec_reset)
 		 {
 			 //		stat_average=(stat_average*stat_datanumber+current.intValue*pow(10,13-(current.intPrefix*(-3)+current.intDecimal)))/(stat_datanumber+1);
 		 }
