@@ -10,8 +10,11 @@
 using namespace LibSerial;
 namespace Fluke {
 
-
-	Fluke189::Fluke189(std::string filename){
+	//////////////////////////
+    ////Fluke189 Functions////
+    //////////////////////////
+	Fluke189::Fluke189(std::string filename)
+	{
 		SetupInterface();
 		this->SetDeviceFilename(filename);
 	}
@@ -36,19 +39,26 @@ namespace Fluke {
 	}
 
 
-	/*
-	 * ResponseAnalyzer Functions
-	 */
+
+
+
+
+	//////////////////////////////////
+	////ResponseAnalyzer Functions////
+	//////////////////////////////////
+
 	Fluke189DataResponseAnalyzer::Fluke189DataResponseAnalyzer(Fluke189::RCT_QD0& container)
 	{
 		this->container=&container;
 		this->currentResponseContainerType=QD0;
 	}
+
 	Fluke189DataResponseAnalyzer::Fluke189DataResponseAnalyzer(Fluke189::RCT_QD2& container)
 	{
 		this->container=&container;
 		this->currentResponseContainerType=QD2;
 	}
+
 	Fluke189DataResponseAnalyzer::Fluke189DataResponseAnalyzer(Fluke189::RCT_QD4& container)
 	{
 		this->container=&container;
@@ -56,9 +66,13 @@ namespace Fluke {
 	}
 
 
-	/*
-	 * Fluke189ResponseAnalyzerWrapper functions
-	 */
+
+
+
+    /////////////////////////////////////////////////
+	////Fluke189ResponseAnalyzerWrapper Functions////
+	/////////////////////////////////////////////////
+
 	Fluke189DataResponseAnalyzerWrapper::analyzedInfo_t Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo)
 	{
 		Fluke189DataResponseAnalyzerWrapper::analyzedInfo_t info;
@@ -485,9 +499,12 @@ namespace Fluke {
 		return ErrorString;
 	}
 
-	/*
-	 * Fluke189ResponseAnalyzerWrapperQD0 functions
-	 */
+
+
+
+	////////////////////////////////////////////////////
+	////Fluke189ResponseAnalyzerWrapperQD0 Functions////
+	////////////////////////////////////////////////////
 
 	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorPRIdisplay(bool reading2)
 	{

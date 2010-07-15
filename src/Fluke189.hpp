@@ -1,7 +1,7 @@
 /**
  * @mainpage
  * @todo Add Documentation to mainpage: Examples, Description etc....
- * @todo Implement another object for min max and average analysis on QD0 packages: Think of name for that object...
+ *
  */
 
 
@@ -677,9 +677,9 @@ public:
 	~Fluke189DataResponseAnalyzerWrapper(){};
 
 
-	/***************
-	 * DATA STRUCTS*
-	 ***************/
+	 ////////////////
+	 //DATA STRUCTS//
+	 ////////////////
 
 
 	/**
@@ -787,9 +787,9 @@ public:
 
 
 
-	/********************************************
-	 * BASE FUNCTIONS USEABLE FOR ALL CONTAINERS*
-	 ********************************************/
+	/////////////////////////////////////////////
+	//BASE FUNCTIONS USEABLE FOR ALL CONTAINERS//
+	/////////////////////////////////////////////
 
 	/**
 	 * Returns a struct with additional information created by analyzing qdInfo.\n
@@ -812,9 +812,9 @@ public:
 
 
 
-	/********************
-	 * VIRTUAL FUNCTIONS*
-	 ********************/
+	/////////////////////
+	//VIRTUAL FUNCTIONS//
+	/////////////////////
 
 
 	/**
@@ -846,7 +846,7 @@ public:
 	virtual Fluke189::ValueError get_SECdisplayError(bool reading2) = 0;
 
 	/**
-	 * Shows the current mode switch setting
+	 * Get the current mode switch setting
 	 * @return Number of mode switch or 0 when stuck between two positions
 	 */
 	virtual ModeSwitchSetting get_ModeSwitchSetting() = 0;
@@ -926,11 +926,10 @@ public:
 	Fluke189::ValueError get_SECdisplayError(bool reading2);
 
 	/**
-	 * Shows the current mode switch setting
+	 * Get the current mode switch setting
 	 * @return Number of mode switch or 0 when stuck between two positions
 	 */
 	ModeSwitchSetting get_ModeSwitchSetting();
-
 
 	/**
 	 * Get physical unit of the primary reading.
@@ -943,8 +942,6 @@ public:
 	 * @return Physical unit of the current reading according to  Fluke189DataResponseAnalyzerWrapper::enum Unit
 	 */
 	Unit get_secondaryUnit();
-
-
 
 	/**
 	 * Get current type of the primary reading (AC, DC, AC+DC, not applicable)
@@ -1066,28 +1063,99 @@ public:
 	 */
 	~Fluke189QD0Logging(){};
 
+	/**
+	 * Struct to store value information in the min max variables
+	 */
+	typedef struct
+	{
+		signed   int Value;     ///<Value (without decimal)
+		unsigned int Decimal;	///<Decimal point location
+		signed   int Prefix;	///<Prefix
+	}  fluke189Value_t;
+
+
 private:
 
 	/*
 	 * Variables for storing minimum maximum and average value
 	 */
     //Primary Display
-	long long pri_min;
-	long long pri_max;
-	long long pri_avg;
+		fluke189Value_t  pri_min;
+		fluke189Value_t  pri_max;
+		long long pri_avg;
+
+
     //Secondary Display
-	long long sec_min;
-	long long sec_max;
-	long long sec_avg;
+		fluke189Value_t  sec_min;
+		fluke189Value_t  sec_max;
+		long long sec_avg;
+
+
+	//Number of data sets
+		unsigned int pri_count, sec_count;
+
 
 	/*
 	 * Variables for storing current units
 	 */
+	 Fluke189DataResponseAnalyzerWrapper::Unit pri_unit, sec_unit;
 
-	 Fluke189DataResponseAnalyzerWrapper::Unit pri_unit;
-	 Fluke189DataResponseAnalyzerWrapper::Unit sec_unit;
+    /*
+     * Check if operandSmall is smaller than operandBig
+     * needed to get
+     */
+	bool fluke189ValueSmallerThan(fluke189Value_t operandSmall,fluke189Value_t operandBig)
+	{
+
+		//Calculation of decimal point location:
+		//each step in prefix shifts the decimal point 3 times in a direction
+		int decimalPosSmall=(-3)*(operandSmall.Prefix)+operandSmall.Decimal;
+		int decimalPosBig  =(-3)*(operandBig.Prefix)+operandBig.Decimal;
 
 
+		long long big,small; //Stores all values in piko prefix
+
+		big  =operandBig.Value*pow(10, 13-decimalPosBig);
+		small=operandSmall.Value*pow(10, 13-decimalPosSmall);
+
+		return (small<big);
+	}
+
+//	void fluke189ValueMinMaxAverage(fluke189Value_t current, fluke189Value_t& min, fluke189Value_t& max, fluke189Value_t& avg, long long &stat_average, long &stat_datanumber, bool &reset,std::string &stat_unit)
+//	{
+//		//reset if unit (mode) changes...
+//		if(current.strUnit!=stat_unit)
+//		{
+//			reset=true;
+//			stat_unit=current.strUnit;
+//		}
+//
+//		//Clear average on reset
+//		if(reset)
+//		{
+//			stat_average=0;
+//			stat_datanumber=0;
+//		}
+//		stat_datanumber++;
+//
+
+//
+//		reset=false;
+//
+//		stat_average=(stat_average*stat_datanumber+current.intValue*pow(10,13-(current.intPrefix*(-3)+current.intDecimal)))/(stat_datanumber+1);
+//
+//
+//		int highest_place_notzero;
+//		//get highest place of value which is not zero
+//		for(highest_place_notzero=18; (  abs(stat_average/pow(10,highest_place_notzero)) )==0 && highest_place_notzero >= 0; highest_place_notzero--)
+//
+//		//Set prefix according highest part of value
+//		//if pico set it to nano
+//		avg.intPrefix=((highest_place_notzero/3)==0)? -3  : (highest_place_notzero/3)-4;
+//		avg.intDecimal=3;
+//		avg.intValue=(int)(stat_average/pow(10,13-(avg.intPrefix*(-3)+avg.intDecimal)));
+//		avg.strUnit=current.strUnit;
+//	}
 
 
 
@@ -1097,26 +1165,72 @@ public:
 	  * This function will add the container to the calculated min, max and average values
 	  * @param [in] container The container object
 	  */
-	 void addContainer(Fluke189::RCT_QD0& container);
+	 void addContainer(Fluke189::RCT_QD0& container)
+	 {
+		Fluke189DataResponseAnalyzer dra=Fluke189DataResponseAnalyzer(container);
+
+		 fluke189Value_t current_pri, current_sec;
+
+		 current_pri.Value=container.Data()->I_priValue0;
+		 current_pri.Prefix=container.Data()->I_priSI_Prefix0;
+		 current_pri.Decimal=container.Data()->I_priDecimal0;
+
+		 current_sec.Value=container.Data()->I_secValue0;
+		 current_sec.Prefix=container.Data()->I_secSi_Prefix;
+		 current_sec.Decimal=container.Data()->I_secDecimal;
+
+		 //Process MINIMUM
+		 //If current is smaller set it to the new min
+		 if(fluke189ValueSmallerThan(current_pri, this->pri_min) && !dra[0]->hasErrorPRIdisplay(0))
+		 {
+			 this->pri_min=current_pri;
+		 }
+		 if(fluke189ValueSmallerThan(current_sec, this->sec_min) && !dra[0]->hasErrorSECdisplay(0))
+		 {
+			 this->sec_min=current_sec;
+		 }
+
+		 //Process MAXIMUM
+		 //If max is smaller than current set current to the new max
+		 if(fluke189ValueSmallerThan(this->pri_max, current_pri) && !dra[0]->hasErrorPRIdisplay(0))
+		 {
+			 this->pri_max=current_pri;
+		 }
+		 if(fluke189ValueSmallerThan(this->sec_min, current_sec) && !dra[0]->hasErrorSECdisplay(0))
+		 {
+			 this->sec_min=current_sec;
+		 }
+
+		 //Process AVERAGE
+		 //@todo Implement AVERAGE
+		 if(!dra[0]->hasErrorPRIdisplay())
+		 {
+			 //		stat_average=(stat_average*stat_datanumber+current.intValue*pow(10,13-(current.intPrefix*(-3)+current.intDecimal)))/(stat_datanumber+1);
+		 }
+		 if(!dra[0]->hasErrorSECdisplay())
+		 {
+			 //		stat_average=(stat_average*stat_datanumber+current.intValue*pow(10,13-(current.intPrefix*(-3)+current.intDecimal)))/(stat_datanumber+1);
+		 }
+	 }
 
 	 /**
-	  * @return This function will return the long long value of the internal variable pri_min.
+	  * @return This function will return the internal variable pri_min.
 	  */
-	 long long get_Primary_Minimum_LL()
+	 fluke189Value_t get_Primary_Minimum()
 	 {
 		 return this->pri_min;
 	 };
 
 	 /**
-	  * @return This function will return the long long value of the internal variable pri_max.
+	  * @return This function will return the internal variable pri_max.
 	  */
-	 long long get_Primary_Maximum_LL()
+	 fluke189Value_t get_Primary_Maximum()
 	 {
 		 return this->pri_max;
 	 }
 
 	 /**
-	  * @return This function will return the long long value of the internal variable pri_avg.
+	  * @return This function will return the internal variable pri_avg.
 	  */
 	 long long get_Primary_Average_LL()
 	 {
@@ -1124,23 +1238,23 @@ public:
 	 }
 
 	 /**
-	  * @return This function will return the long long value of the internal variable sec_min.
+	  * @return This function will return the internal variable sec_min.
 	  */
-	 long long get_Secondary_Minimum_LL()
+	 fluke189Value_t get_Secondary_Minimum()
 	 {
 		 return this->sec_min;
 	 }
 
 	 /**
-	  * @return This function will return the long long value of the internal variable sec_max.
+	  * @return This function will return the internal variable sec_max.
 	  */
-	 long long get_Secondary_Maximum_LL()
+	 fluke189Value_t get_Secondary_Maximum()
 	 {
 		 return this->sec_max;
 	 }
 
 	 /**
-	  * @return This function will return the long long value of the internal variable sec_avg.
+	  * @return This function will return the internal variable sec_avg.
 	  */
 	 long long get_Secondary_Average_LL()
 	 {
