@@ -315,7 +315,7 @@ public:
 			unsigned int I_ErrorSV0 		 :2;  ///<Error when value == 1 (no error: when 3 (negative) or 0 (positive))
 		   };
 		 };
-		unsigned int I_secDecimal			 :8;  ///<Secondary decimal point location
+		unsigned int I_secDecimal			 :8;  ///<Secondary decimal point location (Gets 128 in Hz Mode, If in Hz it should be 2 (always))
 		  signed int I_secSi_Prefix	 		 :8;  ///<Secondary SI-Prefix @todo Check if it is different from first any time...
 
 		union
@@ -708,7 +708,7 @@ public:
 	 */
 	enum Unit
 	{
-		AU_None,
+		AU_None=0,
 
 		AU_AC_V,
 		AU_DC_V,
@@ -1053,16 +1053,7 @@ public:
  */
 class Fluke189QD0Logging
 {
-public:
-	/**
-	 * Constructor (stub)
-	 */
-	Fluke189QD0Logging(){};
-	/**
-	 * Deconstructor (stub)
-	 */
-	~Fluke189QD0Logging(){};
-
+public: /*Types*/
 	/**
 	 * Struct to store value information in the min max variables
 	 */
@@ -1071,40 +1062,79 @@ public:
 		signed   int Value;     ///<Value (without decimal)
 		unsigned int Decimal;	///<Decimal point location
 		signed   int Prefix;	///<Prefix
-	}  fluke189Value_t;
+	}  minmaxvalue_t;
 
 
-private:
+	typedef struct modes_t
+	{
+		unsigned int minmaxavg;
+		bool delta;
+		bool deltapercent;
+		Fluke189DataResponseAnalyzerWrapper::Etch etch;
+
+		bool operator==(modes_t modes)
+		{
+			return (this->minmaxavg    == modes.minmaxavg   &&
+					this->delta        == modes.delta       &&
+					this->deltapercent == modes.deltapercent&&
+					this->etch		   == modes.etch          );
+		}
+		bool operator!=(modes_t modes)
+		{
+			return !this->operator ==(modes);
+		}
+	} modes_t;
+
+private:/*Variables*/
 
 	/*
 	 * Variables for storing minimum maximum and average value
 	 */
     //Primary Display
-		fluke189Value_t  pri_min;
-		fluke189Value_t  pri_max;
-		long long pri_avg;
+		minmaxvalue_t  pri_min;
+		minmaxvalue_t  pri_max;
+		minmaxvalue_t  pri_avg;
+		long long pri_avg_ll;
+		unsigned int pri_count;
 
+		modes_t modes;
 
     //Secondary Display
-		fluke189Value_t  sec_min;
-		fluke189Value_t  sec_max;
-		long long sec_avg;
-
-
-	//Number of data sets
-		unsigned int pri_count, sec_count;
-
+		minmaxvalue_t  sec_min;
+		minmaxvalue_t  sec_max;
+		minmaxvalue_t  sec_avg;
+		long long sec_avg_ll;
+		unsigned int sec_count;
 
 	/*
 	 * Variables for storing current units
 	 */
 	 Fluke189DataResponseAnalyzerWrapper::Unit pri_unit, sec_unit;
 
+public: /*Functions*/
+
+	/**
+	 * Constructor
+	 */
+	Fluke189QD0Logging()
+	{
+		this->pri_unit=Fluke189DataResponseAnalyzerWrapper::AU_None;
+		this->pri_unit=Fluke189DataResponseAnalyzerWrapper::AU_None;
+	};
+	/**
+	 * Deconstructor (stub)
+	 */
+	~Fluke189QD0Logging(){};
+
+
+
+private:
+
     /*
      * Check if operandSmall is smaller than operandBig
      * needed to get
      */
-	bool fluke189ValueSmallerThan(fluke189Value_t operandSmall,fluke189Value_t operandBig)
+	bool fluke189ValueSmallerThan(minmaxvalue_t operandSmall,minmaxvalue_t operandBig)
 	{
 
 		//Calculation of decimal point location:
@@ -1121,44 +1151,6 @@ private:
 		return (small<big);
 	}
 
-//	void fluke189ValueMinMaxAverage(fluke189Value_t current, fluke189Value_t& min, fluke189Value_t& max, fluke189Value_t& avg, long long &stat_average, long &stat_datanumber, bool &reset,std::string &stat_unit)
-//	{
-//		//reset if unit (mode) changes...
-//		if(current.strUnit!=stat_unit)
-//		{
-//			reset=true;
-//			stat_unit=current.strUnit;
-//		}
-//
-//		//Clear average on reset
-//		if(reset)
-//		{
-//			stat_average=0;
-//			stat_datanumber=0;
-//		}
-//		stat_datanumber++;
-//
-
-//
-//		reset=false;
-//
-//		stat_average=(stat_average*stat_datanumber+current.intValue*pow(10,13-(current.intPrefix*(-3)+current.intDecimal)))/(stat_datanumber+1);
-//
-//
-//		int highest_place_notzero;
-//		//get highest place of value which is not zero
-//		for(highest_place_notzero=18; (  abs(stat_average/pow(10,highest_place_notzero)) )==0 && highest_place_notzero >= 0; highest_place_notzero--)
-//
-//		//Set prefix according highest part of value
-//		//if pico set it to nano
-//		avg.intPrefix=((highest_place_notzero/3)==0)? -3  : (highest_place_notzero/3)-4;
-//		avg.intDecimal=3;
-//		avg.intValue=(int)(stat_average/pow(10,13-(avg.intPrefix*(-3)+avg.intDecimal)));
-//		avg.strUnit=current.strUnit;
-//	}
-
-
-
 
 public:
 	 /**
@@ -1168,44 +1160,53 @@ public:
 	 void addContainer(Fluke189::RCT_QD0& container)
 	 {
 
+		 //@todo add special stuff rising falling etch, delta etc ...
 
 		 Fluke189DataResponseAnalyzer dra=Fluke189DataResponseAnalyzer(container);
 
-		 fluke189Value_t current_pri, current_sec;
+		 minmaxvalue_t current_pri, current_sec;
 
 		 current_pri.Value=container.Data()->I_priValue0;
 		 current_pri.Prefix=container.Data()->I_priSI_Prefix0;
-		 current_pri.Decimal=container.Data()->I_priDecimal0;
+		 current_pri.Decimal=(container.Data()->I_priDecimal0 != 128) ? container.Data()->I_priDecimal0 : 2;
 
 		 current_sec.Value=container.Data()->I_secValue0;
 		 current_sec.Prefix=container.Data()->I_secSi_Prefix;
-		 current_sec.Decimal=container.Data()->I_secDecimal;
+		 current_sec.Decimal=(container.Data()->I_secDecimal != 128) ? container.Data()->I_secDecimal : 2;
+
+		 modes_t current_modes;
+		 current_modes.deltapercent=container.Data()->I_QDInfo.I_DeltaPercent;
+		 current_modes.delta=container.Data()->I_QDInfo.I_Delta;
+		 current_modes.minmaxavg=container.Data()->I_QDInfo.I_MinMaxAvg;
+		 current_modes.etch=dra[0]->get_EtchInfo();
+
+
 
 
 		 //Check if the unit is the same as before, if not reset min max and avg
 		 bool pri_reset=false, sec_reset=false;
-		 if(dra[0]->get_primaryUnit() != this->pri_unit)
+		 if(dra[0]->get_primaryUnit() != this->pri_unit || current_modes != this->modes)
 		 {
 			 this->pri_unit=dra[0]->get_primaryUnit();
-			 this->pri_avg=current_pri.Value;
+			 this->pri_avg_ll=current_pri.Value;
 			 this->pri_count=1;
 			 this->pri_min=current_pri;
 			 this->pri_max=current_pri;
 			 pri_reset=true;
-			 return;
 		 }
-		 if(dra[0]->get_secondaryUnit() != this->sec_unit)
+		 if(dra[0]->get_secondaryUnit() != this->sec_unit || current_modes != this->modes)
 		 {
 			 this->sec_unit=dra[0]->get_secondaryUnit();
-			 this->sec_avg=current_pri.Value;
+			 this->sec_avg_ll=current_pri.Value;
 			 this->sec_count=1;
 			 this->sec_min=current_sec;
 			 this->sec_max=current_sec;
 			 sec_reset=true;
-			 return;
 		 }
-
-
+		 if(current_modes != this->modes)
+		 {
+			 this->modes = current_modes;
+		 }
 
 
 		 //Process MINIMUM
@@ -1231,21 +1232,21 @@ public:
 		 }
 
 		 //Process AVERAGE
-		 //@todo Implement AVERAGE
 		 if(!dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
 		 {
-			 //		stat_average=(stat_average*stat_datanumber+current.intValue*pow(10,13-(current.intPrefix*(-3)+current.intDecimal)))/(stat_datanumber+1);
+			 this->pri_avg_ll=(this->pri_avg_ll * this->pri_count+current_pri.Value*pow(10,13-(current_pri.Prefix*(-3)+current_pri.Decimal)))/(++this->pri_count);
 		 }
 		 if(!dra[0]->hasErrorSECdisplay(0) && !sec_reset)
 		 {
-			 //		stat_average=(stat_average*stat_datanumber+current.intValue*pow(10,13-(current.intPrefix*(-3)+current.intDecimal)))/(stat_datanumber+1);
+			 this->sec_avg_ll=(this->sec_avg_ll * this->sec_count+current_sec.Value*pow(10,13-(current_sec.Prefix*(-3)+current_sec.Decimal)))/(++this->sec_count);
 		 }
+
 	 }
 
 	 /**
 	  * @return This function will return the internal variable pri_min.
 	  */
-	 fluke189Value_t get_Primary_Minimum()
+	 minmaxvalue_t get_Primary_Minimum()
 	 {
 		 return this->pri_min;
 	 };
@@ -1253,7 +1254,7 @@ public:
 	 /**
 	  * @return This function will return the internal variable pri_max.
 	  */
-	 fluke189Value_t get_Primary_Maximum()
+	 minmaxvalue_t get_Primary_Maximum()
 	 {
 		 return this->pri_max;
 	 }
@@ -1263,13 +1264,13 @@ public:
 	  */
 	 long long get_Primary_Average_LL()
 	 {
-		 return this->pri_avg;
+		 return this->pri_avg_ll;
 	 }
 
 	 /**
 	  * @return This function will return the internal variable sec_min.
 	  */
-	 fluke189Value_t get_Secondary_Minimum()
+	 minmaxvalue_t get_Secondary_Minimum()
 	 {
 		 return this->sec_min;
 	 }
@@ -1277,7 +1278,7 @@ public:
 	 /**
 	  * @return This function will return the internal variable sec_max.
 	  */
-	 fluke189Value_t get_Secondary_Maximum()
+	 minmaxvalue_t get_Secondary_Maximum()
 	 {
 		 return this->sec_max;
 	 }
@@ -1287,7 +1288,7 @@ public:
 	  */
 	 long long get_Secondary_Average_LL()
 	 {
-		 return this->sec_avg;
+		 return this->sec_avg_ll;
 	 }
 
 	 /**
@@ -1305,6 +1306,16 @@ public:
 	 {
 		 return this->sec_unit;
 	 }
+
+	 /**
+	  * @return This function will return the modes variable
+	  */
+	 modes_t get_Modes()
+	 {
+		 return this->modes;
+	 }
+
+	 //@todo add get_string functions
 };
 
 

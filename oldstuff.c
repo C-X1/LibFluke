@@ -1,6 +1,6 @@
 #if(0)
 
-#warning This is just a file to store old stuff which needs to be reimplemented do not compile!
+#error This is just a file to store old stuff which needs to be reimplemented do not compile!
 
 
 
