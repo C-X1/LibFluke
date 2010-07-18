@@ -1,7 +1,7 @@
 /**
  * @mainpage
  * @todo Add Documentation to mainpage: Examples, Description etc....
- *
+ * @todo Add Error for -OL (capacitor measurement when strips are connected together)
  */
 
 
@@ -1062,7 +1062,7 @@ public: /*Types*/
 		signed   int Value;     ///<Value (without decimal)
 		unsigned int Decimal;	///<Decimal point location
 		signed   int Prefix;	///<Prefix
-	}  minmaxvalue_t;
+	}  minMaxAvgValueStorage_t;
 
 
 	typedef struct modes_t
@@ -1091,18 +1091,18 @@ private:/*Variables*/
 	 * Variables for storing minimum maximum and average value
 	 */
     //Primary Display
-		minmaxvalue_t  pri_min;
-		minmaxvalue_t  pri_max;
-		minmaxvalue_t  pri_avg;
+		minMaxAvgValueStorage_t  pri_min;
+		minMaxAvgValueStorage_t  pri_max;
+		minMaxAvgValueStorage_t  pri_avg;
 		long long pri_avg_ll;
 		unsigned int pri_count;
 
 		modes_t modes;
 
     //Secondary Display
-		minmaxvalue_t  sec_min;
-		minmaxvalue_t  sec_max;
-		minmaxvalue_t  sec_avg;
+		minMaxAvgValueStorage_t  sec_min;
+		minMaxAvgValueStorage_t  sec_max;
+		minMaxAvgValueStorage_t  sec_avg;
 		long long sec_avg_ll;
 		unsigned int sec_count;
 
@@ -1134,7 +1134,7 @@ private:
      * Check if operandSmall is smaller than operandBig
      * needed to get
      */
-	bool fluke189ValueSmallerThan(minmaxvalue_t operandSmall,minmaxvalue_t operandBig)
+	bool fluke189ValueSmallerThan(minMaxAvgValueStorage_t operandSmall,minMaxAvgValueStorage_t operandBig)
 	{
 
 		//Calculation of decimal point location:
@@ -1164,7 +1164,7 @@ public:
 
 		 Fluke189DataResponseAnalyzer dra=Fluke189DataResponseAnalyzer(container);
 
-		 minmaxvalue_t current_pri, current_sec;
+		 minMaxAvgValueStorage_t current_pri, current_sec;
 
 		 current_pri.Value=container.Data()->I_priValue0;
 		 current_pri.Prefix=container.Data()->I_priSI_Prefix0;
@@ -1188,8 +1188,7 @@ public:
 		 if(dra[0]->get_primaryUnit() != this->pri_unit || current_modes != this->modes)
 		 {
 			 this->pri_unit=dra[0]->get_primaryUnit();
-			 this->pri_avg_ll=current_pri.Value;
-			 this->pri_count=1;
+			 this->pri_count=0;
 			 this->pri_min=current_pri;
 			 this->pri_max=current_pri;
 			 pri_reset=true;
@@ -1197,8 +1196,8 @@ public:
 		 if(dra[0]->get_secondaryUnit() != this->sec_unit || current_modes != this->modes)
 		 {
 			 this->sec_unit=dra[0]->get_secondaryUnit();
-			 this->sec_avg_ll=current_pri.Value;
-			 this->sec_count=1;
+
+			 this->sec_count=0;
 			 this->sec_min=current_sec;
 			 this->sec_max=current_sec;
 			 sec_reset=true;
@@ -1232,21 +1231,45 @@ public:
 		 }
 
 		 //Process AVERAGE
-		 if(!dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
+		 if(!dra[0]->hasErrorPRIdisplay(0))
 		 {
 			 this->pri_avg_ll=(this->pri_avg_ll * this->pri_count+current_pri.Value*pow(10,13-(current_pri.Prefix*(-3)+current_pri.Decimal)))/(++this->pri_count);
+			 this->pri_count++;
 		 }
-		 if(!dra[0]->hasErrorSECdisplay(0) && !sec_reset)
+		 if(!dra[0]->hasErrorSECdisplay(0))
 		 {
 			 this->sec_avg_ll=(this->sec_avg_ll * this->sec_count+current_sec.Value*pow(10,13-(current_sec.Prefix*(-3)+current_sec.Decimal)))/(++this->sec_count);
+			 this->sec_count++;
 		 }
 
+
+		 int pri_highest_place=0;
+		 //Get highest place of average
+		 for(int i = 0; ((int)(this->pri_avg_ll / pow(10, 18-i))) == 0;i++ ) pri_highest_place = 18 - i;
+
+
+		 if(pri_highest_place<4)
+		 {
+			 pri_avg.Prefix=-3;
+			 pri_avg.Decimal=3;
+			 pri_avg.Value=(int)pri_avg_ll;
+		 }
+		 else
+		 {
+			 pri_avg.Prefix=pri_highest_place/3-4;
+			 pri_avg.Decimal=2;
+			 pri_avg.Value=pri_avg_ll/pow(10, pri_highest_place-1-pri_avg.Prefix);
+		 }
+
+
+		 std::cout<<pri_avg.Value<<" ";
+		 std::cout<<pri_avg.Prefix<<std::endl;
 	 }
 
 	 /**
 	  * @return This function will return the internal variable pri_min.
 	  */
-	 minmaxvalue_t get_Primary_Minimum()
+	 minMaxAvgValueStorage_t get_Primary_Minimum()
 	 {
 		 return this->pri_min;
 	 };
@@ -1254,7 +1277,7 @@ public:
 	 /**
 	  * @return This function will return the internal variable pri_max.
 	  */
-	 minmaxvalue_t get_Primary_Maximum()
+	 minMaxAvgValueStorage_t get_Primary_Maximum()
 	 {
 		 return this->pri_max;
 	 }
@@ -1270,7 +1293,7 @@ public:
 	 /**
 	  * @return This function will return the internal variable sec_min.
 	  */
-	 minmaxvalue_t get_Secondary_Minimum()
+	 minMaxAvgValueStorage_t get_Secondary_Minimum()
 	 {
 		 return this->sec_min;
 	 }
@@ -1278,7 +1301,7 @@ public:
 	 /**
 	  * @return This function will return the internal variable sec_max.
 	  */
-	 minmaxvalue_t get_Secondary_Maximum()
+	 minMaxAvgValueStorage_t get_Secondary_Maximum()
 	 {
 		 return this->sec_max;
 	 }
