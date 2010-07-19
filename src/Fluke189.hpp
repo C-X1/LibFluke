@@ -1152,119 +1152,23 @@ private:
 	}
 
 
+
+
 public:
+	/**
+	 * This function converts a minMaxAvgValueStorage_t to a string with dot and prefix
+	 * @param [in] value The value storage
+	 * @return Returns a standard string of the value
+	 * @todo implement that
+	 */
+	std::string minMaxAvgValueStorageToString(minMaxAvgValueStorage_t value);
+
+
 	 /**
 	  * This function will add the container to the calculated min, max and average values
 	  * @param [in] container The container object
 	  */
-	 void addContainer(Fluke189::RCT_QD0& container)
-	 {
-
-		 //@todo add special stuff rising falling etch, delta etc ...
-
-		 Fluke189DataResponseAnalyzer dra=Fluke189DataResponseAnalyzer(container);
-
-		 minMaxAvgValueStorage_t current_pri, current_sec;
-
-		 current_pri.Value=container.Data()->I_priValue0;
-		 current_pri.Prefix=container.Data()->I_priSI_Prefix0;
-		 current_pri.Decimal=(container.Data()->I_priDecimal0 != 128) ? container.Data()->I_priDecimal0 : 2;
-
-		 current_sec.Value=container.Data()->I_secValue0;
-		 current_sec.Prefix=container.Data()->I_secSi_Prefix;
-		 current_sec.Decimal=(container.Data()->I_secDecimal != 128) ? container.Data()->I_secDecimal : 2;
-
-		 modes_t current_modes;
-		 current_modes.deltapercent=container.Data()->I_QDInfo.I_DeltaPercent;
-		 current_modes.delta=container.Data()->I_QDInfo.I_Delta;
-		 current_modes.minmaxavg=container.Data()->I_QDInfo.I_MinMaxAvg;
-		 current_modes.etch=dra[0]->get_EtchInfo();
-
-
-
-
-		 //Check if the unit is the same as before, if not reset min max and avg
-		 bool pri_reset=false, sec_reset=false;
-		 if(dra[0]->get_primaryUnit() != this->pri_unit || current_modes != this->modes)
-		 {
-			 this->pri_unit=dra[0]->get_primaryUnit();
-			 this->pri_count=0;
-			 this->pri_min=current_pri;
-			 this->pri_max=current_pri;
-			 pri_reset=true;
-		 }
-		 if(dra[0]->get_secondaryUnit() != this->sec_unit || current_modes != this->modes)
-		 {
-			 this->sec_unit=dra[0]->get_secondaryUnit();
-
-			 this->sec_count=0;
-			 this->sec_min=current_sec;
-			 this->sec_max=current_sec;
-			 sec_reset=true;
-		 }
-		 if(current_modes != this->modes)
-		 {
-			 this->modes = current_modes;
-		 }
-
-
-		 //Process MINIMUM
-		 //If current is smaller set it to the new min
-		 if(fluke189ValueSmallerThan(current_pri, this->pri_min) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
-		 {
-			 this->pri_min=current_pri;
-		 }
-		 if(fluke189ValueSmallerThan(current_sec, this->sec_min) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
-		 {
-			 this->sec_min=current_sec;
-		 }
-
-		 //Process MAXIMUM
-		 //If max is smaller than current set current to the new max
-		 if(fluke189ValueSmallerThan(this->pri_max, current_pri) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
-		 {
-			 this->pri_max=current_pri;
-		 }
-		 if(fluke189ValueSmallerThan(this->sec_min, current_sec) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
-		 {
-			 this->sec_min=current_sec;
-		 }
-
-		 //Process AVERAGE
-		 if(!dra[0]->hasErrorPRIdisplay(0))
-		 {
-			 this->pri_avg_ll=(this->pri_avg_ll * this->pri_count+current_pri.Value*pow(10,13-(current_pri.Prefix*(-3)+current_pri.Decimal)))/(++this->pri_count);
-			 this->pri_count++;
-		 }
-		 if(!dra[0]->hasErrorSECdisplay(0))
-		 {
-			 this->sec_avg_ll=(this->sec_avg_ll * this->sec_count+current_sec.Value*pow(10,13-(current_sec.Prefix*(-3)+current_sec.Decimal)))/(++this->sec_count);
-			 this->sec_count++;
-		 }
-
-
-		 int pri_highest_place=0;
-		 //Get highest place of average
-		 for(int i = 0; ((int)(this->pri_avg_ll / pow(10, 18-i))) == 0;i++ ) pri_highest_place = 18 - i;
-
-
-		 if(pri_highest_place<4)
-		 {
-			 pri_avg.Prefix=-3;
-			 pri_avg.Decimal=3;
-			 pri_avg.Value=(int)pri_avg_ll;
-		 }
-		 else
-		 {
-			 pri_avg.Prefix=pri_highest_place/3-4;
-			 pri_avg.Decimal=2;
-			 pri_avg.Value=pri_avg_ll/pow(10, pri_highest_place-1-pri_avg.Prefix);
-		 }
-
-
-		 std::cout<<pri_avg.Value<<" ";
-		 std::cout<<pri_avg.Prefix<<std::endl;
-	 }
+	 void addContainer(Fluke189::RCT_QD0& container);
 
 	 /**
 	  * @return This function will return the internal variable pri_min.
@@ -1338,7 +1242,23 @@ public:
 		 return this->modes;
 	 }
 
-	 //@todo add get_string functions
+	 /**
+	  * @return Returns a String containing the primary value with dot, prefix and physical unit.
+	  * @todo implement that
+	  */
+	 std::string get_Primary_ValueAndUnit_String();
+
+	 /**
+	  * @return Returns a String containing the Secondary value with dot, prefix and physical unit.
+	  * @todo implement that
+	  */
+	 std::string get_Secondary_ValueAndUnit_String();
+
+	 /**
+	  * @return Returns a String containing the Symbols Rising and Falling etch and Delta
+	  * @todo implement that
+	  */
+	 std::string get_Primary_Symbols_String();
 };
 
 

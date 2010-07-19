@@ -618,5 +618,122 @@ namespace Fluke {
 	}
 
 
+	 void Fluke189QD0Logging::addContainer(Fluke189::RCT_QD0& container)
+	 {
+		 Fluke189DataResponseAnalyzer dra=Fluke189DataResponseAnalyzer(container);
+
+		 minMaxAvgValueStorage_t current_pri, current_sec;
+
+		 current_pri.Value=container.Data()->I_priValue0;
+		 current_pri.Prefix=container.Data()->I_priSI_Prefix0;
+		 current_pri.Decimal=(container.Data()->I_priDecimal0 != 128) ? container.Data()->I_priDecimal0 : 2;
+
+		 current_sec.Value=container.Data()->I_secValue0;
+		 current_sec.Prefix=container.Data()->I_secSi_Prefix;
+		 current_sec.Decimal=(container.Data()->I_secDecimal != 128) ? container.Data()->I_secDecimal : 2;
+
+		 modes_t current_modes;
+		 current_modes.deltapercent=container.Data()->I_QDInfo.I_DeltaPercent;
+		 current_modes.delta=container.Data()->I_QDInfo.I_Delta;
+		 current_modes.minmaxavg=container.Data()->I_QDInfo.I_MinMaxAvg;
+		 current_modes.etch=dra[0]->get_EtchInfo();
+
+
+
+
+		 //Check if the unit is the same as before, if not reset min max and avg
+		 bool pri_reset=false, sec_reset=false;
+		 if(dra[0]->get_primaryUnit() != this->pri_unit || current_modes != this->modes)
+		 {
+			 this->pri_unit=dra[0]->get_primaryUnit();
+			 this->pri_count=0;
+			 this->pri_min=current_pri;
+			 this->pri_max=current_pri;
+			 pri_reset=true;
+		 }
+		 if(dra[0]->get_secondaryUnit() != this->sec_unit || current_modes != this->modes)
+		 {
+			 this->sec_unit=dra[0]->get_secondaryUnit();
+
+			 this->sec_count=0;
+			 this->sec_min=current_sec;
+			 this->sec_max=current_sec;
+			 sec_reset=true;
+		 }
+		 if(current_modes != this->modes)
+		 {
+			 this->modes = current_modes;
+		 }
+
+
+		 //Process MINIMUM
+		 //If current is smaller set it to the new min
+		 if(fluke189ValueSmallerThan(current_pri, this->pri_min) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
+		 {
+			 this->pri_min=current_pri;
+		 }
+		 if(fluke189ValueSmallerThan(current_sec, this->sec_min) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
+		 {
+			 this->sec_min=current_sec;
+		 }
+
+		 //Process MAXIMUM
+		 //If max is smaller than current set current to the new max
+		 if(fluke189ValueSmallerThan(this->pri_max, current_pri) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
+		 {
+			 this->pri_max=current_pri;
+		 }
+		 if(fluke189ValueSmallerThan(this->sec_min, current_sec) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
+		 {
+			 this->sec_min=current_sec;
+		 }
+
+		 //Process AVERAGE
+		 if(!dra[0]->hasErrorPRIdisplay(0))
+		 {
+			 this->pri_avg_ll=(this->pri_avg_ll * this->pri_count+current_pri.Value*pow(10,13-(current_pri.Prefix*(-3)+current_pri.Decimal)))/(++this->pri_count);
+			 this->pri_count++;
+		 }
+		 if(!dra[0]->hasErrorSECdisplay(0))
+		 {
+			 this->sec_avg_ll=(this->sec_avg_ll * this->sec_count+current_sec.Value*pow(10,13-(current_sec.Prefix*(-3)+current_sec.Decimal)))/(++this->sec_count);
+			 this->sec_count++;
+		 }
+
+
+		 int pri_highest_place=0;
+		 //Get highest place of average
+		 for(int i = 0; ((int)(this->pri_avg_ll / pow(10, 18-i))) == 0;i++ ) pri_highest_place = 18 - i -1;
+#ifdef _DEBUG_AVERAGE_
+		 std::cout<<"Value::"<<this->pri_avg_ll<<std::endl;
+		 std::cout<<"Highest Place:"<<pri_highest_place<<std::endl;
+#endif
+		 if(pri_highest_place<4)
+		 {
+			 this->pri_avg.Prefix=-3;
+			 this->pri_avg.Decimal=4;
+			 this->pri_avg.Value=(int)pri_avg_ll;
+		 }
+		 else
+		 {
+
+
+			 unsigned int groupsOfthree=(pri_highest_place)/3;
+#ifdef _DEBUG_AVERAGE
+			 std::cout<<"Amount of groups of three"<<groupsOfthree<<std::endl;
+#endif
+			 this->pri_avg.Prefix=groupsOfthree-4;
+			 this->pri_avg.Decimal=5-((pri_highest_place-groupsOfthree*3)+1);
+			 this->pri_avg.Value=pri_avg_ll/pow(10, (groupsOfthree*3)-(pri_avg.Decimal-1));
+		 }
+
+#ifdef _DEBUG_AVERAGE_
+		 std::cout<<"New Value:"<<this->pri_avg.Value<<std::endl;
+		 std::cout<<"New Decimal:"<<this->pri_avg.Decimal<<std::endl;
+		 std::cout<<"New Prefix:"<<this->pri_avg.Prefix<<std::endl;
+		 std::cout<<"-Value- FLOAT:::"<<(float)this->pri_avg.Value / (float)pow(10, this->pri_avg.Decimal)<<std::endl<<std::endl;
+#endif
+	 }
+
 /*Namespace End*/}
 
