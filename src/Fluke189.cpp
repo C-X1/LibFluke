@@ -618,19 +618,100 @@ namespace Fluke {
 	}
 
 
+
+
+
+	std::string Fluke189QD0Logging::minMaxAvgValueStorageToString(minMaxAvgValueStorage_t value)
+	{
+		std::string strvalue, valmem;
+		std::stringstream convert_int;
+
+		//Insert space
+		strvalue.append(" ");
+
+		//Convert Value into string
+		convert_int<<value.Value;
+		convert_int>>valmem;
+
+		//if negative remove minus for the next step
+		if(value.Value<0)valmem.replace(0,1,"");
+
+
+		//calculate insert location
+		int insertlocation=valmem.length()-value.Decimal;
+
+		if(insertlocation <= 0)
+		{
+			//insert leading zeros and decimal point //limited to a maximum of 5 zeros (we won't need more afaik)
+			for(int i=0;insertlocation+i<0 && i<5;i++)
+			{
+				valmem.insert(0,1,'0');
+			}
+			valmem.insert(0,1,'.');
+			valmem.insert(0,1,'0');
+		}
+		else if(insertlocation >= 0)
+		{
+			//insert decimal point
+			valmem.insert(insertlocation,1,'.');
+		}
+
+		//if negative insert minus again here
+		if(value.Value<0)valmem.insert(0,1,'-');
+
+		//Append to Output
+		strvalue.append(valmem);
+		//Insert space
+		strvalue.append(" ");
+		//addPrefix
+		switch(value.Prefix)
+		{
+		case 0:break;
+
+		case 1:
+			strvalue.append("k");
+		break;
+
+		case 2:
+			strvalue.append("M");
+		break;
+
+		case 3:
+			strvalue.append("G");
+		break;
+
+		case -1:
+			strvalue.append("m");
+		break;
+
+		case -2:
+			strvalue.append("µ");
+		break;
+
+		case -3:
+			strvalue.append("n");
+		break;
+		}
+
+		return strvalue;
+
+	}
+
+
+
+
+
 	 void Fluke189QD0Logging::addContainer(Fluke189::RCT_QD0& container)
 	 {
 		 Fluke189DataResponseAnalyzer dra=Fluke189DataResponseAnalyzer(container);
 
-		 minMaxAvgValueStorage_t current_pri, current_sec;
+		 this->current_pri.Value=container.Data()->I_priValue0;
+		 this->current_pri.Prefix=container.Data()->I_priSI_Prefix0;
+		 this->current_pri.Decimal=(container.Data()->I_priDecimal0 != 128) ? container.Data()->I_priDecimal0 : 2;
 
-		 current_pri.Value=container.Data()->I_priValue0;
-		 current_pri.Prefix=container.Data()->I_priSI_Prefix0;
-		 current_pri.Decimal=(container.Data()->I_priDecimal0 != 128) ? container.Data()->I_priDecimal0 : 2;
-
-		 current_sec.Value=container.Data()->I_secValue0;
-		 current_sec.Prefix=container.Data()->I_secSi_Prefix;
-		 current_sec.Decimal=(container.Data()->I_secDecimal != 128) ? container.Data()->I_secDecimal : 2;
+		 this->current_sec.Value=container.Data()->I_secValue0;
+		 this->current_sec.Prefix=container.Data()->I_secSi_Prefix;
+		 this->current_sec.Decimal=(container.Data()->I_secDecimal != 128) ? container.Data()->I_secDecimal : 2;
 
 		 modes_t current_modes;
 		 current_modes.deltapercent=container.Data()->I_QDInfo.I_DeltaPercent;
@@ -647,8 +728,8 @@ namespace Fluke {
 		 {
 			 this->pri_unit=dra[0]->get_primaryUnit();
 			 this->pri_count=0;
-			 this->pri_min=current_pri;
-			 this->pri_max=current_pri;
+			 this->pri_min=this->current_pri;
+			 this->pri_max=this->current_pri;
 			 pri_reset=true;
 		 }
 		 if(dra[0]->get_secondaryUnit() != this->sec_unit || current_modes != this->modes)
@@ -656,8 +737,8 @@ namespace Fluke {
 			 this->sec_unit=dra[0]->get_secondaryUnit();
 
 			 this->sec_count=0;
-			 this->sec_min=current_sec;
-			 this->sec_max=current_sec;
+			 this->sec_min=this->current_sec;
+			 this->sec_max=this->current_sec;
 			 sec_reset=true;
 		 }
 		 if(current_modes != this->modes)
@@ -668,35 +749,35 @@ namespace Fluke {
 
 		 //Process MINIMUM
 		 //If current is smaller set it to the new min
-		 if(fluke189ValueSmallerThan(current_pri, this->pri_min) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
+		 if(fluke189ValueSmallerThan(this->current_pri, this->pri_min) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
 		 {
-			 this->pri_min=current_pri;
+			 this->pri_min=this->current_pri;
 		 }
-		 if(fluke189ValueSmallerThan(current_sec, this->sec_min) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
+		 if(fluke189ValueSmallerThan(this->current_sec, this->sec_min) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
 		 {
-			 this->sec_min=current_sec;
+			 this->sec_min=this->current_sec;
 		 }
 
 		 //Process MAXIMUM
 		 //If max is smaller than current set current to the new max
-		 if(fluke189ValueSmallerThan(this->pri_max, current_pri) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
+		 if(fluke189ValueSmallerThan(this->pri_max, this->current_pri) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
 		 {
-			 this->pri_max=current_pri;
+			 this->pri_max=this->current_pri;
 		 }
-		 if(fluke189ValueSmallerThan(this->sec_min, current_sec) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
+		 if(fluke189ValueSmallerThan(this->sec_min, this->current_sec) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
 		 {
-			 this->sec_min=current_sec;
+			 this->sec_min=this->current_sec;
 		 }
 
 		 //Process AVERAGE
 		 if(!dra[0]->hasErrorPRIdisplay(0))
 		 {
-			 this->pri_avg_ll=(this->pri_avg_ll * this->pri_count+current_pri.Value*pow(10,13-(current_pri.Prefix*(-3)+current_pri.Decimal)))/(++this->pri_count);
+			 this->pri_avg_ll=(this->pri_avg_ll * this->pri_count+this->current_pri.Value*pow(10,13-(this->current_pri.Prefix*(-3)+this->current_pri.Decimal)))/(++this->pri_count);
 			 this->pri_count++;
 		 }
 		 if(!dra[0]->hasErrorSECdisplay(0))
 		 {
-			 this->sec_avg_ll=(this->sec_avg_ll * this->sec_count+current_sec.Value*pow(10,13-(current_sec.Prefix*(-3)+current_sec.Decimal)))/(++this->sec_count);
+			 this->sec_avg_ll=(this->sec_avg_ll * this->sec_count+this->current_sec.Value*pow(10,13-(this->current_sec.Prefix*(-3)+this->current_sec.Decimal)))/(++this->sec_count);
 			 this->sec_count++;
 		 }
 
@@ -734,6 +815,15 @@ namespace Fluke {
 		 std::cout<<"-Value- FLOAT:::"<<(float)this->pri_avg.Value / (float)pow(10, this->pri_avg.Decimal)<<std::endl<<std::endl;
 #endif
 	 }
+
+
+	 std::string Fluke189QD0Logging::get_Primary_ValueAndUnit_String()
+	 {
+		 std::string valueString=this->minMaxAvgValueStorageToString(this->current_pri);
+
+	 }
+
+
 
 /*Namespace End*/}
 

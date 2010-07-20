@@ -1090,6 +1090,9 @@ private:/*Variables*/
 	/*
 	 * Variables for storing minimum maximum and average value
 	 */
+
+	 minMaxAvgValueStorage_t current_pri, current_sec;
+
     //Primary Display
 		minMaxAvgValueStorage_t  pri_min;
 		minMaxAvgValueStorage_t  pri_max;
@@ -1159,7 +1162,6 @@ public:
 	 * This function converts a minMaxAvgValueStorage_t to a string with dot and prefix
 	 * @param [in] value The value storage
 	 * @return Returns a standard string of the value
-	 * @todo implement that
 	 */
 	std::string minMaxAvgValueStorageToString(minMaxAvgValueStorage_t value);
 
