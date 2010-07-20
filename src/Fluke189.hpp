@@ -880,6 +880,17 @@ public:
 	 * @return etch information according to Fluke189DataResponseAnalyzerWrapper::Etch
 	 */
 	virtual Etch get_EtchInfo() = 0;
+
+	/**
+	 * @return Returns the current physical unit of primary value as string
+	 */
+	virtual std::string getPrimaryUnitString() = 0;
+
+	/**
+	 * @return Returns the current physical unit of secondary value as string
+	 */
+	virtual std::string getSecondaryUnitString() = 0;
+
 };
 
 /**
@@ -960,6 +971,19 @@ public:
 	 * @return etch information according to enum Fluke189DataResponseAnalyzerWrapper::Etch
 	 */
 	Etch get_EtchInfo();
+
+	/**
+	 * @return Returns the current physical unit of primary value as string
+	 */
+	std::string getPrimaryUnitString();
+
+	/**
+	 * @return Returns the current physical unit of secondary value as string
+	 */
+	std::string getSecondaryUnitString();
+
+
+
 
 };
 
@@ -1093,6 +1117,8 @@ private:/*Variables*/
 
 	 minMaxAvgValueStorage_t current_pri, current_sec;
 
+
+
     //Primary Display
 		minMaxAvgValueStorage_t  pri_min;
 		minMaxAvgValueStorage_t  pri_max;
@@ -1113,6 +1139,7 @@ private:/*Variables*/
 	 * Variables for storing current units
 	 */
 	 Fluke189DataResponseAnalyzerWrapper::Unit pri_unit, sec_unit;
+	 std::string pri_unit_str, sec_unit_str;
 
 public: /*Functions*/
 

@@ -501,7 +501,6 @@ namespace Fluke {
 
 
 
-
 	////////////////////////////////////////////////////
 	////Fluke189ResponseAnalyzerWrapperQD0 Functions////
 	////////////////////////////////////////////////////
@@ -617,10 +616,6 @@ namespace Fluke {
 		return AE_NOT_APPLICABLE;
 	}
 
-
-
-
-
 	std::string Fluke189QD0Logging::minMaxAvgValueStorageToString(minMaxAvgValueStorage_t value)
 	{
 		std::string strvalue, valmem;
@@ -697,6 +692,19 @@ namespace Fluke {
 
 	}
 
+	std::string Fluke189DataResponseAnalyzerWrapperQD0::getPrimaryUnitString()
+	{
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).s_priUnit;
+	}
+
+	std::string Fluke189DataResponseAnalyzerWrapperQD0::getSecondaryUnitString()
+	{
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).s_secUnit;
+	}
 
 
 
@@ -705,13 +713,18 @@ namespace Fluke {
 	 {
 		 Fluke189DataResponseAnalyzer dra=Fluke189DataResponseAnalyzer(container);
 
+		 //TODO add Error Handling
+		 //Add class error variable for pri and sec
+
 		 this->current_pri.Value=container.Data()->I_priValue0;
 		 this->current_pri.Prefix=container.Data()->I_priSI_Prefix0;
 		 this->current_pri.Decimal=(container.Data()->I_priDecimal0 != 128) ? container.Data()->I_priDecimal0 : 2;
+		 this->pri_unit_str=dra[0]->getPrimaryUnitString();
 
 		 this->current_sec.Value=container.Data()->I_secValue0;
 		 this->current_sec.Prefix=container.Data()->I_secSi_Prefix;
 		 this->current_sec.Decimal=(container.Data()->I_secDecimal != 128) ? container.Data()->I_secDecimal : 2;
+		 this->sec_unit_str=dra[0]->getSecondaryUnitString();
 
 		 modes_t current_modes;
 		 current_modes.deltapercent=container.Data()->I_QDInfo.I_DeltaPercent;
@@ -819,10 +832,17 @@ namespace Fluke {
 
 	 std::string Fluke189QD0Logging::get_Primary_ValueAndUnit_String()
 	 {
-		 std::string valueString=this->minMaxAvgValueStorageToString(this->current_pri);
-
+		 std::string ValueString=this->minMaxAvgValueStorageToString(this->current_pri);
+		 ValueString.append(this->pri_unit_str);
+		 return ValueString;
 	 }
 
+	 std::string Fluke189QD0Logging::get_Secondary_ValueAndUnit_String()
+	 {
+		 std::string ValueString=this->minMaxAvgValueStorageToString(this->current_sec);
+		 ValueString.append(this->sec_unit_str);
+		 return ValueString;
+	 }
 
 
 /*Namespace End*/}
