@@ -293,55 +293,15 @@ public:
 
 
 		unsigned int I_Time0				 :32; ///<Time(1st occurrence)
-		union
-		{
 		  signed int I_priValue0			 :32; ///<Primary Value	 (1st occurrence)
-		  struct
-		  {
-			unsigned int I_ErrorNoPV0		 :8;  ///<8 bit error code (if error == 1)
-			unsigned int 					 :22; ///<unneeded bits for error
-			unsigned int I_ErrorPV0			 :2;  ///<error when value == 1 (no error: when 3 (negative) or 0 (positive))
-		  };
-		};
 		unsigned int I_priDecimal0  		 :8;  ///<Primary decimal point location(1st occurrence)
 		  signed int I_priSI_Prefix0		 :8;  ///<Primary SI-Prefix (1st occurrence)
-		union
-		{
 		  signed int I_secValue0    		 :32; ///<Secondary display value
-		  struct
-		  {
-			unsigned int I_ErrorNoSV0		 :8;  ///<8 bit error code (if error == 1)
-			unsigned int 					 :22; ///<unneeded bits for Error
-			unsigned int I_ErrorSV0 		 :2;  ///<Error when value == 1 (no error: when 3 (negative) or 0 (positive))
-		   };
-		 };
 		unsigned int I_secDecimal			 :8;  ///<Secondary decimal point location (Gets 128 in Hz Mode, If in Hz it should be 2 (always))
 		  signed int I_secSi_Prefix	 		 :8;  ///<Secondary SI-Prefix @todo Check if it is different from first any time...
-
-		union
-		{
 		  signed int I_secValue1     	     :32; ///<Secondary display value (2. occurrence)
-		  struct
-		  {
-			unsigned int I_ErrorNoSV1 	     :8;  ///<8 bit Error code (if error == 1)
-			unsigned int 					 :22; ///<unneeded bits for error
-			unsigned int I_ErrorSV1 		 :2;  ///<Error when value == 1 (no error: when 3 (negative) or 0 (positive))
-		   };
-		 };
-
 		unsigned int I_Time1				 :32; ///<Time(2nd occurrence)
-
-		union
-		{
 		  signed int I_priValue1			 :32; ///<Primary Value	 (2nd occurrence)
-		  struct
-		  {
-			unsigned int I_ErrorNoPV1	 	 :8;  ///<8 bit error code (if error == 1)
-			unsigned int 					 :22; ///<unneeded bits for Error
-			unsigned int I_ErrorPV1 		 :2;  ///<Error when value == 1 (no error: when 3 (negative) or 0 (positive))
-		  };
-		};
-
 		unsigned int I_priDecimal1  		 :8;  ///<Primary decimal point location (2nd occurrence) This is 0xf when in ViewMem with no Logs "-----"
 		  signed int I_priSI_Prefix1 		 :8;  ///<Primary SI-Prefix	(2nd occurrence)
 
@@ -449,43 +409,16 @@ public:
 	typedef struct
 			{
 				unsigned int I_Time0		 :32; ///<Time(1st occurrence)
-				union
-				{
 				  signed int I_priValue0	 :32; ///<Primary value (1st occurrence)
-				  struct
-				  {
-					unsigned int I_ErrorNoPV0:8;  ///<8 bit error code (If error == 1)
-					unsigned int 			 :22; //unneeded for error
-					unsigned int I_ErrorPV0	 :2;  ///<Error when value == 1
-				  };
-				};
 				unsigned int I_priDecimal0   :8;  ///<Primary decimal point location(1st occurrence)
 				  signed int I_priSI_Prefix0 :8;  ///<Primary SI-prefix 	 (1st occurrence)
-				union
-				{
 				  signed int I_secValue		 :32; ///<Secondary value
-				  struct
-				  {
-					unsigned int I_ErrorNoSV :8;  ///<8 bit error code (If error == 1)
-					unsigned int 			 :22; //unneeded bits for Error
-					unsigned int I_ErrorSV	 :2;  ///<Error when value == 1
-				   };
-				 };
 				unsigned int I_secDecimal	 :8;  ///<Secondary value decimal point location
 				  signed int I_secSi_Prefix	 :8;  ///<Secondary value prefix
 				unsigned int u_unknown0		 :16; ///<@todo FIND OUT::Most times 0x0013 sometimes 0x0001 or 0x0002 WTF?
 				unsigned int u_unknown1		 :16; ///<@todo Make it change to find its purpose
 				unsigned int I_Time1		 :32; ///<Time (2nd occurrence)
-				union
-				{
 				  signed int I_priValue1	 :32; ///<Primary value	 (2nd occurrence)
-				  struct
-			      {
-				    unsigned int I_ErrorNoPV1:8;  ///<8 bit error code (If error == 1)
-					unsigned int 			 :22; //unneeded bits for error
-					unsigned int I_ErrorPV1	 :2;  ///<Error when value == 1
-				  };
-				};
 				unsigned int I_priDecimal1	 :8;  ///<Primary decimal point location (2nd occurrence)
 
 				  signed int I_priSI_Prefix1 :8;  ///<Primary SI-prefix (2nd occurrence)
@@ -565,20 +498,7 @@ public:
 		RANGEMODE_NONE	=0x80,
 	};
 
-	/**
-	 * Display Errors
-	 */
-	enum ValueError
-	{
-		VE_Display_OFFLINE			=0x01,
-		VE_OPEN__NOTHING_CONNECTED	=0x16,
-		VE_FUSE						=0x1B,
-		VE_LEADS_CONNECTION_WRONG	=0x1D,
-		VE_OL_OUTOFRANGE_NOCON		=0x21,
-		//Usage in class functions only:
-		VE_NO_ERROR					=0,
-		VE_NOT_APPLICABLE			=0xFF,
-	};
+
 
 	/**
 	 * Different Measure modes
@@ -758,6 +678,21 @@ public:
 	};
 
 	/**
+	 * Display Errors
+	 */
+	enum DispError
+	{
+		VE_Display_OFFLINE			=0x01,
+		VE_OPEN__NOTHING_CONNECTED	=0x16,
+		VE_FUSE						=0x1B,
+		VE_LEADS_CONNECTION_WRONG	=0x1D,
+		VE_OL_OUTOFRANGE_NOCON		=0x21,
+		//Usage in class functions only:
+		VE_NO_ERROR					=0,
+		VE_NOT_APPLICABLE			=0xFF,
+	};
+
+	/**
 	 * This struct is returned from Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo and holds
 	 * additional data which results from qdInfo_t analysis
 	 */
@@ -807,7 +742,7 @@ public:
 	 * @param[in] number ValueError
 	 * @return A human readable error string
 	 */
-	std::string valueErrorToString(Fluke::Fluke189::ValueError number);
+	static std::string valueErrorToString(DispError number);
 
 
 
@@ -819,31 +754,27 @@ public:
 
 	/**
 	 * Checks if a error in measurement is present in the current primary reading
-	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
 	 * @return <b>true</b> if the primary display value has an error
 	 */
-	virtual bool hasErrorPRIdisplay(bool reading2) = 0;
+	virtual bool hasErrorPRIdisplay() = 0;
 
 	/**
 	 * Checks if a error in measurement is present in the current secondary reading
-	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
 	 * @return <b>true</b> if the secondary display value has an error
 	 */
-	virtual bool hasErrorSECdisplay(bool reading2) = 0;
+	virtual bool hasErrorSECdisplay() = 0;
 
 	/**
 	 * This function returns the ErrorValue of the primary reading
-	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
-	 * @return Error numbers according to Fluke189::ValueError
+	 * @return Error numbers according to DispError
 	 */
-	virtual Fluke189::ValueError get_PRIdisplayError(bool reading2) = 0;
+	virtual DispError get_PRIdisplayError() = 0;
 
 	/**
 	 * This function returns the ErrorValue of the secondary reading
-	 * @param[in] reading2 If <b>true</b> second secondary reading will be used (QD0 only).
-	 * @return Error numbers according to Fluke189::ValueError
+	 * @return Error numbers according to DispError
 	 */
-	virtual Fluke189::ValueError get_SECdisplayError(bool reading2) = 0;
+	virtual DispError get_SECdisplayError() = 0;
 
 	/**
 	 * Get the current mode switch setting
@@ -910,31 +841,27 @@ class Fluke189DataResponseAnalyzerWrapperQD0 : public Fluke189DataResponseAnalyz
 public:
 	/**
 	 * Checks if a error in measurement is present in the current primary reading
-	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
 	 * @return <b>true</b> if the primary display value has an error
 	 */
-	bool hasErrorPRIdisplay(bool reading2);
+	bool hasErrorPRIdisplay();
 
 	/**
 	 * Checks if a error in measurement is present in the current secondary reading
-	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
 	 * @return <b>true</b> if the secondary display value has an error
 	 */
-	bool hasErrorSECdisplay(bool reading2);
+	bool hasErrorSECdisplay();
 
 	/**
 	 * This function returns the ErrorValue of the primary reading
-	 * @param[in] reading2 If <b>true</b> second primary reading will be used.
-	 * @return Error numbers according to Fluke189::ValueError
+	 * @return Error numbers according to DispError
 	 */
-	Fluke189::ValueError get_PRIdisplayError(bool reading2);
+	DispError get_PRIdisplayError();
 
 	/**
 	 * This function returns the ErrorValue of the secondary reading
-	 * @param[in] reading2 If <b>true</b> second secondary reading will be used (QD0 only).
-	 * @return Error numbers according to Fluke189::ValueError
+	 * @return Error numbers according to DispError
 	 */
-	Fluke189::ValueError get_SECdisplayError(bool reading2);
+	DispError get_SECdisplayError();
 
 	/**
 	 * Get the current mode switch setting
@@ -1114,10 +1041,12 @@ private:/*Variables*/
 	/*
 	 * Variables for storing minimum maximum and average value
 	 */
-
 	 minMaxAvgValueStorage_t current_pri, current_sec;
 
-
+	 /*
+	  * Error Variables
+	  */
+	 Fluke189DataResponseAnalyzerWrapper::DispError pri_error, sec_error;
 
     //Primary Display
 		minMaxAvgValueStorage_t  pri_min;

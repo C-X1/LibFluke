@@ -459,36 +459,36 @@ namespace Fluke {
 			return info;
 	}
 
-	std::string Fluke189DataResponseAnalyzerWrapper::valueErrorToString(Fluke189::ValueError number)
+	std::string Fluke189DataResponseAnalyzerWrapper::valueErrorToString(DispError number)
 	{
 		std::string ErrorString;
 		switch(number)
 		{
-		case Fluke189::VE_Display_OFFLINE:
+		case Fluke189DataResponseAnalyzerWrapper::VE_Display_OFFLINE:
 			ErrorString = "-OFF-";
 		break;
 
-		case Fluke189::VE_LEADS_CONNECTION_WRONG:
+		case Fluke189DataResponseAnalyzerWrapper::VE_LEADS_CONNECTION_WRONG:
 			ErrorString = "LEADS";
 		break;
 
-		case Fluke189::VE_OL_OUTOFRANGE_NOCON:
+		case Fluke189DataResponseAnalyzerWrapper::VE_OL_OUTOFRANGE_NOCON:
 			ErrorString = "OL";
 		break;
 
-		case Fluke189::VE_OPEN__NOTHING_CONNECTED:
+		case Fluke189DataResponseAnalyzerWrapper::VE_OPEN__NOTHING_CONNECTED:
 			ErrorString = "OPEN";
 		break;
 
-		case Fluke189::VE_FUSE:
+		case Fluke189DataResponseAnalyzerWrapper::VE_FUSE:
 			ErrorString = "FUSE";
 		break;
 
-		case Fluke189::VE_NOT_APPLICABLE:
+		case Fluke189DataResponseAnalyzerWrapper::VE_NOT_APPLICABLE:
 			ErrorString = "";
 		break;
 
-		case Fluke189::VE_NO_ERROR:
+		case Fluke189DataResponseAnalyzerWrapper::VE_NO_ERROR:
 			ErrorString="";
 
 		default:
@@ -505,71 +505,24 @@ namespace Fluke {
 	////Fluke189ResponseAnalyzerWrapperQD0 Functions////
 	////////////////////////////////////////////////////
 
-	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorPRIdisplay(bool reading2)
+	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorPRIdisplay()
 	{
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*)this->currentContainer;
-		if(reading2)
-		{
-			return (Fluke189::ValueError)container->Data()->I_ErrorPV0==1;
-		}
-		else
-		{
-			return (Fluke189::ValueError)container->Data()->I_ErrorPV1==1;
-		}
+		//@todo reimplement this function
 	}
 
-	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorSECdisplay(bool reading2)
+	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorSECdisplay()
 	{
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*)this->currentContainer;
-		if(reading2)
-		{
-			return (Fluke189::ValueError)container->Data()->I_ErrorSV0==1;
-		}
-		else
-		{
-			return (Fluke189::ValueError)container->Data()->I_ErrorSV1==1;
-		}
+		//@todo reimplement this function
 	}
 
-	Fluke189::ValueError Fluke189DataResponseAnalyzerWrapperQD0::get_PRIdisplayError(bool reading2)
+	Fluke189DataResponseAnalyzerWrapper::DispError Fluke189DataResponseAnalyzerWrapperQD0::get_PRIdisplayError()
 	{
-		if(!hasErrorPRIdisplay(reading2))
-		{
-			return Fluke189::VE_NO_ERROR;
-		}
-
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*)this->currentContainer;
-		if(reading2)
-		{
-			return (Fluke189::ValueError)container->Data()->I_ErrorNoPV0;
-		}
-		else
-		{
-			return (Fluke189::ValueError)container->Data()->I_ErrorNoPV1;
-		}
-
+		//@todo reimplement this function
 	}
 
-	Fluke189::ValueError Fluke189DataResponseAnalyzerWrapperQD0::get_SECdisplayError(bool reading2)
+	Fluke189DataResponseAnalyzerWrapper::DispError Fluke189DataResponseAnalyzerWrapperQD0::get_SECdisplayError()
 	{
-		if(!hasErrorSECdisplay(reading2))
-		{
-			return Fluke189::VE_NO_ERROR;
-		}
-
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*)this->currentContainer;
-		if(reading2)
-		{
-			return (Fluke189::ValueError)container->Data()->I_ErrorNoSV0;
-		}
-		else
-		{
-			return (Fluke189::ValueError)container->Data()->I_ErrorNoSV1;
-		}
+		//@todo reimplement this function
 	}
 
 	Fluke189DataResponseAnalyzerWrapper::ModeSwitchSetting Fluke189DataResponseAnalyzerWrapperQD0::get_ModeSwitchSetting()
@@ -713,8 +666,8 @@ namespace Fluke {
 	 {
 		 Fluke189DataResponseAnalyzer dra=Fluke189DataResponseAnalyzer(container);
 
-		 //TODO add Error Handling
-		 //Add class error variable for pri and sec
+		 this->pri_error=dra[0]->get_PRIdisplayError();
+		 this->sec_error=dra[0]->get_SECdisplayError();
 
 		 this->current_pri.Value=container.Data()->I_priValue0;
 		 this->current_pri.Prefix=container.Data()->I_priSI_Prefix0;
@@ -762,71 +715,82 @@ namespace Fluke {
 
 		 //Process MINIMUM
 		 //If current is smaller set it to the new min
-		 if(fluke189ValueSmallerThan(this->current_pri, this->pri_min) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
+		 if(fluke189ValueSmallerThan(this->current_pri, this->pri_min) && !dra[0]->hasErrorPRIdisplay() && !pri_reset)
 		 {
 			 this->pri_min=this->current_pri;
 		 }
-		 if(fluke189ValueSmallerThan(this->current_sec, this->sec_min) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
+		 if(fluke189ValueSmallerThan(this->current_sec, this->sec_min) && !dra[0]->hasErrorSECdisplay() && !sec_reset)
 		 {
 			 this->sec_min=this->current_sec;
 		 }
 
 		 //Process MAXIMUM
 		 //If max is smaller than current set current to the new max
-		 if(fluke189ValueSmallerThan(this->pri_max, this->current_pri) && !dra[0]->hasErrorPRIdisplay(0) && !pri_reset)
+		 if(fluke189ValueSmallerThan(this->pri_max, this->current_pri) && !dra[0]->hasErrorPRIdisplay() && !pri_reset)
 		 {
 			 this->pri_max=this->current_pri;
 		 }
-		 if(fluke189ValueSmallerThan(this->sec_min, this->current_sec) && !dra[0]->hasErrorSECdisplay(0) && !sec_reset)
+		 if(fluke189ValueSmallerThan(this->sec_min, this->current_sec) && !dra[0]->hasErrorSECdisplay() && !sec_reset)
 		 {
 			 this->sec_min=this->current_sec;
 		 }
 
 		 //Process AVERAGE
-		 if(!dra[0]->hasErrorPRIdisplay(0))
+		 if(!dra[0]->hasErrorPRIdisplay())
 		 {
 			 this->pri_avg_ll=(this->pri_avg_ll * this->pri_count+this->current_pri.Value*pow(10,13-(this->current_pri.Prefix*(-3)+this->current_pri.Decimal)))/(++this->pri_count);
 			 this->pri_count++;
 		 }
-		 if(!dra[0]->hasErrorSECdisplay(0))
+		 if(!dra[0]->hasErrorSECdisplay())
 		 {
 			 this->sec_avg_ll=(this->sec_avg_ll * this->sec_count+this->current_sec.Value*pow(10,13-(this->current_sec.Prefix*(-3)+this->current_sec.Decimal)))/(++this->sec_count);
 			 this->sec_count++;
 		 }
 
+		//Average long long to minmaxvaluestorage
+		if(!dra[0]->hasErrorPRIdisplay())
+		{
+			 int pri_highest_place=0;
+			 //Get highest place of average
+			 for(int i = 0; ((int)(this->pri_avg_ll / pow(10, 18-i))) == 0;i++ ) pri_highest_place = 18 - i -1;
+			 if(pri_highest_place<4)
+			 {
+				 this->pri_avg.Prefix=-3;
+				 this->pri_avg.Decimal=4;
+				 this->pri_avg.Value=(int)pri_avg_ll;
+			 }
+			 else
+			 {
+				 unsigned int groupsOfthree=(pri_highest_place)/3;
+				 this->pri_avg.Prefix=groupsOfthree-4;
+				 this->pri_avg.Decimal=5-((pri_highest_place-groupsOfthree*3)+1);
+				 this->pri_avg.Value=pri_avg_ll/pow(10, (groupsOfthree*3)-(pri_avg.Decimal-1));
+			 }
+		}
 
-		 int pri_highest_place=0;
-		 //Get highest place of average
-		 for(int i = 0; ((int)(this->pri_avg_ll / pow(10, 18-i))) == 0;i++ ) pri_highest_place = 18 - i -1;
-#ifdef _DEBUG_AVERAGE_
-		 std::cout<<"Value::"<<this->pri_avg_ll<<std::endl;
-		 std::cout<<"Highest Place:"<<pri_highest_place<<std::endl;
-#endif
-		 if(pri_highest_place<4)
-		 {
-			 this->pri_avg.Prefix=-3;
-			 this->pri_avg.Decimal=4;
-			 this->pri_avg.Value=(int)pri_avg_ll;
-		 }
-		 else
-		 {
+		if(!dra[0]->hasErrorSECdisplay())
+		{
+			 int sec_highest_place=0;
+			 //Get highest place of average
+			 for(int i = 0; ((int)(this->sec_avg_ll / pow(10, 18-i))) == 0;i++ ) sec_highest_place = 18 - i -1;
+			 if(sec_highest_place<4)
+			 {
+				 this->sec_avg.Prefix=-3;
+				 this->sec_avg.Decimal=4;
+				 this->sec_avg.Value=(int)sec_avg_ll;
+			 }
+			 else
+			 {
+				 unsigned int groupsOfthree=(sec_highest_place)/3;
+				 this->sec_avg.Prefix=groupsOfthree-4;
+				 this->sec_avg.Decimal=5-((sec_highest_place-groupsOfthree*3)+1);
+				 this->sec_avg.Value=sec_avg_ll/pow(10, (groupsOfthree*3)-(sec_avg.Decimal-1));
+			 }
+		}
 
 
-			 unsigned int groupsOfthree=(pri_highest_place)/3;
-#ifdef _DEBUG_AVERAGE
-			 std::cout<<"Amount of groups of three"<<groupsOfthree<<std::endl;
-#endif
-			 this->pri_avg.Prefix=groupsOfthree-4;
-			 this->pri_avg.Decimal=5-((pri_highest_place-groupsOfthree*3)+1);
-			 this->pri_avg.Value=pri_avg_ll/pow(10, (groupsOfthree*3)-(pri_avg.Decimal-1));
-		 }
 
-#ifdef _DEBUG_AVERAGE_
-		 std::cout<<"New Value:"<<this->pri_avg.Value<<std::endl;
-		 std::cout<<"New Decimal:"<<this->pri_avg.Decimal<<std::endl;
-		 std::cout<<"New Prefix:"<<this->pri_avg.Prefix<<std::endl;
-		 std::cout<<"-Value- FLOAT:::"<<(float)this->pri_avg.Value / (float)pow(10, this->pri_avg.Decimal)<<std::endl<<std::endl;
-#endif
+
 	 }
 
 
@@ -834,6 +798,8 @@ namespace Fluke {
 	 {
 		 std::string ValueString=this->minMaxAvgValueStorageToString(this->current_pri);
 		 ValueString.append(this->pri_unit_str);
+
+		 if(pri_error) ValueString=Fluke189DataResponseAnalyzerWrapper::valueErrorToString(pri_error);
 		 return ValueString;
 	 }
 
@@ -841,6 +807,7 @@ namespace Fluke {
 	 {
 		 std::string ValueString=this->minMaxAvgValueStorageToString(this->current_sec);
 		 ValueString.append(this->sec_unit_str);
+		 if(sec_error) ValueString=Fluke189DataResponseAnalyzerWrapper::valueErrorToString(sec_error);
 		 return ValueString;
 	 }
 
