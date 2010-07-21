@@ -507,12 +507,24 @@ namespace Fluke {
 
 	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorPRIdisplay()
 	{
-		//@todo reimplement this function
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*) this->currentContainer;
+
+		int priValue0=container->Data()->I_priValue0;
+		int priValue1=container->Data()->I_priValue1;
+
+		return (priValue0 > 99999 || priValue0 <-99999 || priValue1 > 99999 || priValue1 <-99999);
 	}
 
 	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorSECdisplay()
 	{
-		//@todo reimplement this function
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*) this->currentContainer;
+
+		int secValue0=container->Data()->I_secValue0;
+		int secValue1=container->Data()->I_secValue1;
+
+		return (secValue0 > 99999 || secValue0 <-99999 || secValue1 > 99999 || secValue1 <-99999);
 	}
 
 	Fluke189DataResponseAnalyzerWrapper::DispError Fluke189DataResponseAnalyzerWrapperQD0::get_PRIdisplayError()
