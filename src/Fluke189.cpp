@@ -464,42 +464,83 @@ namespace Fluke {
 		std::string ErrorString;
 		switch(number)
 		{
-		case Fluke189DataResponseAnalyzerWrapper::VE_Display_OFFLINE:
+		case Fluke189DataResponseAnalyzerWrapper::ERR_DISPLAY_OFF:
 			ErrorString = "-OFF-";
 		break;
 
-		case Fluke189DataResponseAnalyzerWrapper::VE_LEADS_CONNECTION_WRONG:
+		case Fluke189DataResponseAnalyzerWrapper::ERR_LEADS:
 			ErrorString = "LEADS";
 		break;
 
-		case Fluke189DataResponseAnalyzerWrapper::VE_OL_OUTOFRANGE_NOCON:
+		case Fluke189DataResponseAnalyzerWrapper::ERR_OUTOFRANGE_POSITIVE:
 			ErrorString = "OL";
 		break;
 
-		case Fluke189DataResponseAnalyzerWrapper::VE_OPEN__NOTHING_CONNECTED:
+		case Fluke189DataResponseAnalyzerWrapper::ERR_OPEN:
 			ErrorString = "OPEN";
 		break;
 
-		case Fluke189DataResponseAnalyzerWrapper::VE_FUSE:
+		case Fluke189DataResponseAnalyzerWrapper::ERR_FUSE:
 			ErrorString = "FUSE";
 		break;
 
-		case Fluke189DataResponseAnalyzerWrapper::VE_NOT_APPLICABLE:
-			ErrorString = "";
+		case Fluke189DataResponseAnalyzerWrapper::ERR_UNKNOWN:
+			ErrorString = "UNKNOWN ERR";
 		break;
 
-		case Fluke189DataResponseAnalyzerWrapper::VE_NO_ERROR:
+		case Fluke189DataResponseAnalyzerWrapper::ERR_NONE:
 			ErrorString="";
+		break;
+
+		case Fluke189DataResponseAnalyzerWrapper::ERR_OUTOFRANGE_NEGATIVE:
+			ErrorString="-0L";
+		break;
 
 		default:
-			ErrorString = "UNKNOWN_ERR";
+			ErrorString = "-?-UERROR--";
 		break;
 		}
 
 		return ErrorString;
 	}
 
+	Fluke189DataResponseAnalyzerWrapper::DispError Fluke189DataResponseAnalyzerWrapper::valueExtractError(int value)
+	{
 
+		bool negative=false;
+		if(value < -99999 || value > 99999 )
+		{
+			if(value < 0) negative=true;
+			value &= ~((1<<31) | (1<<30) | (1<<29) | (1<<28));
+			switch(value)
+			{
+			case 1: //DISPLAY OFFLINE
+					return ERR_DISPLAY_OFF;
+			case 22: //OPEN
+					return ERR_OPEN;
+			case 29: //LEADS
+					return ERR_LEADS;
+			case 33: //OUT OF RANGE
+					return ERR_OUTOFRANGE_POSITIVE;
+			case 0:
+				if(negative)
+				{
+					return ERR_OUTOFRANGE_NEGATIVE;
+				}
+				else
+				{
+					return ERR_UNKNOWN;
+				}
+			case 27: //FUSE ERROR
+					return ERR_FUSE;
+			}
+			return ERR_UNKNOWN;
+		}
+		else
+		{
+			return ERR_NONE;
+		}
+	}
 
 	////////////////////////////////////////////////////
 	////Fluke189ResponseAnalyzerWrapperQD0 Functions////
@@ -507,34 +548,26 @@ namespace Fluke {
 
 	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorPRIdisplay()
 	{
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*) this->currentContainer;
-
-		int priValue0=container->Data()->I_priValue0;
-		int priValue1=container->Data()->I_priValue1;
-
-		return (priValue0 > 99999 || priValue0 <-99999 || priValue1 > 99999 || priValue1 <-99999);
+		return(!!get_PRIdisplayError());
 	}
 
 	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorSECdisplay()
 	{
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*) this->currentContainer;
-
-		int secValue0=container->Data()->I_secValue0;
-		int secValue1=container->Data()->I_secValue1;
-
-		return (secValue0 > 99999 || secValue0 <-99999 || secValue1 > 99999 || secValue1 <-99999);
+		return(!!get_SECdisplayError());
 	}
 
 	Fluke189DataResponseAnalyzerWrapper::DispError Fluke189DataResponseAnalyzerWrapperQD0::get_PRIdisplayError()
 	{
-		//@todo reimplement this function
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		return Fluke189DataResponseAnalyzerWrapper::valueExtractError(container->Data()->I_priValue0);
 	}
 
 	Fluke189DataResponseAnalyzerWrapper::DispError Fluke189DataResponseAnalyzerWrapperQD0::get_SECdisplayError()
 	{
-		//@todo reimplement this function
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		return Fluke189DataResponseAnalyzerWrapper::valueExtractError(container->Data()->I_secValue0);
 	}
 
 	Fluke189DataResponseAnalyzerWrapper::ModeSwitchSetting Fluke189DataResponseAnalyzerWrapperQD0::get_ModeSwitchSetting()

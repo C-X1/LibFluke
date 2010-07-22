@@ -682,14 +682,14 @@ public:
 	 */
 	enum DispError
 	{
-		VE_Display_OFFLINE			=0x01,
-		VE_OPEN__NOTHING_CONNECTED	=0x16,
-		VE_FUSE						=0x1B,
-		VE_LEADS_CONNECTION_WRONG	=0x1D,
-		VE_OL_OUTOFRANGE_NOCON		=0x21,
-		//Usage in class functions only:
-		VE_NO_ERROR					=0,
-		VE_NOT_APPLICABLE			=0xFF,
+		ERR_NONE				  =0,
+		ERR_DISPLAY_OFF				,
+		ERR_OPEN					,
+		ERR_FUSE					,
+		ERR_LEADS					,
+		ERR_OUTOFRANGE_POSITIVE		,
+		ERR_OUTOFRANGE_NEGATIVE		,
+		ERR_UNKNOWN					,
 	};
 
 	/**
@@ -744,6 +744,12 @@ public:
 	 */
 	static std::string valueErrorToString(DispError number);
 
+	/**
+	 * This function will extract a error number out of a multimeter value
+	 * @param [in] value Value from Fluke189 data set
+	 * @return Returns a Value from the DispError enum.
+	 */
+	static DispError valueExtractError(int value);
 
 
 
@@ -1202,13 +1208,11 @@ public:
 
 	 /**
 	  * @return Returns a String containing the primary value with dot, prefix and physical unit.
-	  * @todo implement that
 	  */
 	 std::string get_Primary_ValueAndUnit_String();
 
 	 /**
 	  * @return Returns a String containing the Secondary value with dot, prefix and physical unit.
-	  * @todo implement that
 	  */
 	 std::string get_Secondary_ValueAndUnit_String();
 
