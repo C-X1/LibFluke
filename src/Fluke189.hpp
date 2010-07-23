@@ -735,7 +735,7 @@ public:
 	 * @param[in] qdInfo Struct containing setup for the current reading
 	 * @return Struct containing additional information.
 	 */
-	analyzedInfo_t analyzeQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
+	static analyzedInfo_t analyzeQdInfo(Fluke::Fluke189::qdInfo_t* qdInfo);
 
 	/**
 	 * Returns the error string according to the ValueError number
@@ -757,6 +757,11 @@ public:
 	//VIRTUAL FUNCTIONS//
 	/////////////////////
 
+	/**
+	 * This function returns the analyzedInfo_t struct of the current value qdInfo_t struct
+	 * Return Returns analyzedInfo_t struct
+	 */
+	virtual analyzedInfo_t getAnalyzedInfoStruct() = 0;
 
 	/**
 	 * Checks if a error in measurement is present in the current primary reading
@@ -845,6 +850,12 @@ class Fluke189DataResponseAnalyzerWrapperQD0 : public Fluke189DataResponseAnalyz
 	~Fluke189DataResponseAnalyzerWrapperQD0(){};
 
 public:
+	/**
+	 * This function returns the analyzedInfo_t struct of the current value qdInfo_t struct
+	 * Return Returns analyzedInfo_t struct
+	 */
+	analyzedInfo_t getAnalyzedInfoStruct();
+
 	/**
 	 * Checks if a error in measurement is present in the current primary reading
 	 * @return <b>true</b> if the primary display value has an error
@@ -1027,6 +1038,8 @@ public: /*Types*/
 		unsigned int minmaxavg;
 		bool delta;
 		bool deltapercent;
+		bool autohold;
+		bool hold;
 		Fluke189DataResponseAnalyzerWrapper::Etch etch;
 
 		bool operator==(modes_t modes)
@@ -1034,7 +1047,10 @@ public: /*Types*/
 			return (this->minmaxavg    == modes.minmaxavg   &&
 					this->delta        == modes.delta       &&
 					this->deltapercent == modes.deltapercent&&
-					this->etch		   == modes.etch          );
+					this->etch		   == modes.etch        &&
+					this->autohold     == modes.autohold    &&
+					this->hold         == modes.hold
+			);
 		}
 		bool operator!=(modes_t modes)
 		{
@@ -1074,6 +1090,7 @@ private:/*Variables*/
 	 * Variables for storing current units
 	 */
 	 Fluke189DataResponseAnalyzerWrapper::Unit pri_unit, sec_unit;
+	 std::string pri_current, sec_current;
 	 std::string pri_unit_str, sec_unit_str;
 
 public: /*Functions*/
@@ -1120,6 +1137,7 @@ private:
 
 
 public:
+
 	/**
 	 * This function converts a minMaxAvgValueStorage_t to a string with dot and prefix
 	 * @param [in] value The value storage
@@ -1216,11 +1234,6 @@ public:
 	  */
 	 std::string get_Secondary_ValueAndUnit_String();
 
-	 /**
-	  * @return Returns a String containing the Symbols Rising and Falling etch and Delta
-	  * @todo implement that
-	  */
-	 std::string get_Primary_Symbols_String();
 };
 
 

@@ -38,11 +38,6 @@ namespace Fluke {
 			this->DelayResponse_us=120000;
 	}
 
-
-
-
-
-
 	//////////////////////////////////
 	////ResponseAnalyzer Functions////
 	//////////////////////////////////
@@ -64,9 +59,6 @@ namespace Fluke {
 		this->container=&container;
 		this->currentResponseContainerType=QD4;
 	}
-
-
-
 
 
     /////////////////////////////////////////////////
@@ -399,10 +391,23 @@ namespace Fluke {
 				info.s_priUnit="%";
 			}
 
+			//If any hold mode is enabled and the secondary display was off before it changes to the current value
+			//while the primary value stays at the hold value.
+			//But if there is already anything displayed in the secondary display it does not change to the current value
+			if(qdInfo->I_S_Hold && info.i_secUnit==AU_None);
+			{
+				info.i_secUnit=info.i_priUnit;
+				info.s_secUnit=info.s_priUnit;
+				info.i_secCurrentType=info.i_priCurrentType;
+				info.s_secCurrentType=info.s_priCurrentType;
+			}
+
+
+
 			//Does the multimeter log new data atm?
 			info.b_Logging=qdInfo->I_MEMclr != 3 && qdInfo->I_S_Log &&qdInfo->I_CurrentView != 6 ;
 
-			//Are we in ViewMode? If no data CurrentView==6 else MEMclr==3 //TODO (change into enum symbols)
+			//Are we in ViewMode? If no data CurrentView==6 else MEMclr==3
 			info.b_ViewMem=qdInfo->I_CurrentView == 6 || qdInfo->I_MEMclr == 3;
 
 			//Check if mode switch is stuck between two positions
@@ -542,9 +547,17 @@ namespace Fluke {
 		}
 	}
 
+
 	////////////////////////////////////////////////////
 	////Fluke189ResponseAnalyzerWrapperQD0 Functions////
 	////////////////////////////////////////////////////
+
+	Fluke189DataResponseAnalyzerWrapper::analyzedInfo_t Fluke189DataResponseAnalyzerWrapperQD0::getAnalyzedInfoStruct()
+	{
+		Fluke189::RCT_QD0* container;
+		container=(Fluke189::RCT_QD0*)this->currentContainer;
+		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo));
+	}
 
 	bool Fluke189DataResponseAnalyzerWrapperQD0::hasErrorPRIdisplay()
 	{
@@ -572,37 +585,27 @@ namespace Fluke {
 
 	Fluke189DataResponseAnalyzerWrapper::ModeSwitchSetting Fluke189DataResponseAnalyzerWrapperQD0::get_ModeSwitchSetting()
 	{
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*)this->currentContainer;
-		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).i_ModeSwitchPos;
+		return getAnalyzedInfoStruct().i_ModeSwitchPos;
 	}
 
 	Fluke189DataResponseAnalyzerWrapper::Unit Fluke189DataResponseAnalyzerWrapperQD0::get_primaryUnit()
 	{
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*)this->currentContainer;
-		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).i_priUnit;
+		return getAnalyzedInfoStruct().i_priUnit;
 	}
 
 	Fluke189DataResponseAnalyzerWrapper::Unit Fluke189DataResponseAnalyzerWrapperQD0::get_secondaryUnit()
 	{
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*)this->currentContainer;
-		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).i_secUnit;
+		return getAnalyzedInfoStruct().i_secUnit;
 	}
 
 	Fluke189DataResponseAnalyzerWrapper::CurrentType Fluke189DataResponseAnalyzerWrapperQD0::get_primaryCurrentType()
 	{
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*)this->currentContainer;
-		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).i_priCurrentType;
+		return getAnalyzedInfoStruct().i_priCurrentType;
 	}
 
 	Fluke189DataResponseAnalyzerWrapper::CurrentType Fluke189DataResponseAnalyzerWrapperQD0::get_secondaryCurrentType()
 	{
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*)this->currentContainer;
-		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).i_secCurrentType;
+		return getAnalyzedInfoStruct().i_secCurrentType;
 	}
 
 	Fluke189DataResponseAnalyzerWrapper::Etch Fluke189DataResponseAnalyzerWrapperQD0::get_EtchInfo()
@@ -614,100 +617,21 @@ namespace Fluke {
 		return AE_NOT_APPLICABLE;
 	}
 
-	std::string Fluke189QD0Logging::minMaxAvgValueStorageToString(minMaxAvgValueStorage_t value)
-	{
-		std::string strvalue, valmem;
-		std::stringstream convert_int;
-
-		//Insert space
-		strvalue.append(" ");
-
-		//Convert Value into string
-		convert_int<<value.Value;
-		convert_int>>valmem;
-
-		//if negative remove minus for the next step
-		if(value.Value<0)valmem.replace(0,1,"");
-
-
-		//calculate insert location
-		int insertlocation=valmem.length()-value.Decimal;
-
-		if(insertlocation <= 0)
-		{
-			//insert leading zeros and decimal point //limited to a maximum of 5 zeros (we won't need more afaik)
-			for(int i=0;insertlocation+i<0 && i<5;i++)
-			{
-				valmem.insert(0,1,'0');
-			}
-			valmem.insert(0,1,'.');
-			valmem.insert(0,1,'0');
-		}
-		else if(insertlocation >= 0)
-		{
-			//insert decimal point
-			valmem.insert(insertlocation,1,'.');
-		}
-
-		//if negative insert minus again here
-		if(value.Value<0)valmem.insert(0,1,'-');
-
-		//Append to Output
-		strvalue.append(valmem);
-		//Insert space
-		strvalue.append(" ");
-		//addPrefix
-		switch(value.Prefix)
-		{
-		case 0:break;
-
-		case 1:
-			strvalue.append("k");
-		break;
-
-		case 2:
-			strvalue.append("M");
-		break;
-
-		case 3:
-			strvalue.append("G");
-		break;
-
-		case -1:
-			strvalue.append("m");
-		break;
-
-		case -2:
-			strvalue.append("µ");
-		break;
-
-		case -3:
-			strvalue.append("n");
-		break;
-		}
-
-		return strvalue;
-
-	}
-
 	std::string Fluke189DataResponseAnalyzerWrapperQD0::getPrimaryUnitString()
 	{
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*)this->currentContainer;
-		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).s_priUnit;
+return getAnalyzedInfoStruct().s_priUnit;
 	}
 
 	std::string Fluke189DataResponseAnalyzerWrapperQD0::getSecondaryUnitString()
 	{
-		Fluke189::RCT_QD0* container;
-		container=(Fluke189::RCT_QD0*)this->currentContainer;
-		return Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo((Fluke::Fluke189::qdInfo_t*) &(container->Data()->I_QDInfo)).s_secUnit;
+return getAnalyzedInfoStruct().s_secUnit;
 	}
 
+	////////////////////////////////////
+	////Fluke189QD0Logging Functions////
+	////////////////////////////////////
 
-
-
-	 void Fluke189QD0Logging::addContainer(Fluke189::RCT_QD0& container)
+	void Fluke189QD0Logging::addContainer(Fluke189::RCT_QD0& container)
 	 {
 		 Fluke189DataResponseAnalyzer dra=Fluke189DataResponseAnalyzer(container);
 
@@ -719,15 +643,19 @@ namespace Fluke {
 		 this->current_pri.Decimal=(container.Data()->I_priDecimal0 != 128) ? container.Data()->I_priDecimal0 : 2;
 		 this->pri_unit_str=dra[0]->getPrimaryUnitString();
 
+
 		 this->current_sec.Value=container.Data()->I_secValue0;
 		 this->current_sec.Prefix=container.Data()->I_secSi_Prefix;
 		 this->current_sec.Decimal=(container.Data()->I_secDecimal != 128) ? container.Data()->I_secDecimal : 2;
 		 this->sec_unit_str=dra[0]->getSecondaryUnitString();
 
+
 		 modes_t current_modes;
 		 current_modes.deltapercent=container.Data()->I_QDInfo.I_DeltaPercent;
 		 current_modes.delta=container.Data()->I_QDInfo.I_Delta;
 		 current_modes.minmaxavg=container.Data()->I_QDInfo.I_MinMaxAvg;
+		 current_modes.hold=container.Data()->I_QDInfo.I_Hold;
+		 current_modes.autohold=container.Data()->I_QDInfo.I_AutoHold;
 		 current_modes.etch=dra[0]->get_EtchInfo();
 
 
@@ -735,21 +663,23 @@ namespace Fluke {
 
 		 //Check if the unit is the same as before, if not reset min max and avg
 		 bool pri_reset=false, sec_reset=false;
-		 if(dra[0]->get_primaryUnit() != this->pri_unit || current_modes != this->modes)
+		 if(dra[0]->get_primaryUnit() != this->pri_unit || current_modes != this->modes)// || this->pri_current != dra[0]->get_primaryCurrentType())
 		 {
 			 this->pri_unit=dra[0]->get_primaryUnit();
 			 this->pri_count=0;
 			 this->pri_min=this->current_pri;
 			 this->pri_max=this->current_pri;
+			 this->pri_current=dra[0]->get_primaryCurrentType();
 			 pri_reset=true;
 		 }
-		 if(dra[0]->get_secondaryUnit() != this->sec_unit || current_modes != this->modes)
+		 if(dra[0]->get_secondaryUnit() != this->sec_unit || current_modes != this->modes)// || this->sec_current != dra[0]->get_secondaryCurrentType())
 		 {
 			 this->sec_unit=dra[0]->get_secondaryUnit();
 
 			 this->sec_count=0;
 			 this->sec_min=this->current_sec;
 			 this->sec_max=this->current_sec;
+			 this->sec_current=dra[0]->get_secondaryCurrentType();
 			 sec_reset=true;
 		 }
 		 if(current_modes != this->modes)
@@ -838,24 +768,98 @@ namespace Fluke {
 
 	 }
 
+	std::string Fluke189QD0Logging::minMaxAvgValueStorageToString(minMaxAvgValueStorage_t value)
+	{
+		std::string strvalue, valmem;
+		std::stringstream convert_int;
 
-	 std::string Fluke189QD0Logging::get_Primary_ValueAndUnit_String()
-	 {
-		 std::string ValueString=this->minMaxAvgValueStorageToString(this->current_pri);
-		 ValueString.append(this->pri_unit_str);
+		//Insert space
+		strvalue.append(" ");
 
-		 if(pri_error) ValueString=Fluke189DataResponseAnalyzerWrapper::valueErrorToString(pri_error);
-		 return ValueString;
-	 }
+		//Convert Value into string
+		convert_int<<value.Value;
+		convert_int>>valmem;
 
-	 std::string Fluke189QD0Logging::get_Secondary_ValueAndUnit_String()
-	 {
-		 std::string ValueString=this->minMaxAvgValueStorageToString(this->current_sec);
-		 ValueString.append(this->sec_unit_str);
-		 if(sec_error) ValueString=Fluke189DataResponseAnalyzerWrapper::valueErrorToString(sec_error);
-		 return ValueString;
-	 }
+		//if negative remove minus for the next step
+		if(value.Value<0)valmem.replace(0,1,"");
 
+
+		//calculate insert location
+		int insertlocation=valmem.length()-value.Decimal;
+
+		if(insertlocation <= 0)
+		{
+			//insert leading zeros and decimal point //limited to a maximum of 5 zeros (we won't need more afaik)
+			for(int i=0;insertlocation+i<0 && i<5;i++)
+			{
+				valmem.insert(0,1,'0');
+			}
+			valmem.insert(0,1,'.');
+			valmem.insert(0,1,'0');
+		}
+		else if(insertlocation >= 0)
+		{
+			//insert decimal point
+			valmem.insert(insertlocation,1,'.');
+		}
+
+		//if negative insert minus again here
+		if(value.Value<0)valmem.insert(0,1,'-');
+
+		//Append to Output
+		strvalue.append(valmem);
+		//Insert space
+		strvalue.append(" ");
+		//addPrefix
+		switch(value.Prefix)
+		{
+		case 0:break;
+
+		case 1:
+			strvalue.append("k");
+		break;
+
+		case 2:
+			strvalue.append("M");
+		break;
+
+		case 3:
+			strvalue.append("G");
+		break;
+
+		case -1:
+			strvalue.append("m");
+		break;
+
+		case -2:
+			strvalue.append("µ");
+		break;
+
+		case -3:
+			strvalue.append("n");
+		break;
+		}
+
+		return strvalue;
+
+	}
+
+	std::string Fluke189QD0Logging::get_Primary_ValueAndUnit_String()
+	{
+	 std::string ValueString=this->minMaxAvgValueStorageToString(this->current_pri);
+	 ValueString.append(this->pri_unit_str);
+
+	 if(pri_error) ValueString=Fluke189DataResponseAnalyzerWrapper::valueErrorToString(pri_error);
+	 return ValueString;
+	}
+
+	std::string Fluke189QD0Logging::get_Secondary_ValueAndUnit_String()
+	{
+	 std::string ValueString=this->minMaxAvgValueStorageToString(this->current_sec);
+	 ValueString.append(this->sec_unit_str);
+	 if(sec_error) ValueString=Fluke189DataResponseAnalyzerWrapper::valueErrorToString(sec_error);
+	 return ValueString;
+	}
 
 /*Namespace End*/}
 
