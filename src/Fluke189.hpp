@@ -582,10 +582,6 @@ protected:
 	void* currentContainer;     ///<helds the address of a supported container type
 
 public:
-
-
-
-
 	/**
 	 * Constructor
 	 * param[in] datasetnumber Number of the data set to be edited
@@ -848,6 +844,9 @@ class Fluke189DataResponseAnalyzerWrapperQD0 : public Fluke189DataResponseAnalyz
 	: Fluke189DataResponseAnalyzerWrapper(datasetnumber, currentContainer){};
 
 	~Fluke189DataResponseAnalyzerWrapperQD0(){};
+
+
+
 
 public:
 	/**

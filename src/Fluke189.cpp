@@ -374,6 +374,7 @@ namespace Fluke {
 			//Delta and Delta Percent
 			if(qdInfo->I_Delta)
 			{
+				std::cout<<"(1)";
 				//Secondary unit becomes primary unit (showing start value)
 				info.i_secUnit=info.i_priUnit;
 				info.s_secUnit=info.s_priUnit;
@@ -389,12 +390,13 @@ namespace Fluke {
 				info.s_secCurrentType=info.s_priCurrentType;
 				info.i_priUnit=AU_Percent;
 				info.s_priUnit="%";
+
 			}
 
 			//If any hold mode is enabled and the secondary display was off before it changes to the current value
 			//while the primary value stays at the hold value.
 			//But if there is already anything displayed in the secondary display it does not change to the current value
-			if(qdInfo->I_S_Hold && info.i_secUnit==AU_None);
+			if(qdInfo->I_S_Hold && info.i_secUnit==AU_None)
 			{
 				info.i_secUnit=info.i_priUnit;
 				info.s_secUnit=info.s_priUnit;
@@ -619,12 +621,12 @@ namespace Fluke {
 
 	std::string Fluke189DataResponseAnalyzerWrapperQD0::getPrimaryUnitString()
 	{
-return getAnalyzedInfoStruct().s_priUnit;
+		return getAnalyzedInfoStruct().s_priUnit;
 	}
 
 	std::string Fluke189DataResponseAnalyzerWrapperQD0::getSecondaryUnitString()
 	{
-return getAnalyzedInfoStruct().s_secUnit;
+		return getAnalyzedInfoStruct().s_secUnit;
 	}
 
 	////////////////////////////////////
@@ -639,9 +641,12 @@ return getAnalyzedInfoStruct().s_secUnit;
 		 this->sec_error=dra[0]->get_SECdisplayError();
 
 		 this->current_pri.Value=container.Data()->I_priValue0;
-		 this->current_pri.Prefix=container.Data()->I_priSI_Prefix0;
+
+		 //If we have Percent for the primary value we need to ignore the Prefix... it could be wrong...
+		 this->current_pri.Prefix=(dra[0]->getAnalyzedInfoStruct().i_priUnit != Fluke189DataResponseAnalyzerWrapper::AU_Percent)?container.Data()->I_priSI_Prefix0 : 0;
 		 this->current_pri.Decimal=(container.Data()->I_priDecimal0 != 128) ? container.Data()->I_priDecimal0 : 2;
 		 this->pri_unit_str=dra[0]->getPrimaryUnitString();
+
 
 
 		 this->current_sec.Value=container.Data()->I_secValue0;
@@ -846,7 +851,10 @@ return getAnalyzedInfoStruct().s_secUnit;
 
 	std::string Fluke189QD0Logging::get_Primary_ValueAndUnit_String()
 	{
-	 std::string ValueString=this->minMaxAvgValueStorageToString(this->current_pri);
+
+	 std::string ValueString;
+	 if(this->modes.delta || this->modes.deltapercent) ValueString.append("Δ");
+	 ValueString += this->minMaxAvgValueStorageToString(this->current_pri);
 	 ValueString.append(this->pri_unit_str);
 
 	 if(pri_error) ValueString=Fluke189DataResponseAnalyzerWrapper::valueErrorToString(pri_error);
