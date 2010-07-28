@@ -1,7 +1,7 @@
 /**
  * @mainpage
  * @todo Add Documentation to mainpage: Examples, Description etc....
- * @todo Add Error for -OL (capacitor measurement when strips are connected together)
+ *
  */
 
 
@@ -31,7 +31,7 @@ namespace Fluke {
 /**
  * Class for accessing a Fluke189 multimeter\n
  *
- * Initialization Example:\n
+ * Initialization:\n
  * Fluke::Fluke189 Device("/dev/ttyUSB0");\n
  *
  * Sending a command:\n
@@ -698,21 +698,22 @@ public:
 
 		//primary
 		        Unit i_priUnit;			///<Unit (primary Display) (enum Unit)
-		 std::string s_priUnit;			///<Unit string(primary Display)
+		 std::string s_priUnit;			///<Unit string(primary Display)//@todo remove this and create function UnitToString
 		 CurrentType i_priCurrentType;	///<Integer number for current type AC DC AC+DC(primary Display)
-	     std::string s_priCurrentType;	///<String for current type(primary Display)
+	     std::string s_priCurrentType;	///<String for current type(primary Display)@todo delete
 
 		//secondary
                 Unit i_secUnit;			///<Integer number for unit (sec. Disp) (enum Unit)
-		 std::string s_secUnit;			///<Unit string(sec. Disp)
+		 std::string s_secUnit;			///<Unit string(sec. Disp) //@todo remove this and create function UnitToString
 		 CurrentType i_secCurrentType;	///<Integer number for current type AC DC AC+DC(sec. Disp)
-		 std::string s_secCurrentType;	///<string for current type(sec. Disp)
+		 std::string s_secCurrentType;	///<string for current type(sec. Disp) @todo delete
 
 		//Special Modes
 			    bool b_Logging;			///<True if currently logging
 			    bool b_ViewMem;			///<True if in ViewMem (and CLR is not displayed)
 			    bool b_ModeSwitchERR;	///<True if switch is stuck between two modes
    ModeSwitchSetting i_ModeSwitchPos;   ///<Position of mode switch
+
 
 	} analyzedInfo_t;
 
@@ -747,6 +748,13 @@ public:
 	 */
 	static DispError valueExtractError(int value);
 
+	/**
+	 * This function will convert a currentType to a string
+	 * @param [in] type CurrentType variable
+	 * @param [in] symbol If true it will return a symbol instead of words
+	 * @return Returns symbol or abbreviation of current type
+	 */
+	static std::string currentTypeToString(CurrentType type, bool symbol);
 
 
 	/////////////////////
@@ -1031,16 +1039,21 @@ public: /*Types*/
 		signed   int Prefix;	///<Prefix
 	}  minMaxAvgValueStorage_t;
 
-
+	/**
+	 * Struct for modes information
+	 */
 	typedef struct modes_t
 	{
-		unsigned int minmaxavg;
-		bool delta;
-		bool deltapercent;
-		bool autohold;
-		bool hold;
-		Fluke189DataResponseAnalyzerWrapper::Etch etch;
+		unsigned int minmaxavg; ///< 0=NoMinMaxAvg 1=Max 2=Min 3=Avg
+ 		bool delta;				///< This is true when delta mode is used but not in delta percent mode
+		bool deltapercent;	 	///< This is true when delta percent mode is used but not in delta mode
+		bool autohold;			///< This is true in autohold mode but not in hold
+		bool hold;				///< This is true in hold mode but not in auto hold
+		Fluke189DataResponseAnalyzerWrapper::Etch etch; ///< This will show if there is rising or falling etch or neither
 
+		/**
+		 * Operator == for this struct type (std-behavior)
+		 */
 		bool operator==(modes_t modes)
 		{
 			return (this->minmaxavg    == modes.minmaxavg   &&
@@ -1051,6 +1064,9 @@ public: /*Types*/
 					this->hold         == modes.hold
 			);
 		}
+		/**
+		 * Operator != for this struct type (std-behavior)
+		 */
 		bool operator!=(modes_t modes)
 		{
 			return !this->operator ==(modes);
@@ -1085,11 +1101,15 @@ private:/*Variables*/
 		long long sec_avg_ll;
 		unsigned int sec_count;
 
+	//Reset Variable
+		bool pri_reset;
+		bool sec_reset;
+
 	/*
 	 * Variables for storing current units
 	 */
 	 Fluke189DataResponseAnalyzerWrapper::Unit pri_unit, sec_unit;
-	 std::string pri_current, sec_current;
+	 Fluke189DataResponseAnalyzerWrapper::CurrentType pri_current, sec_current;
 	 std::string pri_unit_str, sec_unit_str;
 
 public: /*Functions*/
@@ -1144,12 +1164,30 @@ public:
 	 */
 	std::string minMaxAvgValueStorageToString(minMaxAvgValueStorage_t value);
 
-
 	 /**
 	  * This function will add the container to the calculated min, max and average values
+	  * Internally its the function which does the most important work, calculating etc.
 	  * @param [in] container The container object
 	  */
 	 void addContainer(Fluke189::RCT_QD0& container);
+
+	 /**
+	  * This function will reset primary min max and avg values
+	  * @todo: Implement in add Container
+	  */
+	 void reset_primary()
+	 {
+		 this->pri_reset=true;
+	 }
+
+	 /**
+	  * This function will reset secondary min max and avg values
+	  *	@todo Implement in add Container
+	  */
+	 void reset_secondary()
+	 {
+		 this->sec_reset=true;
+	 }
 
 	 /**
 	  * @return This function will return the internal variable pri_min.
@@ -1229,9 +1267,40 @@ public:
 	 std::string get_Primary_ValueAndUnit_String();
 
 	 /**
+	  * @return Returns a String containing the primary max value with dot, prefix and physical unit.
+	  */
+	 std::string get_Primary_Max_ValueAndUnit_String();
+
+	 /**
+	  * @return Returns a String containing the primary min value with dot, prefix and physical unit.
+	  */
+	 std::string get_Primary_Min_ValueAndUnit_String();
+
+	 /**
+	  * @return Returns a String containing the primary avg value with dot, prefix and physical unit.
+	  */
+	 std::string get_Primary_Avg_ValueAndUnit_String();
+
+
+	 /**
 	  * @return Returns a String containing the Secondary value with dot, prefix and physical unit.
 	  */
 	 std::string get_Secondary_ValueAndUnit_String();
+
+	 /**
+	  * @return Returns a String containing the Secondary max value with dot, prefix and physical unit.
+	  */
+	 std::string get_Secondary_Max_ValueAndUnit_String();
+
+	 /**
+	  * @return Returns a String containing the Secondary min value with dot, prefix and physical unit.
+	  */
+	 std::string get_Secondary_Min_ValueAndUnit_String();
+
+	 /**
+	  * @return Returns a String containing the Secondary avg value with dot, prefix and physical unit.
+	  */
+	 std::string get_Secondary_Avg_ValueAndUnit_String();
 
 };
 

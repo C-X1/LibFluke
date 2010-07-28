@@ -549,6 +549,52 @@ namespace Fluke {
 		}
 	}
 
+	std::string Fluke189DataResponseAnalyzerWrapper::currentTypeToString(CurrentType type, bool symbol)
+	{
+		std::string typestr;
+		if(symbol)
+		{
+			switch(type)
+			{
+			case ACT_AlternatingCurrent:
+				typestr="AC";
+				break;
+			case ACT_DirectCurrent:
+				typestr="DC";
+				break;
+			case ACT_DirectandAlternatingCurrent:
+				typestr="AC+DC";
+				break;
+			case ACT_NoCurrentType:
+				typestr="";
+				break;
+			default:
+				throw std::runtime_error("Error: Unknown CurrentType!!!");
+			}
+		}
+		else
+		{
+			switch(type)
+			{
+			case ACT_AlternatingCurrent:
+				typestr="~";
+				break;
+			case ACT_DirectCurrent:
+				typestr="=";
+				break;
+			case ACT_DirectandAlternatingCurrent:
+				typestr="≃";
+				break;
+			case ACT_NoCurrentType:
+				typestr="";
+				break;
+			default:
+				throw std::runtime_error("Error: Unknown CurrentType!!!");
+			}
+		}
+		return typestr;
+	}
+
 
 	////////////////////////////////////////////////////
 	////Fluke189ResponseAnalyzerWrapperQD0 Functions////
@@ -644,6 +690,7 @@ namespace Fluke {
 
 		 //If we have Percent for the primary value we need to ignore the Prefix... it could be wrong...
 		 this->current_pri.Prefix=(dra[0]->getAnalyzedInfoStruct().i_priUnit != Fluke189DataResponseAnalyzerWrapper::AU_Percent)?container.Data()->I_priSI_Prefix0 : 0;
+
 		 this->current_pri.Decimal=(container.Data()->I_priDecimal0 != 128) ? container.Data()->I_priDecimal0 : 2;
 		 this->pri_unit_str=dra[0]->getPrimaryUnitString();
 
@@ -666,18 +713,26 @@ namespace Fluke {
 
 
 
-		 //Check if the unit is the same as before, if not reset min max and avg
-		 bool pri_reset=false, sec_reset=false;
-		 if(dra[0]->get_primaryUnit() != this->pri_unit || current_modes != this->modes)// || this->pri_current != dra[0]->get_primaryCurrentType())
+
+		 if(dra[0]->get_primaryUnit() != this->pri_unit
+			|| current_modes != this->modes
+			|| this->pri_current != dra[0]->get_primaryCurrentType()
+			|| this->pri_reset
+			)
 		 {
 			 this->pri_unit=dra[0]->get_primaryUnit();
 			 this->pri_count=0;
 			 this->pri_min=this->current_pri;
 			 this->pri_max=this->current_pri;
 			 this->pri_current=dra[0]->get_primaryCurrentType();
-			 pri_reset=true;
+			 this->pri_reset=true;
 		 }
-		 if(dra[0]->get_secondaryUnit() != this->sec_unit || current_modes != this->modes)// || this->sec_current != dra[0]->get_secondaryCurrentType())
+
+		 if(dra[0]->get_secondaryUnit() != this->sec_unit
+		    || current_modes != this->modes
+		    || this->sec_current != dra[0]->get_secondaryCurrentType()
+		    || this->sec_reset
+		    )
 		 {
 			 this->sec_unit=dra[0]->get_secondaryUnit();
 
@@ -685,8 +740,9 @@ namespace Fluke {
 			 this->sec_min=this->current_sec;
 			 this->sec_max=this->current_sec;
 			 this->sec_current=dra[0]->get_secondaryCurrentType();
-			 sec_reset=true;
+			 this->sec_reset=true;
 		 }
+
 		 if(current_modes != this->modes)
 		 {
 			 this->modes = current_modes;
@@ -730,6 +786,8 @@ namespace Fluke {
 		//Average long long to minmaxvaluestorage
 		if(!dra[0]->hasErrorPRIdisplay())
 		{
+           //change reset to false only when a good measurement has been gotten after reset
+			 this->pri_reset=false;
 			 int pri_highest_place=0;
 			 //Get highest place of average
 			 for(int i = 0; ((int)(this->pri_avg_ll / pow(10, 18-i))) == 0;i++ ) pri_highest_place = 18 - i -1;
@@ -750,6 +808,8 @@ namespace Fluke {
 
 		if(!dra[0]->hasErrorSECdisplay())
 		{
+		//change reset to false only when a good measurement has been gotten after reset
+			 this->sec_reset=false;
 			 int sec_highest_place=0;
 			 //Get highest place of average
 			 for(int i = 0; ((int)(this->sec_avg_ll / pow(10, 18-i))) == 0;i++ ) sec_highest_place = 18 - i -1;
@@ -767,8 +827,6 @@ namespace Fluke {
 				 this->sec_avg.Value=sec_avg_ll/pow(10, (groupsOfthree*3)-(sec_avg.Decimal-1));
 			 }
 		}
-
-
 
 
 	 }
@@ -851,7 +909,6 @@ namespace Fluke {
 
 	std::string Fluke189QD0Logging::get_Primary_ValueAndUnit_String()
 	{
-
 	 std::string ValueString;
 	 if(this->modes.delta || this->modes.deltapercent) ValueString.append("Δ");
 	 ValueString += this->minMaxAvgValueStorageToString(this->current_pri);
@@ -861,13 +918,93 @@ namespace Fluke {
 	 return ValueString;
 	}
 
+	std::string Fluke189QD0Logging::get_Primary_Max_ValueAndUnit_String()
+	{
+		 std::string ValueString;
+		 if(this->modes.delta || this->modes.deltapercent) ValueString.append("Δ");
+		 ValueString += this->minMaxAvgValueStorageToString(this->pri_max);
+		 ValueString.append(this->pri_unit_str);
+		 if(pri_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
+		 return ValueString;
+	}
+
+	std::string Fluke189QD0Logging::get_Primary_Min_ValueAndUnit_String()
+	{
+		 std::string ValueString;
+		 if(this->modes.delta || this->modes.deltapercent) ValueString.append("Δ");
+		 ValueString += this->minMaxAvgValueStorageToString(this->pri_min);
+		 ValueString.append(this->pri_unit_str);
+		 if(pri_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
+		 return ValueString;
+	}
+
+	std::string Fluke189QD0Logging::get_Primary_Avg_ValueAndUnit_String()
+	{
+		 std::string ValueString;
+		 if(this->modes.delta || this->modes.deltapercent) ValueString.append("Δ");
+		 ValueString += this->minMaxAvgValueStorageToString(this->pri_avg);
+		 ValueString.append(this->pri_unit_str);
+		 if(pri_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
+		 return ValueString;
+	}
+
+
+
 	std::string Fluke189QD0Logging::get_Secondary_ValueAndUnit_String()
 	{
-	 std::string ValueString=this->minMaxAvgValueStorageToString(this->current_sec);
-	 ValueString.append(this->sec_unit_str);
-	 if(sec_error) ValueString=Fluke189DataResponseAnalyzerWrapper::valueErrorToString(sec_error);
-	 return ValueString;
+
+		std::string ValueString=this->minMaxAvgValueStorageToString(this->current_sec);
+		ValueString.append(this->sec_unit_str);
+		if(sec_error) ValueString=Fluke189DataResponseAnalyzerWrapper::valueErrorToString(sec_error);
+		return ValueString;
 	}
+
+	std::string Fluke189QD0Logging::get_Secondary_Max_ValueAndUnit_String()
+	{
+
+		std::string ValueString=this->minMaxAvgValueStorageToString(this->sec_max);
+		ValueString.append(this->sec_unit_str);
+		if(sec_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
+		return ValueString;
+	}
+
+	std::string Fluke189QD0Logging::get_Secondary_Min_ValueAndUnit_String()
+	{
+
+		std::string ValueString=this->minMaxAvgValueStorageToString(this->sec_min);
+		ValueString.append(this->sec_unit_str);
+		if(sec_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
+		return ValueString;
+	}
+
+	std::string Fluke189QD0Logging::get_Secondary_Avg_ValueAndUnit_String()
+	{
+
+		std::string ValueString=this->minMaxAvgValueStorageToString(this->sec_avg);
+		ValueString.append(this->sec_unit_str);
+		if(sec_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
+		return ValueString;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*Namespace End*/}
 

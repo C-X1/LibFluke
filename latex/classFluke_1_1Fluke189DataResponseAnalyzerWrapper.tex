@@ -39,7 +39,7 @@ enum \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a2ec2700a6086a
  \}
 \item 
 enum \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ab8e5f2306e4d2ad3d741d273793aaed1}{Unit} \{ \par
-{\bfseries AU\_\-None}, 
+{\bfseries AU\_\-None} = 0, 
 {\bfseries AU\_\-AC\_\-V}, 
 {\bfseries AU\_\-DC\_\-V}, 
 {\bfseries AU\_\-ACDC\_\-V}, 
@@ -70,23 +70,33 @@ enum \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ada71f6ab32a7b
 {\bfseries AE\_\-FALLING\_\-ETCH}, 
 {\bfseries AE\_\-RISING\_\-ETCH}
  \}
+\item 
+enum \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a5e26140c615bf0b73788f665a7bec9c7}{DispError} \{ \par
+{\bfseries ERR\_\-NONE} = 0, 
+{\bfseries ERR\_\-DISPLAY\_\-OFF}, 
+{\bfseries ERR\_\-OPEN}, 
+{\bfseries ERR\_\-FUSE}, 
+\par
+{\bfseries ERR\_\-LEADS}, 
+{\bfseries ERR\_\-OUTOFRANGE\_\-POSITIVE}, 
+{\bfseries ERR\_\-OUTOFRANGE\_\-NEGATIVE}, 
+{\bfseries ERR\_\-UNKNOWN}
+ \}
 \end{DoxyCompactItemize}
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_af4f891231353edf2c9a20743d3018b1e}{Fluke189DataResponseAnalyzerWrapper} (unsigned int \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a568ccec1349cc6b278fb0791182bc7b4}{datasetnumber}, void $\ast$\hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_aa0096243be3694f7993022733703697a}{currentContainer})
 \item 
-\hyperlink{structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t}{analyzedInfo\_\-t} \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a2bec1dad601bc993375d358ef77c7e6b}{analyzeQdInfo} (\hyperlink{structFluke_1_1Fluke189_1_1qdInfo__t}{Fluke::Fluke189::qdInfo\_\-t} $\ast$qdInfo)
+virtual \hyperlink{structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t}{analyzedInfo\_\-t} \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a006925b794ce1cd11ca13668fbcf5b64}{getAnalyzedInfoStruct} ()=0
 \item 
-std::string \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ac6af92576728d360cf3e0d462d07dd27}{valueErrorToString} (\hyperlink{classFluke_1_1Fluke189_a5dc0eaffde0a29a64cbcbd50d4178491}{Fluke::Fluke189::ValueError} number)
+virtual bool \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a25ca42185c5573fb30a6c60e72c36e27}{hasErrorPRIdisplay} ()=0
 \item 
-virtual bool \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a831296ad9286753efede158c207adc19}{hasErrorPRIdisplay} (bool reading2)=0
+virtual bool \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a99952a4552f0cb6705996b28312850dc}{hasErrorSECdisplay} ()=0
 \item 
-virtual bool \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_aa78f02012a5f1803c080bae3e6121286}{hasErrorSECdisplay} (bool reading2)=0
+virtual \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a5e26140c615bf0b73788f665a7bec9c7}{DispError} \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ae6b5bf434d9600f4178650d66922a3aa}{get\_\-PRIdisplayError} ()=0
 \item 
-virtual \hyperlink{classFluke_1_1Fluke189_a5dc0eaffde0a29a64cbcbd50d4178491}{Fluke189::ValueError} \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ad10698c83895619a6fbf251c1256ce11}{get\_\-PRIdisplayError} (bool reading2)=0
-\item 
-virtual \hyperlink{classFluke_1_1Fluke189_a5dc0eaffde0a29a64cbcbd50d4178491}{Fluke189::ValueError} \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_aaf53f3e129ae21be4abe85bf4998fed5}{get\_\-SECdisplayError} (bool reading2)=0
+virtual \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a5e26140c615bf0b73788f665a7bec9c7}{DispError} \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a28c8a2bcca43f33e1b1becf9d5ffa76c}{get\_\-SECdisplayError} ()=0
 \item 
 virtual \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a2ec2700a6086ae0ebd9601fe0c0f957a}{ModeSwitchSetting} \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a18e1b686e50a4cc3a7023c646f66a35c}{get\_\-ModeSwitchSetting} ()=0
 \item 
@@ -99,6 +109,19 @@ virtual \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_afef24496da
 virtual \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_afef24496da239e3613c40ad3582d7adc}{CurrentType} \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a21a39a54587e31af04c931b46aa11806}{get\_\-secondaryCurrentType} ()=0
 \item 
 virtual \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ada71f6ab32a7b0eb40bb0ed96d7053bc}{Etch} \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a258e56c1ff27b8aae648940599d3b475}{get\_\-EtchInfo} ()=0
+\item 
+virtual std::string \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a54f606e7d645b34c075074d72b291ce8}{getPrimaryUnitString} ()=0
+\item 
+virtual std::string \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ae8fa175a376f000e0ccebef46b0f6cc2}{getSecondaryUnitString} ()=0
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t}{analyzedInfo\_\-t} \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a2bec1dad601bc993375d358ef77c7e6b}{analyzeQdInfo} (\hyperlink{structFluke_1_1Fluke189_1_1qdInfo__t}{Fluke::Fluke189::qdInfo\_\-t} $\ast$qdInfo)
+\item 
+static std::string \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_aa12dd607815d6ee1530a54855a4b3264}{valueErrorToString} (\hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a5e26140c615bf0b73788f665a7bec9c7}{DispError} number)
+\item 
+static \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a5e26140c615bf0b73788f665a7bec9c7}{DispError} \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ab12ae68ca8c80dce4a952811825de465}{valueExtractError} (int value)
 \end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
@@ -132,7 +155,12 @@ This Wrapper is the superclass for the different data sets. The class to creatin
 \index{CurrentType@{CurrentType}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
 \subsubsection[{CurrentType}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Fluke::Fluke189DataResponseAnalyzerWrapper::CurrentType}}}
 \label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_afef24496da239e3613c40ad3582d7adc}
-Voltage Types (AC, DC, AC+DC) \hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ada71f6ab32a7b0eb40bb0ed96d7053bc}{
+Voltage Types (AC, DC, AC+DC) \hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a5e26140c615bf0b73788f665a7bec9c7}{
+\index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!DispError@{DispError}}
+\index{DispError@{DispError}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
+\subsubsection[{DispError}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Fluke::Fluke189DataResponseAnalyzerWrapper::DispError}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a5e26140c615bf0b73788f665a7bec9c7}
+Display Errors \hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ada71f6ab32a7b0eb40bb0ed96d7053bc}{
 \index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!Etch@{Etch}}
 \index{Etch@{Etch}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
 \subsubsection[{Etch}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf Fluke::Fluke189DataResponseAnalyzerWrapper::Etch}}}
@@ -161,7 +189,7 @@ Constructor param\mbox{[}in\mbox{]} datasetnumber Number of the data set to be e
 \hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a2bec1dad601bc993375d358ef77c7e6b}{
 \index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!analyzeQdInfo@{analyzeQdInfo}}
 \index{analyzeQdInfo@{analyzeQdInfo}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
-\subsubsection[{analyzeQdInfo}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Fluke189DataResponseAnalyzerWrapper::analyzedInfo\_\-t} Fluke::Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo ({\bf Fluke::Fluke189::qdInfo\_\-t} $\ast$ {\em qdInfo})}}
+\subsubsection[{analyzeQdInfo}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Fluke189DataResponseAnalyzerWrapper::analyzedInfo\_\-t} Fluke::Fluke189DataResponseAnalyzerWrapper::analyzeQdInfo ({\bf Fluke::Fluke189::qdInfo\_\-t} $\ast$ {\em qdInfo})\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
 \label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a2bec1dad601bc993375d358ef77c7e6b}
 Returns a struct with additional information created by analyzing qdInfo.\par
  It containes the primary and secondary units, current types and shows if the multimeter is currently in logging or viewmem mode\par
@@ -188,25 +216,22 @@ Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_a
 \index{get\_\-ModeSwitchSetting@{get\_\-ModeSwitchSetting}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
 \subsubsection[{get\_\-ModeSwitchSetting}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf ModeSwitchSetting} Fluke::Fluke189DataResponseAnalyzerWrapper::get\_\-ModeSwitchSetting ()\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
 \label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a18e1b686e50a4cc3a7023c646f66a35c}
-Shows the current mode switch setting \begin{DoxyReturn}{Returns}
+Get the current mode switch setting \begin{DoxyReturn}{Returns}
 Number of mode switch or 0 when stuck between two positions 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_ad28a17399ffe6a926990aafd5a1891d3}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ad10698c83895619a6fbf251c1256ce11}{
+Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_ad28a17399ffe6a926990aafd5a1891d3}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ae6b5bf434d9600f4178650d66922a3aa}{
 \index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!get\_\-PRIdisplayError@{get\_\-PRIdisplayError}}
 \index{get\_\-PRIdisplayError@{get\_\-PRIdisplayError}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
-\subsubsection[{get\_\-PRIdisplayError}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Fluke189::ValueError} Fluke::Fluke189DataResponseAnalyzerWrapper::get\_\-PRIdisplayError (bool {\em reading2})\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ad10698c83895619a6fbf251c1256ce11}
-This function returns the ErrorValue of the primary reading 
-\begin{DoxyParams}{Parameters}
-\item[\mbox{$\leftarrow$} {\em reading2}]If {\bfseries true} second primary reading will be used. \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Error numbers according to \hyperlink{classFluke_1_1Fluke189_a5dc0eaffde0a29a64cbcbd50d4178491}{Fluke189::ValueError} 
+\subsubsection[{get\_\-PRIdisplayError}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf DispError} Fluke::Fluke189DataResponseAnalyzerWrapper::get\_\-PRIdisplayError ()\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ae6b5bf434d9600f4178650d66922a3aa}
+This function returns the ErrorValue of the primary reading \begin{DoxyReturn}{Returns}
+Error numbers according to DispError 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_a4a3343d00db4cda2bf021074f2cfdadc}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_afb7361d6963bb0edd9194ba72a1583df}{
+Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_a92b0a7a3c0cfd671f86df8e8b61aebb8}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_afb7361d6963bb0edd9194ba72a1583df}{
 \index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!get\_\-primaryCurrentType@{get\_\-primaryCurrentType}}
 \index{get\_\-primaryCurrentType@{get\_\-primaryCurrentType}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
 \subsubsection[{get\_\-primaryCurrentType}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf CurrentType} Fluke::Fluke189DataResponseAnalyzerWrapper::get\_\-primaryCurrentType ()\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
@@ -226,20 +251,17 @@ Physical unit of the current reading according to Fluke189DataResponseAnalyzerWr
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_af71dd62d9f81866ad3cb96c580754329}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_aaf53f3e129ae21be4abe85bf4998fed5}{
+Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_af71dd62d9f81866ad3cb96c580754329}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a28c8a2bcca43f33e1b1becf9d5ffa76c}{
 \index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!get\_\-SECdisplayError@{get\_\-SECdisplayError}}
 \index{get\_\-SECdisplayError@{get\_\-SECdisplayError}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
-\subsubsection[{get\_\-SECdisplayError}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Fluke189::ValueError} Fluke::Fluke189DataResponseAnalyzerWrapper::get\_\-SECdisplayError (bool {\em reading2})\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_aaf53f3e129ae21be4abe85bf4998fed5}
-This function returns the ErrorValue of the secondary reading 
-\begin{DoxyParams}{Parameters}
-\item[\mbox{$\leftarrow$} {\em reading2}]If {\bfseries true} second secondary reading will be used (QD0 only). \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
-Error numbers according to \hyperlink{classFluke_1_1Fluke189_a5dc0eaffde0a29a64cbcbd50d4178491}{Fluke189::ValueError} 
+\subsubsection[{get\_\-SECdisplayError}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf DispError} Fluke::Fluke189DataResponseAnalyzerWrapper::get\_\-SECdisplayError ()\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a28c8a2bcca43f33e1b1becf9d5ffa76c}
+This function returns the ErrorValue of the secondary reading \begin{DoxyReturn}{Returns}
+Error numbers according to DispError 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_a72e91f8c908b7fa8ce541308a53ff696}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a21a39a54587e31af04c931b46aa11806}{
+Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_a26e5925f4ca96aeea4115c44aa8ed1a8}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a21a39a54587e31af04c931b46aa11806}{
 \index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!get\_\-secondaryCurrentType@{get\_\-secondaryCurrentType}}
 \index{get\_\-secondaryCurrentType@{get\_\-secondaryCurrentType}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
 \subsubsection[{get\_\-secondaryCurrentType}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf CurrentType} Fluke::Fluke189DataResponseAnalyzerWrapper::get\_\-secondaryCurrentType ()\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
@@ -259,42 +281,74 @@ Physical unit of the current reading according to Fluke189DataResponseAnalyzerWr
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_a3f1bdb92d10f341c8b22fa8ee95600b5}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a831296ad9286753efede158c207adc19}{
+Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_a3f1bdb92d10f341c8b22fa8ee95600b5}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a006925b794ce1cd11ca13668fbcf5b64}{
+\index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!getAnalyzedInfoStruct@{getAnalyzedInfoStruct}}
+\index{getAnalyzedInfoStruct@{getAnalyzedInfoStruct}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
+\subsubsection[{getAnalyzedInfoStruct}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf analyzedInfo\_\-t} Fluke::Fluke189DataResponseAnalyzerWrapper::getAnalyzedInfoStruct ()\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a006925b794ce1cd11ca13668fbcf5b64}
+This function returns the \hyperlink{structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t}{analyzedInfo\_\-t} struct of the current value qdInfo\_\-t struct Return Returns \hyperlink{structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t}{analyzedInfo\_\-t} struct 
+
+Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_af6e15c77a255dbebaaeb61e6848e8b42}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a54f606e7d645b34c075074d72b291ce8}{
+\index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!getPrimaryUnitString@{getPrimaryUnitString}}
+\index{getPrimaryUnitString@{getPrimaryUnitString}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
+\subsubsection[{getPrimaryUnitString}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string Fluke::Fluke189DataResponseAnalyzerWrapper::getPrimaryUnitString ()\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a54f606e7d645b34c075074d72b291ce8}
+\begin{DoxyReturn}{Returns}
+Returns the current physical unit of primary value as string 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_a95eb5efb6652935a968b6063b6ae59ad}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ae8fa175a376f000e0ccebef46b0f6cc2}{
+\index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!getSecondaryUnitString@{getSecondaryUnitString}}
+\index{getSecondaryUnitString@{getSecondaryUnitString}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
+\subsubsection[{getSecondaryUnitString}]{\setlength{\rightskip}{0pt plus 5cm}virtual std::string Fluke::Fluke189DataResponseAnalyzerWrapper::getSecondaryUnitString ()\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ae8fa175a376f000e0ccebef46b0f6cc2}
+\begin{DoxyReturn}{Returns}
+Returns the current physical unit of secondary value as string 
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_af504a28abc1a4a92a26daf1ccf79150f}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a25ca42185c5573fb30a6c60e72c36e27}{
 \index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!hasErrorPRIdisplay@{hasErrorPRIdisplay}}
 \index{hasErrorPRIdisplay@{hasErrorPRIdisplay}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
-\subsubsection[{hasErrorPRIdisplay}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Fluke::Fluke189DataResponseAnalyzerWrapper::hasErrorPRIdisplay (bool {\em reading2})\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a831296ad9286753efede158c207adc19}
-Checks if a error in measurement is present in the current primary reading 
-\begin{DoxyParams}{Parameters}
-\item[\mbox{$\leftarrow$} {\em reading2}]If {\bfseries true} second primary reading will be used. \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\subsubsection[{hasErrorPRIdisplay}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Fluke::Fluke189DataResponseAnalyzerWrapper::hasErrorPRIdisplay ()\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a25ca42185c5573fb30a6c60e72c36e27}
+Checks if a error in measurement is present in the current primary reading \begin{DoxyReturn}{Returns}
 {\bfseries true} if the primary display value has an error 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_aeffd54445d733f8b149c5918589e5b9e}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_aa78f02012a5f1803c080bae3e6121286}{
+Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_a173f4602b71d7d415e11aa1f1826d3f0}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a99952a4552f0cb6705996b28312850dc}{
 \index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!hasErrorSECdisplay@{hasErrorSECdisplay}}
 \index{hasErrorSECdisplay@{hasErrorSECdisplay}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
-\subsubsection[{hasErrorSECdisplay}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Fluke::Fluke189DataResponseAnalyzerWrapper::hasErrorSECdisplay (bool {\em reading2})\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
-\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_aa78f02012a5f1803c080bae3e6121286}
-Checks if a error in measurement is present in the current secondary reading 
-\begin{DoxyParams}{Parameters}
-\item[\mbox{$\leftarrow$} {\em reading2}]If {\bfseries true} second primary reading will be used. \end{DoxyParams}
-\begin{DoxyReturn}{Returns}
+\subsubsection[{hasErrorSECdisplay}]{\setlength{\rightskip}{0pt plus 5cm}virtual bool Fluke::Fluke189DataResponseAnalyzerWrapper::hasErrorSECdisplay ()\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_a99952a4552f0cb6705996b28312850dc}
+Checks if a error in measurement is present in the current secondary reading \begin{DoxyReturn}{Returns}
 {\bfseries true} if the secondary display value has an error 
 \end{DoxyReturn}
 
 
-Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_a97829a1943b858fd09c4fef1d6d61420}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ac6af92576728d360cf3e0d462d07dd27}{
+Implemented in \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0_aad8855dc897cc83a4a7b4df79657a724}{Fluke::Fluke189DataResponseAnalyzerWrapperQD0}.\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_aa12dd607815d6ee1530a54855a4b3264}{
 \index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!valueErrorToString@{valueErrorToString}}
 \index{valueErrorToString@{valueErrorToString}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
-\subsubsection[{valueErrorToString}]{\setlength{\rightskip}{0pt plus 5cm}std::string Fluke::Fluke189DataResponseAnalyzerWrapper::valueErrorToString ({\bf Fluke::Fluke189::ValueError} {\em number})}}
-\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ac6af92576728d360cf3e0d462d07dd27}
+\subsubsection[{valueErrorToString}]{\setlength{\rightskip}{0pt plus 5cm}std::string Fluke::Fluke189DataResponseAnalyzerWrapper::valueErrorToString ({\bf DispError} {\em number})\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_aa12dd607815d6ee1530a54855a4b3264}
 Returns the error string according to the ValueError number 
 \begin{DoxyParams}{Parameters}
 \item[\mbox{$\leftarrow$} {\em number}]ValueError \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 A human readable error string 
+\end{DoxyReturn}
+\hypertarget{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ab12ae68ca8c80dce4a952811825de465}{
+\index{Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}!valueExtractError@{valueExtractError}}
+\index{valueExtractError@{valueExtractError}!Fluke::Fluke189DataResponseAnalyzerWrapper@{Fluke::Fluke189DataResponseAnalyzerWrapper}}
+\subsubsection[{valueExtractError}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Fluke189DataResponseAnalyzerWrapper::DispError} Fluke::Fluke189DataResponseAnalyzerWrapper::valueExtractError (int {\em value})\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ab12ae68ca8c80dce4a952811825de465}
+This function will extract a error number out of a multimeter value 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{$\leftarrow$} {\em value}]Value from \hyperlink{classFluke_1_1Fluke189}{Fluke189} data set \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a Value from the DispError enum. 
 \end{DoxyReturn}
 
 

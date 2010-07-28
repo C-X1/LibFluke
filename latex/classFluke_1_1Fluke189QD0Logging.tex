@@ -4,35 +4,63 @@
 }
 
 
-{\ttfamily \#include $<$Fluke189.hpp$>$}\subsection*{Public Member Functions}
+{\ttfamily \#include $<$Fluke189.hpp$>$}\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t}{minMaxAvgValueStorage\_\-t}
+\item 
+struct \hyperlink{structFluke_1_1Fluke189QD0Logging_1_1modes__t}{modes\_\-t}
+\end{DoxyCompactItemize}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structFluke_1_1Fluke189QD0Logging_1_1modes__t}{Fluke::Fluke189QD0Logging::modes\_\-t} \hyperlink{classFluke_1_1Fluke189QD0Logging_aa9e03c2f5b92478c1f3182fc7b9a0a60}{modes\_\-t}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \hyperlink{classFluke_1_1Fluke189QD0Logging_ab856daf79c71ace0841c10c9f9b8f9e6}{Fluke189QD0Logging} ()
 \item 
 \hyperlink{classFluke_1_1Fluke189QD0Logging_ac134feed3bec91193ba7ffd119f9833d}{$\sim$Fluke189QD0Logging} ()
 \item 
+std::string \hyperlink{classFluke_1_1Fluke189QD0Logging_a328f1e4b632082f62d461fd4ba6eb838}{minMaxAvgValueStorageToString} (\hyperlink{structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t}{minMaxAvgValueStorage\_\-t} value)
+\item 
 void \hyperlink{classFluke_1_1Fluke189QD0Logging_af06d4058c124e5b13893311145d529d2}{addContainer} (\hyperlink{classFluke_1_1Fluke189_a9a5b405bb506cd2482de2f8bb0bea189}{Fluke189::RCT\_\-QD0} \&container)
 \item 
-long long \hyperlink{classFluke_1_1Fluke189QD0Logging_af4535d1fe0f684efc4ffe4df66a3cec6}{get\_\-Primary\_\-Minimum\_\-LL} ()
+\hyperlink{structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t}{minMaxAvgValueStorage\_\-t} \hyperlink{classFluke_1_1Fluke189QD0Logging_a61180ec1e3f4ffc507c5cc92bfa61952}{get\_\-Primary\_\-Minimum} ()
 \item 
-long long \hyperlink{classFluke_1_1Fluke189QD0Logging_a583f6614ac6b917bb151cd4cd93dc41d}{get\_\-Primary\_\-Maximum\_\-LL} ()
+\hyperlink{structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t}{minMaxAvgValueStorage\_\-t} \hyperlink{classFluke_1_1Fluke189QD0Logging_a7da9ac7b5617e427cdfc1b09d6bd4373}{get\_\-Primary\_\-Maximum} ()
 \item 
 long long \hyperlink{classFluke_1_1Fluke189QD0Logging_a29473a5a7d016d020f0948fcf3e31e50}{get\_\-Primary\_\-Average\_\-LL} ()
 \item 
-long long \hyperlink{classFluke_1_1Fluke189QD0Logging_a4086fe72824fc857356582a962d78678}{get\_\-Secondary\_\-Minimum\_\-LL} ()
+\hyperlink{structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t}{minMaxAvgValueStorage\_\-t} \hyperlink{classFluke_1_1Fluke189QD0Logging_a447e04b2f508cb4a821c2842b96115ae}{get\_\-Secondary\_\-Minimum} ()
 \item 
-long long \hyperlink{classFluke_1_1Fluke189QD0Logging_a6f0d87ff7022cf47120fd477698639ea}{get\_\-Secondary\_\-Maximum\_\-LL} ()
+\hyperlink{structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t}{minMaxAvgValueStorage\_\-t} \hyperlink{classFluke_1_1Fluke189QD0Logging_a368a2503ede00bd9ef45937fc76278ea}{get\_\-Secondary\_\-Maximum} ()
 \item 
 long long \hyperlink{classFluke_1_1Fluke189QD0Logging_a1f33bcc2d2342018f0a1ef5b4ec3caa0}{get\_\-Secondary\_\-Average\_\-LL} ()
 \item 
 \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ab8e5f2306e4d2ad3d741d273793aaed1}{Fluke189DataResponseAnalyzerWrapper::Unit} \hyperlink{classFluke_1_1Fluke189QD0Logging_a864f0f60f6995d5d035163caf0651565}{get\_\-Primary\_\-Unit} ()
 \item 
 \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ab8e5f2306e4d2ad3d741d273793aaed1}{Fluke189DataResponseAnalyzerWrapper::Unit} \hyperlink{classFluke_1_1Fluke189QD0Logging_a7d50361ed373ebaf4bf9cd7bf101f93d}{get\_\-Secondary\_\-Unit} ()
+\item 
+\hyperlink{structFluke_1_1Fluke189QD0Logging_1_1modes__t}{modes\_\-t} \hyperlink{classFluke_1_1Fluke189QD0Logging_a334633daaf140e8d49655e65ecd382e3}{get\_\-Modes} ()
+\item 
+std::string \hyperlink{classFluke_1_1Fluke189QD0Logging_a1ab6475394ca111e1afcd044d4f278e7}{get\_\-Primary\_\-ValueAndUnit\_\-String} ()
+\item 
+std::string \hyperlink{classFluke_1_1Fluke189QD0Logging_a5e36bbcb7bc5c45ffaf099af76c46d7e}{get\_\-Secondary\_\-ValueAndUnit\_\-String} ()
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
 This class will handle continous logging with the QD0 command multiple QD0 commands 
+
+\subsection{Member Typedef Documentation}
+\hypertarget{classFluke_1_1Fluke189QD0Logging_aa9e03c2f5b92478c1f3182fc7b9a0a60}{
+\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!modes\_\-t@{modes\_\-t}}
+\index{modes\_\-t@{modes\_\-t}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
+\subsubsection[{modes\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf Fluke::Fluke189QD0Logging::modes\_\-t}  {\bf Fluke::Fluke189QD0Logging::modes\_\-t}}}
+\label{classFluke_1_1Fluke189QD0Logging_aa9e03c2f5b92478c1f3182fc7b9a0a60}
+Struct for modes information 
 
 \subsection{Constructor \& Destructor Documentation}
 \hypertarget{classFluke_1_1Fluke189QD0Logging_ab856daf79c71ace0841c10c9f9b8f9e6}{
@@ -40,7 +68,7 @@ This class will handle continous logging with the QD0 command multiple QD0 comma
 \index{Fluke189QD0Logging@{Fluke189QD0Logging}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
 \subsubsection[{Fluke189QD0Logging}]{\setlength{\rightskip}{0pt plus 5cm}Fluke::Fluke189QD0Logging::Fluke189QD0Logging ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classFluke_1_1Fluke189QD0Logging_ab856daf79c71ace0841c10c9f9b8f9e6}
-Constructor (stub) \hypertarget{classFluke_1_1Fluke189QD0Logging_ac134feed3bec91193ba7ffd119f9833d}{
+Constructor \hypertarget{classFluke_1_1Fluke189QD0Logging_ac134feed3bec91193ba7ffd119f9833d}{
 \index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!$\sim$Fluke189QD0Logging@{$\sim$Fluke189QD0Logging}}
 \index{$\sim$Fluke189QD0Logging@{$\sim$Fluke189QD0Logging}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
 \subsubsection[{$\sim$Fluke189QD0Logging}]{\setlength{\rightskip}{0pt plus 5cm}Fluke::Fluke189QD0Logging::$\sim$Fluke189QD0Logging ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
@@ -53,32 +81,40 @@ Deconstructor (stub)
 \index{addContainer@{addContainer}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
 \subsubsection[{addContainer}]{\setlength{\rightskip}{0pt plus 5cm}void Fluke::Fluke189QD0Logging::addContainer ({\bf Fluke189::RCT\_\-QD0} \& {\em container})}}
 \label{classFluke_1_1Fluke189QD0Logging_af06d4058c124e5b13893311145d529d2}
-This function will add the container to the calculated min, max and average values 
+This function will add the container to the calculated min, max and average values Internally its the function which does the most important work, calculating etc. 
 \begin{DoxyParams}{Parameters}
 \item[\mbox{$\leftarrow$} {\em container}]The container object \end{DoxyParams}
+\hypertarget{classFluke_1_1Fluke189QD0Logging_a334633daaf140e8d49655e65ecd382e3}{
+\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Modes@{get\_\-Modes}}
+\index{get\_\-Modes@{get\_\-Modes}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
+\subsubsection[{get\_\-Modes}]{\setlength{\rightskip}{0pt plus 5cm}{\bf modes\_\-t} Fluke::Fluke189QD0Logging::get\_\-Modes ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classFluke_1_1Fluke189QD0Logging_a334633daaf140e8d49655e65ecd382e3}
+\begin{DoxyReturn}{Returns}
+This function will return the modes variable 
+\end{DoxyReturn}
 \hypertarget{classFluke_1_1Fluke189QD0Logging_a29473a5a7d016d020f0948fcf3e31e50}{
 \index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Primary\_\-Average\_\-LL@{get\_\-Primary\_\-Average\_\-LL}}
 \index{get\_\-Primary\_\-Average\_\-LL@{get\_\-Primary\_\-Average\_\-LL}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
 \subsubsection[{get\_\-Primary\_\-Average\_\-LL}]{\setlength{\rightskip}{0pt plus 5cm}long long Fluke::Fluke189QD0Logging::get\_\-Primary\_\-Average\_\-LL ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classFluke_1_1Fluke189QD0Logging_a29473a5a7d016d020f0948fcf3e31e50}
 \begin{DoxyReturn}{Returns}
-This function will return the long long value of the internal variable pri\_\-avg. 
+This function will return the internal variable pri\_\-avg. 
 \end{DoxyReturn}
-\hypertarget{classFluke_1_1Fluke189QD0Logging_a583f6614ac6b917bb151cd4cd93dc41d}{
-\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Primary\_\-Maximum\_\-LL@{get\_\-Primary\_\-Maximum\_\-LL}}
-\index{get\_\-Primary\_\-Maximum\_\-LL@{get\_\-Primary\_\-Maximum\_\-LL}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
-\subsubsection[{get\_\-Primary\_\-Maximum\_\-LL}]{\setlength{\rightskip}{0pt plus 5cm}long long Fluke::Fluke189QD0Logging::get\_\-Primary\_\-Maximum\_\-LL ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{classFluke_1_1Fluke189QD0Logging_a583f6614ac6b917bb151cd4cd93dc41d}
+\hypertarget{classFluke_1_1Fluke189QD0Logging_a7da9ac7b5617e427cdfc1b09d6bd4373}{
+\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Primary\_\-Maximum@{get\_\-Primary\_\-Maximum}}
+\index{get\_\-Primary\_\-Maximum@{get\_\-Primary\_\-Maximum}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
+\subsubsection[{get\_\-Primary\_\-Maximum}]{\setlength{\rightskip}{0pt plus 5cm}{\bf minMaxAvgValueStorage\_\-t} Fluke::Fluke189QD0Logging::get\_\-Primary\_\-Maximum ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classFluke_1_1Fluke189QD0Logging_a7da9ac7b5617e427cdfc1b09d6bd4373}
 \begin{DoxyReturn}{Returns}
-This function will return the long long value of the internal variable pri\_\-max. 
+This function will return the internal variable pri\_\-max. 
 \end{DoxyReturn}
-\hypertarget{classFluke_1_1Fluke189QD0Logging_af4535d1fe0f684efc4ffe4df66a3cec6}{
-\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Primary\_\-Minimum\_\-LL@{get\_\-Primary\_\-Minimum\_\-LL}}
-\index{get\_\-Primary\_\-Minimum\_\-LL@{get\_\-Primary\_\-Minimum\_\-LL}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
-\subsubsection[{get\_\-Primary\_\-Minimum\_\-LL}]{\setlength{\rightskip}{0pt plus 5cm}long long Fluke::Fluke189QD0Logging::get\_\-Primary\_\-Minimum\_\-LL ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{classFluke_1_1Fluke189QD0Logging_af4535d1fe0f684efc4ffe4df66a3cec6}
+\hypertarget{classFluke_1_1Fluke189QD0Logging_a61180ec1e3f4ffc507c5cc92bfa61952}{
+\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Primary\_\-Minimum@{get\_\-Primary\_\-Minimum}}
+\index{get\_\-Primary\_\-Minimum@{get\_\-Primary\_\-Minimum}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
+\subsubsection[{get\_\-Primary\_\-Minimum}]{\setlength{\rightskip}{0pt plus 5cm}{\bf minMaxAvgValueStorage\_\-t} Fluke::Fluke189QD0Logging::get\_\-Primary\_\-Minimum ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classFluke_1_1Fluke189QD0Logging_a61180ec1e3f4ffc507c5cc92bfa61952}
 \begin{DoxyReturn}{Returns}
-This function will return the long long value of the internal variable pri\_\-min. 
+This function will return the internal variable pri\_\-min. 
 \end{DoxyReturn}
 \hypertarget{classFluke_1_1Fluke189QD0Logging_a864f0f60f6995d5d035163caf0651565}{
 \index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Primary\_\-Unit@{get\_\-Primary\_\-Unit}}
@@ -88,29 +124,37 @@ This function will return the long long value of the internal variable pri\_\-mi
 \begin{DoxyReturn}{Returns}
 This function will return the unit (type: \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ab8e5f2306e4d2ad3d741d273793aaed1}{Fluke189DataResponseAnalyzerWrapper::Unit}) value of the internal variable. 
 \end{DoxyReturn}
+\hypertarget{classFluke_1_1Fluke189QD0Logging_a1ab6475394ca111e1afcd044d4f278e7}{
+\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Primary\_\-ValueAndUnit\_\-String@{get\_\-Primary\_\-ValueAndUnit\_\-String}}
+\index{get\_\-Primary\_\-ValueAndUnit\_\-String@{get\_\-Primary\_\-ValueAndUnit\_\-String}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
+\subsubsection[{get\_\-Primary\_\-ValueAndUnit\_\-String}]{\setlength{\rightskip}{0pt plus 5cm}std::string Fluke::Fluke189QD0Logging::get\_\-Primary\_\-ValueAndUnit\_\-String ()}}
+\label{classFluke_1_1Fluke189QD0Logging_a1ab6475394ca111e1afcd044d4f278e7}
+\begin{DoxyReturn}{Returns}
+Returns a String containing the primary value with dot, prefix and physical unit. 
+\end{DoxyReturn}
 \hypertarget{classFluke_1_1Fluke189QD0Logging_a1f33bcc2d2342018f0a1ef5b4ec3caa0}{
 \index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Secondary\_\-Average\_\-LL@{get\_\-Secondary\_\-Average\_\-LL}}
 \index{get\_\-Secondary\_\-Average\_\-LL@{get\_\-Secondary\_\-Average\_\-LL}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
 \subsubsection[{get\_\-Secondary\_\-Average\_\-LL}]{\setlength{\rightskip}{0pt plus 5cm}long long Fluke::Fluke189QD0Logging::get\_\-Secondary\_\-Average\_\-LL ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
 \label{classFluke_1_1Fluke189QD0Logging_a1f33bcc2d2342018f0a1ef5b4ec3caa0}
 \begin{DoxyReturn}{Returns}
-This function will return the long long value of the internal variable sec\_\-avg. 
+This function will return the internal variable sec\_\-avg. 
 \end{DoxyReturn}
-\hypertarget{classFluke_1_1Fluke189QD0Logging_a6f0d87ff7022cf47120fd477698639ea}{
-\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Secondary\_\-Maximum\_\-LL@{get\_\-Secondary\_\-Maximum\_\-LL}}
-\index{get\_\-Secondary\_\-Maximum\_\-LL@{get\_\-Secondary\_\-Maximum\_\-LL}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
-\subsubsection[{get\_\-Secondary\_\-Maximum\_\-LL}]{\setlength{\rightskip}{0pt plus 5cm}long long Fluke::Fluke189QD0Logging::get\_\-Secondary\_\-Maximum\_\-LL ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{classFluke_1_1Fluke189QD0Logging_a6f0d87ff7022cf47120fd477698639ea}
+\hypertarget{classFluke_1_1Fluke189QD0Logging_a368a2503ede00bd9ef45937fc76278ea}{
+\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Secondary\_\-Maximum@{get\_\-Secondary\_\-Maximum}}
+\index{get\_\-Secondary\_\-Maximum@{get\_\-Secondary\_\-Maximum}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
+\subsubsection[{get\_\-Secondary\_\-Maximum}]{\setlength{\rightskip}{0pt plus 5cm}{\bf minMaxAvgValueStorage\_\-t} Fluke::Fluke189QD0Logging::get\_\-Secondary\_\-Maximum ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classFluke_1_1Fluke189QD0Logging_a368a2503ede00bd9ef45937fc76278ea}
 \begin{DoxyReturn}{Returns}
-This function will return the long long value of the internal variable sec\_\-max. 
+This function will return the internal variable sec\_\-max. 
 \end{DoxyReturn}
-\hypertarget{classFluke_1_1Fluke189QD0Logging_a4086fe72824fc857356582a962d78678}{
-\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Secondary\_\-Minimum\_\-LL@{get\_\-Secondary\_\-Minimum\_\-LL}}
-\index{get\_\-Secondary\_\-Minimum\_\-LL@{get\_\-Secondary\_\-Minimum\_\-LL}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
-\subsubsection[{get\_\-Secondary\_\-Minimum\_\-LL}]{\setlength{\rightskip}{0pt plus 5cm}long long Fluke::Fluke189QD0Logging::get\_\-Secondary\_\-Minimum\_\-LL ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
-\label{classFluke_1_1Fluke189QD0Logging_a4086fe72824fc857356582a962d78678}
+\hypertarget{classFluke_1_1Fluke189QD0Logging_a447e04b2f508cb4a821c2842b96115ae}{
+\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Secondary\_\-Minimum@{get\_\-Secondary\_\-Minimum}}
+\index{get\_\-Secondary\_\-Minimum@{get\_\-Secondary\_\-Minimum}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
+\subsubsection[{get\_\-Secondary\_\-Minimum}]{\setlength{\rightskip}{0pt plus 5cm}{\bf minMaxAvgValueStorage\_\-t} Fluke::Fluke189QD0Logging::get\_\-Secondary\_\-Minimum ()\hspace{0.3cm}{\ttfamily  \mbox{[}inline\mbox{]}}}}
+\label{classFluke_1_1Fluke189QD0Logging_a447e04b2f508cb4a821c2842b96115ae}
 \begin{DoxyReturn}{Returns}
-This function will return the long long value of the internal variable sec\_\-min. 
+This function will return the internal variable sec\_\-min. 
 \end{DoxyReturn}
 \hypertarget{classFluke_1_1Fluke189QD0Logging_a7d50361ed373ebaf4bf9cd7bf101f93d}{
 \index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Secondary\_\-Unit@{get\_\-Secondary\_\-Unit}}
@@ -120,8 +164,28 @@ This function will return the long long value of the internal variable sec\_\-mi
 \begin{DoxyReturn}{Returns}
 This function will return the unit (type: \hyperlink{classFluke_1_1Fluke189DataResponseAnalyzerWrapper_ab8e5f2306e4d2ad3d741d273793aaed1}{Fluke189DataResponseAnalyzerWrapper::Unit}) value of the internal variable. 
 \end{DoxyReturn}
+\hypertarget{classFluke_1_1Fluke189QD0Logging_a5e36bbcb7bc5c45ffaf099af76c46d7e}{
+\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!get\_\-Secondary\_\-ValueAndUnit\_\-String@{get\_\-Secondary\_\-ValueAndUnit\_\-String}}
+\index{get\_\-Secondary\_\-ValueAndUnit\_\-String@{get\_\-Secondary\_\-ValueAndUnit\_\-String}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
+\subsubsection[{get\_\-Secondary\_\-ValueAndUnit\_\-String}]{\setlength{\rightskip}{0pt plus 5cm}std::string Fluke::Fluke189QD0Logging::get\_\-Secondary\_\-ValueAndUnit\_\-String ()}}
+\label{classFluke_1_1Fluke189QD0Logging_a5e36bbcb7bc5c45ffaf099af76c46d7e}
+\begin{DoxyReturn}{Returns}
+Returns a String containing the Secondary value with dot, prefix and physical unit. 
+\end{DoxyReturn}
+\hypertarget{classFluke_1_1Fluke189QD0Logging_a328f1e4b632082f62d461fd4ba6eb838}{
+\index{Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}!minMaxAvgValueStorageToString@{minMaxAvgValueStorageToString}}
+\index{minMaxAvgValueStorageToString@{minMaxAvgValueStorageToString}!Fluke::Fluke189QD0Logging@{Fluke::Fluke189QD0Logging}}
+\subsubsection[{minMaxAvgValueStorageToString}]{\setlength{\rightskip}{0pt plus 5cm}std::string Fluke::Fluke189QD0Logging::minMaxAvgValueStorageToString ({\bf minMaxAvgValueStorage\_\-t} {\em value})}}
+\label{classFluke_1_1Fluke189QD0Logging_a328f1e4b632082f62d461fd4ba6eb838}
+This function converts a \hyperlink{structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t}{minMaxAvgValueStorage\_\-t} to a string with dot and prefix 
+\begin{DoxyParams}{Parameters}
+\item[\mbox{$\leftarrow$} {\em value}]The value storage \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns a standard string of the value 
+\end{DoxyReturn}
 
 
-The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
 \item 
-src/Fluke189.hpp\end{DoxyCompactItemize}
+src/Fluke189.hpp\item 
+src/Fluke189.cpp\end{DoxyCompactItemize}
