@@ -626,10 +626,6 @@ public:
 	{
 		AU_None=0,
 
-		AU_AC_V,
-		AU_DC_V,
-		AU_ACDC_V,
-
 		AU_Volts,
 
 		AU_Ampere,
@@ -698,15 +694,13 @@ public:
 
 		//primary
 		        Unit i_priUnit;			///<Unit (primary Display) (enum Unit)
-		 std::string s_priUnit;			///<Unit string(primary Display)//@todo remove this and create function UnitToString
 		 CurrentType i_priCurrentType;	///<Integer number for current type AC DC AC+DC(primary Display)
-	     std::string s_priCurrentType;	///<String for current type(primary Display)@todo delete
+
 
 		//secondary
                 Unit i_secUnit;			///<Integer number for unit (sec. Disp) (enum Unit)
-		 std::string s_secUnit;			///<Unit string(sec. Disp) //@todo remove this and create function UnitToString
 		 CurrentType i_secCurrentType;	///<Integer number for current type AC DC AC+DC(sec. Disp)
-		 std::string s_secCurrentType;	///<string for current type(sec. Disp) @todo delete
+
 
 		//Special Modes
 			    bool b_Logging;			///<True if currently logging
@@ -756,6 +750,12 @@ public:
 	 */
 	static std::string currentTypeToString(CurrentType type, bool symbol);
 
+	/**
+	 * This function will convert a Unit to a string
+	 * @param [in] unit The unit enum variable
+	 * @param [in] symbol If true it returns only the symbol (V instead of Volts)
+	 */
+	static std::string unitToString(Unit unit, bool symbol);
 
 	/////////////////////
 	//VIRTUAL FUNCTIONS//
@@ -828,14 +828,14 @@ public:
 	virtual Etch get_EtchInfo() = 0;
 
 	/**
-	 * @return Returns the current physical unit of primary value as string
+	 * @return Returns the current physical unit symbol of primary value as string
 	 */
-	virtual std::string getPrimaryUnitString() = 0;
+	virtual std::string getPrimaryUnitSymbol() = 0;
 
 	/**
-	 * @return Returns the current physical unit of secondary value as string
+	 * @return Returns the current physical unit symbol of secondary value as string
 	 */
-	virtual std::string getSecondaryUnitString() = 0;
+	virtual std::string getSecondaryUnitSymbol() = 0;
 
 };
 
@@ -924,14 +924,14 @@ public:
 	Etch get_EtchInfo();
 
 	/**
-	 * @return Returns the current physical unit of primary value as string
+	 * @return Returns the current physical unit symbol of primary value as string
 	 */
-	std::string getPrimaryUnitString();
+	std::string getPrimaryUnitSymbol();
 
 	/**
-	 * @return Returns the current physical unit of secondary value as string
+	 * @return Returns the current physical unit symbol of secondary value as string
 	 */
-	std::string getSecondaryUnitString();
+	std::string getSecondaryUnitSymbol();
 
 
 
@@ -1110,7 +1110,7 @@ private:/*Variables*/
 	 */
 	 Fluke189DataResponseAnalyzerWrapper::Unit pri_unit, sec_unit;
 	 Fluke189DataResponseAnalyzerWrapper::CurrentType pri_current, sec_current;
-	 std::string pri_unit_str, sec_unit_str;
+	 Fluke189DataResponseAnalyzerWrapper::Unit pri_unit_str, sec_unit_str;
 
 public: /*Functions*/
 
