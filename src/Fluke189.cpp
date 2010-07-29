@@ -649,6 +649,40 @@ namespace Fluke {
 		return unitstr;
 	}
 
+	std::string Fluke189DataResponseAnalyzerWrapper::etchToString(Etch etch, bool symbol)
+	{
+		std::string EtchString;
+		if(symbol)
+		{
+			switch(etch)
+			{
+			case AE_RISING_ETCH:
+				EtchString="⏌";
+				break;
+			case AE_FALLING_ETCH:
+				EtchString="⏋";
+				break;
+			case AE_NOT_APPLICABLE:
+				EtchString="";
+				break;
+			}
+		}
+		else
+		{
+			switch(etch)
+			{
+			case AE_RISING_ETCH:
+				EtchString="Rising Etch";
+				break;
+			case AE_FALLING_ETCH:
+				EtchString="Falling Etch";
+				break;
+			case AE_NOT_APPLICABLE:
+				EtchString="";
+				break;
+			}
+		}
+	}
 	////////////////////////////////////////////////////
 	////Fluke189ResponseAnalyzerWrapperQD0 Functions////
 	////////////////////////////////////////////////////
@@ -1045,26 +1079,6 @@ namespace Fluke {
 		if(sec_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
 		return ValueString;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*Namespace End*/}
 

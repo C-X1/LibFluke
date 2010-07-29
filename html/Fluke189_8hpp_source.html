@@ -474,402 +474,424 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00626"></a>00626         {
 <a name="l00627"></a>00627                 AU_None=0,
 <a name="l00628"></a>00628 
-<a name="l00629"></a>00629                 AU_AC_V,
-<a name="l00630"></a>00630                 AU_DC_V,
-<a name="l00631"></a>00631                 AU_ACDC_V,
+<a name="l00629"></a>00629                 AU_Volts,
+<a name="l00630"></a>00630 
+<a name="l00631"></a>00631                 AU_Ampere,
 <a name="l00632"></a>00632 
-<a name="l00633"></a>00633                 AU_Volts,
-<a name="l00634"></a>00634 
-<a name="l00635"></a>00635                 AU_Ampere,
-<a name="l00636"></a>00636 
-<a name="l00637"></a>00637                 AU_dBm,
-<a name="l00638"></a>00638                 AU_dB_V,
-<a name="l00639"></a>00639 
-<a name="l00640"></a>00640                 AU_Hz,
-<a name="l00641"></a>00641                 AU_Seconds,
-<a name="l00642"></a>00642 
-<a name="l00643"></a>00643                 AU_Percent,
-<a name="l00644"></a>00644 
-<a name="l00645"></a>00645                 AU_Ohm,
-<a name="l00646"></a>00646                 AU_Siemens,
-<a name="l00647"></a>00647 
-<a name="l00648"></a>00648                 AU_Farad,
-<a name="l00649"></a>00649 
-<a name="l00650"></a>00650                 AU_Celsius,
-<a name="l00651"></a>00651                 AU_Fahrenheit,
-<a name="l00652"></a>00652 
-<a name="l00653"></a>00653         };
-<a name="l00654"></a>00654 
-<a name="l00658"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">00658</a>         <span class="keyword">enum</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a>
-<a name="l00659"></a>00659         {
-<a name="l00660"></a>00660                 ACT_NoCurrentType,
-<a name="l00661"></a>00661                 ACT_AlternatingCurrent,
-<a name="l00662"></a>00662                 ACT_DirectCurrent,
-<a name="l00663"></a>00663                 ACT_DirectandAlternatingCurrent
-<a name="l00664"></a>00664         };
-<a name="l00665"></a>00665 
-<a name="l00669"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ada71f6ab32a7b0eb40bb0ed96d7053bc">00669</a>         <span class="keyword">enum</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ada71f6ab32a7b0eb40bb0ed96d7053bc">Etch</a>
-<a name="l00670"></a>00670         {
-<a name="l00671"></a>00671                 AE_NOT_APPLICABLE,
-<a name="l00672"></a>00672                 AE_FALLING_ETCH,
-<a name="l00673"></a>00673                 AE_RISING_ETCH,
-<a name="l00674"></a>00674         };
-<a name="l00675"></a>00675 
-<a name="l00679"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">00679</a>         <span class="keyword">enum</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a>
-<a name="l00680"></a>00680         {
-<a name="l00681"></a>00681                 ERR_NONE                                  =0,
-<a name="l00682"></a>00682                 ERR_DISPLAY_OFF                         ,
-<a name="l00683"></a>00683                 ERR_OPEN                                        ,
-<a name="l00684"></a>00684                 ERR_FUSE                                        ,
-<a name="l00685"></a>00685                 ERR_LEADS                                       ,
-<a name="l00686"></a>00686                 ERR_OUTOFRANGE_POSITIVE         ,
-<a name="l00687"></a>00687                 ERR_OUTOFRANGE_NEGATIVE         ,
-<a name="l00688"></a>00688                 ERR_UNKNOWN                                     ,
-<a name="l00689"></a>00689         };
-<a name="l00690"></a>00690 
-<a name="l00695"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html">00695</a>         <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00696"></a>00696         {
-<a name="l00697"></a>00697                 <span class="comment">//Units information</span>
+<a name="l00633"></a>00633                 AU_dBm,
+<a name="l00634"></a>00634                 AU_dB_V,
+<a name="l00635"></a>00635 
+<a name="l00636"></a>00636                 AU_Hz,
+<a name="l00637"></a>00637                 AU_Seconds,
+<a name="l00638"></a>00638 
+<a name="l00639"></a>00639                 AU_Percent,
+<a name="l00640"></a>00640 
+<a name="l00641"></a>00641                 AU_Ohm,
+<a name="l00642"></a>00642                 AU_Siemens,
+<a name="l00643"></a>00643 
+<a name="l00644"></a>00644                 AU_Farad,
+<a name="l00645"></a>00645 
+<a name="l00646"></a>00646                 AU_Celsius,
+<a name="l00647"></a>00647                 AU_Fahrenheit,
+<a name="l00648"></a>00648 
+<a name="l00649"></a>00649         };
+<a name="l00650"></a>00650 
+<a name="l00654"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">00654</a>         <span class="keyword">enum</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a>
+<a name="l00655"></a>00655         {
+<a name="l00656"></a>00656                 ACT_NoCurrentType,
+<a name="l00657"></a>00657                 ACT_AlternatingCurrent,
+<a name="l00658"></a>00658                 ACT_DirectCurrent,
+<a name="l00659"></a>00659                 ACT_DirectandAlternatingCurrent
+<a name="l00660"></a>00660         };
+<a name="l00661"></a>00661 
+<a name="l00665"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ada71f6ab32a7b0eb40bb0ed96d7053bc">00665</a>         <span class="keyword">enum</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ada71f6ab32a7b0eb40bb0ed96d7053bc">Etch</a>
+<a name="l00666"></a>00666         {
+<a name="l00667"></a>00667                 AE_NOT_APPLICABLE,
+<a name="l00668"></a>00668                 AE_FALLING_ETCH,
+<a name="l00669"></a>00669                 AE_RISING_ETCH,
+<a name="l00670"></a>00670         };
+<a name="l00671"></a>00671 
+<a name="l00675"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">00675</a>         <span class="keyword">enum</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a>
+<a name="l00676"></a>00676         {
+<a name="l00677"></a>00677                 ERR_NONE                                  =0,
+<a name="l00678"></a>00678                 ERR_DISPLAY_OFF                         ,
+<a name="l00679"></a>00679                 ERR_OPEN                                        ,
+<a name="l00680"></a>00680                 ERR_FUSE                                        ,
+<a name="l00681"></a>00681                 ERR_LEADS                                       ,
+<a name="l00682"></a>00682                 ERR_OUTOFRANGE_POSITIVE         ,
+<a name="l00683"></a>00683                 ERR_OUTOFRANGE_NEGATIVE         ,
+<a name="l00684"></a>00684                 ERR_UNKNOWN                                     ,
+<a name="l00685"></a>00685         };
+<a name="l00686"></a>00686 
+<a name="l00691"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html">00691</a>         <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00692"></a>00692         {
+<a name="l00693"></a>00693                 <span class="comment">//Units information</span>
+<a name="l00694"></a>00694 
+<a name="l00695"></a>00695                 <span class="comment">//primary</span>
+<a name="l00696"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#aba8eba7b53ed6345bdcbfb9bebfe4e61">00696</a>                         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> i_priUnit;                 
+<a name="l00697"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#aac9913e9a3b6cca77d9b339f5090493c">00697</a>                  <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> i_priCurrentType;  
 <a name="l00698"></a>00698 
-<a name="l00699"></a>00699                 <span class="comment">//primary</span>
-<a name="l00700"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#aba8eba7b53ed6345bdcbfb9bebfe4e61">00700</a>                         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> i_priUnit;                 
-<a name="l00701"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#add1e25b6f2d4709cdf6dac679bf9759d">00701</a>                  std::string s_priUnit;                 
-<a name="l00702"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#aac9913e9a3b6cca77d9b339f5090493c">00702</a>                  <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> i_priCurrentType;  
-<a name="l00703"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#ad2d799d3b518d18d2013067f61800d3d">00703</a>              std::string s_priCurrentType;      
+<a name="l00699"></a>00699 
+<a name="l00700"></a>00700                 <span class="comment">//secondary</span>
+<a name="l00701"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#a440be0601e12d6fed6da867404e01b4d">00701</a>                 <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> i_secUnit;                 
+<a name="l00702"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#a502748872b2566b3883a5b44181b6d9f">00702</a>                  <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> i_secCurrentType;  
+<a name="l00703"></a>00703 
 <a name="l00704"></a>00704 
-<a name="l00705"></a>00705                 <span class="comment">//secondary</span>
-<a name="l00706"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#a440be0601e12d6fed6da867404e01b4d">00706</a>                 <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> i_secUnit;                 
-<a name="l00707"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#aea1c164a79fd5c06d7bca43b52f25add">00707</a>                  std::string s_secUnit;                 
-<a name="l00708"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#a502748872b2566b3883a5b44181b6d9f">00708</a>                  <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> i_secCurrentType;  
-<a name="l00709"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#a4064dafd2fee463c46757a932f90805e">00709</a>                  std::string s_secCurrentType;  
+<a name="l00705"></a>00705                 <span class="comment">//Special Modes</span>
+<a name="l00706"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#af68f3373ac335c8624fc65905ed0ca7d">00706</a>                             <span class="keywordtype">bool</span> b_Logging;                     
+<a name="l00707"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#adaf103adef5e99ff88d26fa7943d1c2b">00707</a>                             <span class="keywordtype">bool</span> b_ViewMem;                     
+<a name="l00708"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#ab028de7dcc6b32240be5deb7e9d325c4">00708</a>                             <span class="keywordtype">bool</span> b_ModeSwitchERR;       
+<a name="l00709"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#a066327f1ce453f5756a07b885e604198">00709</a>    <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a2ec2700a6086ae0ebd9601fe0c0f957a">ModeSwitchSetting</a> i_ModeSwitchPos;   
 <a name="l00710"></a>00710 
-<a name="l00711"></a>00711                 <span class="comment">//Special Modes</span>
-<a name="l00712"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#af68f3373ac335c8624fc65905ed0ca7d">00712</a>                             <span class="keywordtype">bool</span> b_Logging;                     
-<a name="l00713"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#adaf103adef5e99ff88d26fa7943d1c2b">00713</a>                             <span class="keywordtype">bool</span> b_ViewMem;                     
-<a name="l00714"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#ab028de7dcc6b32240be5deb7e9d325c4">00714</a>                             <span class="keywordtype">bool</span> b_ModeSwitchERR;       
-<a name="l00715"></a><a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html#a066327f1ce453f5756a07b885e604198">00715</a>    <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a2ec2700a6086ae0ebd9601fe0c0f957a">ModeSwitchSetting</a> i_ModeSwitchPos;   
-<a name="l00716"></a>00716 
-<a name="l00717"></a>00717 
-<a name="l00718"></a>00718         } <a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html">analyzedInfo_t</a>;
-<a name="l00719"></a>00719 
-<a name="l00720"></a>00720 
-<a name="l00721"></a>00721 
-<a name="l00723"></a>00723         <span class="comment">//BASE FUNCTIONS USEABLE FOR ALL CONTAINERS//</span>
-<a name="l00725"></a>00725 <span class="comment"></span>
-<a name="l00735"></a>00735         <span class="keyword">static</span> <a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html">analyzedInfo_t</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a2bec1dad601bc993375d358ef77c7e6b">analyzeQdInfo</a>(<a class="code" href="structFluke_1_1Fluke189_1_1qdInfo__t.html">Fluke::Fluke189::qdInfo_t</a>* qdInfo);
-<a name="l00736"></a>00736 
-<a name="l00742"></a>00742         <span class="keyword">static</span> std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#aa12dd607815d6ee1530a54855a4b3264">valueErrorToString</a>(<a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> number);
-<a name="l00743"></a>00743 
-<a name="l00749"></a>00749         <span class="keyword">static</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab12ae68ca8c80dce4a952811825de465">valueExtractError</a>(<span class="keywordtype">int</span> value);
-<a name="l00750"></a>00750 
-<a name="l00751"></a>00751 
+<a name="l00711"></a>00711 
+<a name="l00712"></a>00712         } <a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html">analyzedInfo_t</a>;
+<a name="l00713"></a>00713 
+<a name="l00714"></a>00714 
+<a name="l00715"></a>00715 
+<a name="l00717"></a>00717         <span class="comment">//BASE FUNCTIONS USEABLE FOR ALL CONTAINERS//</span>
+<a name="l00719"></a>00719 <span class="comment"></span>
+<a name="l00729"></a>00729         <span class="keyword">static</span> <a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html">analyzedInfo_t</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a2bec1dad601bc993375d358ef77c7e6b">analyzeQdInfo</a>(<a class="code" href="structFluke_1_1Fluke189_1_1qdInfo__t.html">Fluke::Fluke189::qdInfo_t</a>* qdInfo);
+<a name="l00730"></a>00730 
+<a name="l00736"></a>00736         <span class="keyword">static</span> std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#aa12dd607815d6ee1530a54855a4b3264">valueErrorToString</a>(<a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> number);
+<a name="l00737"></a>00737 
+<a name="l00743"></a>00743         <span class="keyword">static</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab12ae68ca8c80dce4a952811825de465">valueExtractError</a>(<span class="keywordtype">int</span> value);
+<a name="l00744"></a>00744 
+<a name="l00751"></a>00751         <span class="keyword">static</span> std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a17475d8977da4140a5e7fbe28e3fdb6e">currentTypeToString</a>(<a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> type, <span class="keywordtype">bool</span> symbol);
 <a name="l00752"></a>00752 
-<a name="l00754"></a>00754         <span class="comment">//VIRTUAL FUNCTIONS//</span>
-<a name="l00756"></a>00756 <span class="comment"></span>
-<a name="l00761"></a>00761         <span class="keyword">virtual</span> <a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html">analyzedInfo_t</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a006925b794ce1cd11ca13668fbcf5b64">getAnalyzedInfoStruct</a>() = 0;
-<a name="l00762"></a>00762 
-<a name="l00767"></a>00767         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a25ca42185c5573fb30a6c60e72c36e27">hasErrorPRIdisplay</a>() = 0;
-<a name="l00768"></a>00768 
-<a name="l00773"></a>00773         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a99952a4552f0cb6705996b28312850dc">hasErrorSECdisplay</a>() = 0;
-<a name="l00774"></a>00774 
-<a name="l00779"></a>00779         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ae6b5bf434d9600f4178650d66922a3aa">get_PRIdisplayError</a>() = 0;
-<a name="l00780"></a>00780 
-<a name="l00785"></a>00785         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a28c8a2bcca43f33e1b1becf9d5ffa76c">get_SECdisplayError</a>() = 0;
-<a name="l00786"></a>00786 
-<a name="l00791"></a>00791         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a2ec2700a6086ae0ebd9601fe0c0f957a">ModeSwitchSetting</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a18e1b686e50a4cc3a7023c646f66a35c">get_ModeSwitchSetting</a>() = 0;
-<a name="l00792"></a>00792 
-<a name="l00797"></a>00797         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a81fd0f497095dba37f2a614bd35426db">get_primaryUnit</a>() = 0;
-<a name="l00798"></a>00798 
-<a name="l00803"></a>00803         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a8c24a1f3d5abae862ffa06a3a7ac44f1">get_secondaryUnit</a>() = 0;
-<a name="l00804"></a>00804 
-<a name="l00809"></a>00809         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afb7361d6963bb0edd9194ba72a1583df">get_primaryCurrentType</a>() = 0;
-<a name="l00810"></a>00810 
-<a name="l00815"></a>00815         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a21a39a54587e31af04c931b46aa11806">get_secondaryCurrentType</a>() = 0;
-<a name="l00816"></a>00816 
-<a name="l00821"></a>00821         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ada71f6ab32a7b0eb40bb0ed96d7053bc">Etch</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a258e56c1ff27b8aae648940599d3b475">get_EtchInfo</a>() = 0;
-<a name="l00822"></a>00822 
-<a name="l00826"></a>00826         <span class="keyword">virtual</span> std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a54f606e7d645b34c075074d72b291ce8">getPrimaryUnitString</a>() = 0;
-<a name="l00827"></a>00827 
-<a name="l00831"></a>00831         <span class="keyword">virtual</span> std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ae8fa175a376f000e0ccebef46b0f6cc2">getSecondaryUnitString</a>() = 0;
-<a name="l00832"></a>00832 
-<a name="l00833"></a>00833 };
+<a name="l00758"></a>00758         <span class="keyword">static</span> std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a377922abe231b285470386cd90dec3c0">unitToString</a>(<a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> unit, <span class="keywordtype">bool</span> symbol);
+<a name="l00759"></a>00759 
+<a name="l00761"></a>00761         <span class="comment">//VIRTUAL FUNCTIONS//</span>
+<a name="l00763"></a>00763 <span class="comment"></span>
+<a name="l00768"></a>00768         <span class="keyword">virtual</span> <a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html">analyzedInfo_t</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a006925b794ce1cd11ca13668fbcf5b64">getAnalyzedInfoStruct</a>() = 0;
+<a name="l00769"></a>00769 
+<a name="l00774"></a>00774         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a25ca42185c5573fb30a6c60e72c36e27">hasErrorPRIdisplay</a>() = 0;
+<a name="l00775"></a>00775 
+<a name="l00780"></a>00780         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a99952a4552f0cb6705996b28312850dc">hasErrorSECdisplay</a>() = 0;
+<a name="l00781"></a>00781 
+<a name="l00786"></a>00786         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ae6b5bf434d9600f4178650d66922a3aa">get_PRIdisplayError</a>() = 0;
+<a name="l00787"></a>00787 
+<a name="l00792"></a>00792         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a28c8a2bcca43f33e1b1becf9d5ffa76c">get_SECdisplayError</a>() = 0;
+<a name="l00793"></a>00793 
+<a name="l00798"></a>00798         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a2ec2700a6086ae0ebd9601fe0c0f957a">ModeSwitchSetting</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a18e1b686e50a4cc3a7023c646f66a35c">get_ModeSwitchSetting</a>() = 0;
+<a name="l00799"></a>00799 
+<a name="l00804"></a>00804         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a81fd0f497095dba37f2a614bd35426db">get_primaryUnit</a>() = 0;
+<a name="l00805"></a>00805 
+<a name="l00810"></a>00810         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a8c24a1f3d5abae862ffa06a3a7ac44f1">get_secondaryUnit</a>() = 0;
+<a name="l00811"></a>00811 
+<a name="l00816"></a>00816         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afb7361d6963bb0edd9194ba72a1583df">get_primaryCurrentType</a>() = 0;
+<a name="l00817"></a>00817 
+<a name="l00822"></a>00822         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a21a39a54587e31af04c931b46aa11806">get_secondaryCurrentType</a>() = 0;
+<a name="l00823"></a>00823 
+<a name="l00828"></a>00828         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ada71f6ab32a7b0eb40bb0ed96d7053bc">Etch</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a258e56c1ff27b8aae648940599d3b475">get_EtchInfo</a>() = 0;
+<a name="l00829"></a>00829 
+<a name="l00833"></a>00833         <span class="keyword">virtual</span> std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab7559dd16cb4c1bda20ac54b4f93865b">getPrimaryUnitSymbol</a>() = 0;
 <a name="l00834"></a>00834 
-<a name="l00840"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html">00840</a> <span class="keyword">class </span><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html">Fluke189DataResponseAnalyzerWrapperQD0</a> : <span class="keyword">public</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html">Fluke189DataResponseAnalyzerWrapper</a>
-<a name="l00841"></a>00841 {
-<a name="l00842"></a>00842         <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html">Fluke189DataResponseAnalyzer</a>;
-<a name="l00843"></a>00843 
-<a name="l00844"></a>00844         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html">Fluke189DataResponseAnalyzerWrapperQD0</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a568ccec1349cc6b278fb0791182bc7b4" title="helds the number of the current data set">datasetnumber</a>, <span class="keywordtype">void</span>* <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#aa0096243be3694f7993022733703697a" title="helds the address of a supported container type">currentContainer</a>)
-<a name="l00845"></a>00845         : <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#af4f891231353edf2c9a20743d3018b1e">Fluke189DataResponseAnalyzerWrapper</a>(datasetnumber, currentContainer){};
-<a name="l00846"></a>00846 
-<a name="l00847"></a>00847         ~<a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html">Fluke189DataResponseAnalyzerWrapperQD0</a>(){};
-<a name="l00848"></a>00848 
-<a name="l00849"></a>00849 
+<a name="l00838"></a>00838         <span class="keyword">virtual</span> std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab64cf61c2461f5150b0a0ad31ba689cc">getSecondaryUnitSymbol</a>() = 0;
+<a name="l00839"></a>00839 
+<a name="l00840"></a>00840 };
+<a name="l00841"></a>00841 
+<a name="l00847"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html">00847</a> <span class="keyword">class </span><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html">Fluke189DataResponseAnalyzerWrapperQD0</a> : <span class="keyword">public</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html">Fluke189DataResponseAnalyzerWrapper</a>
+<a name="l00848"></a>00848 {
+<a name="l00849"></a>00849         <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html">Fluke189DataResponseAnalyzer</a>;
 <a name="l00850"></a>00850 
-<a name="l00851"></a>00851 
-<a name="l00852"></a>00852 <span class="keyword">public</span>:
-<a name="l00857"></a>00857         <a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html">analyzedInfo_t</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#af6e15c77a255dbebaaeb61e6848e8b42">getAnalyzedInfoStruct</a>();
+<a name="l00851"></a>00851         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html">Fluke189DataResponseAnalyzerWrapperQD0</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a568ccec1349cc6b278fb0791182bc7b4" title="helds the number of the current data set">datasetnumber</a>, <span class="keywordtype">void</span>* <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#aa0096243be3694f7993022733703697a" title="helds the address of a supported container type">currentContainer</a>)
+<a name="l00852"></a>00852         : <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#af4f891231353edf2c9a20743d3018b1e">Fluke189DataResponseAnalyzerWrapper</a>(datasetnumber, currentContainer){};
+<a name="l00853"></a>00853 
+<a name="l00854"></a>00854         ~<a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html">Fluke189DataResponseAnalyzerWrapperQD0</a>(){};
+<a name="l00855"></a>00855 
+<a name="l00856"></a>00856 
+<a name="l00857"></a>00857 
 <a name="l00858"></a>00858 
-<a name="l00863"></a>00863         <span class="keywordtype">bool</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#a173f4602b71d7d415e11aa1f1826d3f0">hasErrorPRIdisplay</a>();
-<a name="l00864"></a>00864 
-<a name="l00869"></a>00869         <span class="keywordtype">bool</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#aad8855dc897cc83a4a7b4df79657a724">hasErrorSECdisplay</a>();
-<a name="l00870"></a>00870 
-<a name="l00875"></a>00875         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#a92b0a7a3c0cfd671f86df8e8b61aebb8">get_PRIdisplayError</a>();
-<a name="l00876"></a>00876 
-<a name="l00881"></a>00881         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#a26e5925f4ca96aeea4115c44aa8ed1a8">get_SECdisplayError</a>();
-<a name="l00882"></a>00882 
-<a name="l00887"></a>00887         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a2ec2700a6086ae0ebd9601fe0c0f957a">ModeSwitchSetting</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#ad28a17399ffe6a926990aafd5a1891d3">get_ModeSwitchSetting</a>();
-<a name="l00888"></a>00888 
-<a name="l00893"></a>00893         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#af71dd62d9f81866ad3cb96c580754329">get_primaryUnit</a>();
-<a name="l00894"></a>00894 
-<a name="l00899"></a>00899         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#a3f1bdb92d10f341c8b22fa8ee95600b5">get_secondaryUnit</a>();
-<a name="l00900"></a>00900 
-<a name="l00905"></a>00905         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#acffb9af55e2d690060ef210977c3c933">get_primaryCurrentType</a>();
-<a name="l00906"></a>00906 
-<a name="l00911"></a>00911         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#aa46ac22750b412df37ae24db84fab138">get_secondaryCurrentType</a>();
-<a name="l00912"></a>00912 
-<a name="l00917"></a>00917         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ada71f6ab32a7b0eb40bb0ed96d7053bc">Etch</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#a8a50c55ebd21461e4c934a1eb4b07641">get_EtchInfo</a>();
-<a name="l00918"></a>00918 
-<a name="l00922"></a>00922         std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#a95eb5efb6652935a968b6063b6ae59ad">getPrimaryUnitString</a>();
-<a name="l00923"></a>00923 
-<a name="l00927"></a>00927         std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#af504a28abc1a4a92a26daf1ccf79150f">getSecondaryUnitString</a>();
-<a name="l00928"></a>00928 
-<a name="l00929"></a>00929 
+<a name="l00859"></a>00859 <span class="keyword">public</span>:
+<a name="l00864"></a>00864         <a class="code" href="structFluke_1_1Fluke189DataResponseAnalyzerWrapper_1_1analyzedInfo__t.html">analyzedInfo_t</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#af6e15c77a255dbebaaeb61e6848e8b42">getAnalyzedInfoStruct</a>();
+<a name="l00865"></a>00865 
+<a name="l00870"></a>00870         <span class="keywordtype">bool</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#a173f4602b71d7d415e11aa1f1826d3f0">hasErrorPRIdisplay</a>();
+<a name="l00871"></a>00871 
+<a name="l00876"></a>00876         <span class="keywordtype">bool</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#aad8855dc897cc83a4a7b4df79657a724">hasErrorSECdisplay</a>();
+<a name="l00877"></a>00877 
+<a name="l00882"></a>00882         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#a92b0a7a3c0cfd671f86df8e8b61aebb8">get_PRIdisplayError</a>();
+<a name="l00883"></a>00883 
+<a name="l00888"></a>00888         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">DispError</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#a26e5925f4ca96aeea4115c44aa8ed1a8">get_SECdisplayError</a>();
+<a name="l00889"></a>00889 
+<a name="l00894"></a>00894         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a2ec2700a6086ae0ebd9601fe0c0f957a">ModeSwitchSetting</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#ad28a17399ffe6a926990aafd5a1891d3">get_ModeSwitchSetting</a>();
+<a name="l00895"></a>00895 
+<a name="l00900"></a>00900         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#af71dd62d9f81866ad3cb96c580754329">get_primaryUnit</a>();
+<a name="l00901"></a>00901 
+<a name="l00906"></a>00906         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Unit</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#a3f1bdb92d10f341c8b22fa8ee95600b5">get_secondaryUnit</a>();
+<a name="l00907"></a>00907 
+<a name="l00912"></a>00912         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#acffb9af55e2d690060ef210977c3c933">get_primaryCurrentType</a>();
+<a name="l00913"></a>00913 
+<a name="l00918"></a>00918         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">CurrentType</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#aa46ac22750b412df37ae24db84fab138">get_secondaryCurrentType</a>();
+<a name="l00919"></a>00919 
+<a name="l00924"></a>00924         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ada71f6ab32a7b0eb40bb0ed96d7053bc">Etch</a> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#a8a50c55ebd21461e4c934a1eb4b07641">get_EtchInfo</a>();
+<a name="l00925"></a>00925 
+<a name="l00929"></a>00929         std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#af0968b6176ba724d21a89547147f9be5">getPrimaryUnitSymbol</a>();
 <a name="l00930"></a>00930 
-<a name="l00931"></a>00931 
-<a name="l00932"></a>00932 };
-<a name="l00933"></a>00933 
-<a name="l00949"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html">00949</a> <span class="keyword">class </span><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html">Fluke189DataResponseAnalyzer</a>
-<a name="l00950"></a>00950 {
-<a name="l00951"></a>00951         <span class="comment">//This are ResponseContainerTypes for internal usage</span>
-<a name="l00952"></a>00952         <span class="keyword">enum</span> ResponseContainerType
-<a name="l00953"></a>00953         {
-<a name="l00954"></a>00954                 QD0,
-<a name="l00955"></a>00955                 QD2,
-<a name="l00956"></a>00956                 QD4,
-<a name="l00957"></a>00957         };
-<a name="l00958"></a>00958 
-<a name="l00959"></a>00959         <span class="comment">//This variable stores the current ResponseContainerType</span>
-<a name="l00960"></a>00960         ResponseContainerType currentResponseContainerType;
-<a name="l00961"></a>00961         <span class="comment">//This stores the address of the current container</span>
-<a name="l00962"></a>00962         <span class="keywordtype">void</span>* container;
-<a name="l00963"></a>00963 
-<a name="l00964"></a>00964         <span class="comment">//This is vector stores the addresses to the created Fluke189ResponseAnalyserWrappers</span>
-<a name="l00965"></a>00965         std::vector&lt;Fluke189DataResponseAnalyzerWrapper*&gt; delAtDeconstruction;
-<a name="l00966"></a>00966 
-<a name="l00967"></a>00967 <span class="keyword">public</span>:
-<a name="l00969"></a>00969         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#a37d9cf81e6d7eee9ea5cf3cd77306dad">Fluke189DataResponseAnalyzer</a>(<a class="code" href="classFluke_1_1Fluke189.html#a9a5b405bb506cd2482de2f8bb0bea189">Fluke189::RCT_QD0</a>&amp; container);
-<a name="l00971"></a>00971         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#a37d9cf81e6d7eee9ea5cf3cd77306dad">Fluke189DataResponseAnalyzer</a>(<a class="code" href="classFluke_1_1Fluke189.html#a6dcb8bdb7e09aba26dd95d49f56690cf">Fluke189::RCT_QD2</a>&amp; container);
-<a name="l00973"></a>00973         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#a37d9cf81e6d7eee9ea5cf3cd77306dad">Fluke189DataResponseAnalyzer</a>(<a class="code" href="classFluke_1_1Fluke189.html#a82ebb2c4106833e320c8b18b968a5e22">Fluke189::RCT_QD4</a>&amp; container);
-<a name="l00974"></a>00974 
-<a name="l00975"></a>00975 
-<a name="l00977"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#a8340ad62d9d5f3364482064eea967cef">00977</a>         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#a8340ad62d9d5f3364482064eea967cef">~Fluke189DataResponseAnalyzer</a>()
-<a name="l00978"></a>00978         {
-<a name="l00979"></a>00979                 std::vector&lt;Fluke189DataResponseAnalyzerWrapper*&gt;::iterator itDel = this-&gt;delAtDeconstruction.begin();
-<a name="l00980"></a>00980                 <span class="keywordflow">for</span>(;itDel&lt;this-&gt;delAtDeconstruction.end(); itDel++ )
-<a name="l00981"></a>00981                 {
-<a name="l00982"></a>00982                         <span class="keywordflow">if</span>(*itDel != 0) <span class="keyword">delete</span> *itDel;
-<a name="l00983"></a>00983                 }
-<a name="l00984"></a>00984         };
-<a name="l00985"></a>00985 
-<a name="l00990"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#ac946623b6b04e9ddb858a1d20fc753da">00990</a>         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html">Fluke189DataResponseAnalyzerWrapper</a>* <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#ac946623b6b04e9ddb858a1d20fc753da">operator[]</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> datasetnumber)
-<a name="l00991"></a>00991         {
-<a name="l00992"></a>00992                 <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html">Fluke189DataResponseAnalyzerWrapper</a>* wrapper;
-<a name="l00993"></a>00993                 <span class="keywordflow">if</span>(this-&gt;currentResponseContainerType==QD0)
-<a name="l00994"></a>00994                 {
-<a name="l00995"></a>00995                         <span class="keywordflow">if</span>(datasetnumber != 0)<span class="keywordflow">throw</span> std::range_error(<span class="stringliteral">&quot;There is no repetitive data for this type!&quot;</span>);
-<a name="l00996"></a>00996                         wrapper=<span class="keyword">new</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html">Fluke189DataResponseAnalyzerWrapperQD0</a>(datasetnumber, this-&gt;container);
-<a name="l00997"></a>00997                         this-&gt;delAtDeconstruction.push_back(wrapper);
-<a name="l00998"></a>00998                 }
-<a name="l00999"></a>00999                 <span class="keywordflow">else</span>
-<a name="l01000"></a>01000                 {
-<a name="l01001"></a>01001                         <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Unknown/not implemented container type&quot;</span>);
-<a name="l01002"></a>01002                 }
-<a name="l01003"></a>01003 
-<a name="l01004"></a>01004                  <span class="keywordflow">if</span>(! *this-&gt;delAtDeconstruction.rend())
-<a name="l01005"></a>01005                  {
-<a name="l01006"></a>01006                          <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;FlukeResponseAnalyserWrapper could not be created&quot;</span>);
-<a name="l01007"></a>01007                  }
-<a name="l01008"></a>01008 
-<a name="l01009"></a>01009                 <span class="keywordflow">return</span>  wrapper;
+<a name="l00934"></a>00934         std::string <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html#af7a5731fbbd6ac2a7ab2a8d0a9f2ffe6">getSecondaryUnitSymbol</a>();
+<a name="l00935"></a>00935 
+<a name="l00936"></a>00936 
+<a name="l00937"></a>00937 
+<a name="l00938"></a>00938 
+<a name="l00939"></a>00939 };
+<a name="l00940"></a>00940 
+<a name="l00956"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html">00956</a> <span class="keyword">class </span><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html">Fluke189DataResponseAnalyzer</a>
+<a name="l00957"></a>00957 {
+<a name="l00958"></a>00958         <span class="comment">//This are ResponseContainerTypes for internal usage</span>
+<a name="l00959"></a>00959         <span class="keyword">enum</span> ResponseContainerType
+<a name="l00960"></a>00960         {
+<a name="l00961"></a>00961                 QD0,
+<a name="l00962"></a>00962                 QD2,
+<a name="l00963"></a>00963                 QD4,
+<a name="l00964"></a>00964         };
+<a name="l00965"></a>00965 
+<a name="l00966"></a>00966         <span class="comment">//This variable stores the current ResponseContainerType</span>
+<a name="l00967"></a>00967         ResponseContainerType currentResponseContainerType;
+<a name="l00968"></a>00968         <span class="comment">//This stores the address of the current container</span>
+<a name="l00969"></a>00969         <span class="keywordtype">void</span>* container;
+<a name="l00970"></a>00970 
+<a name="l00971"></a>00971         <span class="comment">//This is vector stores the addresses to the created Fluke189ResponseAnalyserWrappers</span>
+<a name="l00972"></a>00972         std::vector&lt;Fluke189DataResponseAnalyzerWrapper*&gt; delAtDeconstruction;
+<a name="l00973"></a>00973 
+<a name="l00974"></a>00974 <span class="keyword">public</span>:
+<a name="l00976"></a>00976         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#a37d9cf81e6d7eee9ea5cf3cd77306dad">Fluke189DataResponseAnalyzer</a>(<a class="code" href="classFluke_1_1Fluke189.html#a9a5b405bb506cd2482de2f8bb0bea189">Fluke189::RCT_QD0</a>&amp; container);
+<a name="l00978"></a>00978         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#a37d9cf81e6d7eee9ea5cf3cd77306dad">Fluke189DataResponseAnalyzer</a>(<a class="code" href="classFluke_1_1Fluke189.html#a6dcb8bdb7e09aba26dd95d49f56690cf">Fluke189::RCT_QD2</a>&amp; container);
+<a name="l00980"></a>00980         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#a37d9cf81e6d7eee9ea5cf3cd77306dad">Fluke189DataResponseAnalyzer</a>(<a class="code" href="classFluke_1_1Fluke189.html#a82ebb2c4106833e320c8b18b968a5e22">Fluke189::RCT_QD4</a>&amp; container);
+<a name="l00981"></a>00981 
+<a name="l00982"></a>00982 
+<a name="l00984"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#a8340ad62d9d5f3364482064eea967cef">00984</a>         <span class="keyword">virtual</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#a8340ad62d9d5f3364482064eea967cef">~Fluke189DataResponseAnalyzer</a>()
+<a name="l00985"></a>00985         {
+<a name="l00986"></a>00986                 std::vector&lt;Fluke189DataResponseAnalyzerWrapper*&gt;::iterator itDel = this-&gt;delAtDeconstruction.begin();
+<a name="l00987"></a>00987                 <span class="keywordflow">for</span>(;itDel&lt;this-&gt;delAtDeconstruction.end(); itDel++ )
+<a name="l00988"></a>00988                 {
+<a name="l00989"></a>00989                         <span class="keywordflow">if</span>(*itDel != 0) <span class="keyword">delete</span> *itDel;
+<a name="l00990"></a>00990                 }
+<a name="l00991"></a>00991         };
+<a name="l00992"></a>00992 
+<a name="l00997"></a><a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#ac946623b6b04e9ddb858a1d20fc753da">00997</a>         <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html">Fluke189DataResponseAnalyzerWrapper</a>* <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzer.html#ac946623b6b04e9ddb858a1d20fc753da">operator[]</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> datasetnumber)
+<a name="l00998"></a>00998         {
+<a name="l00999"></a>00999                 <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html">Fluke189DataResponseAnalyzerWrapper</a>* wrapper;
+<a name="l01000"></a>01000                 <span class="keywordflow">if</span>(this-&gt;currentResponseContainerType==QD0)
+<a name="l01001"></a>01001                 {
+<a name="l01002"></a>01002                         <span class="keywordflow">if</span>(datasetnumber != 0)<span class="keywordflow">throw</span> std::range_error(<span class="stringliteral">&quot;There is no repetitive data for this type!&quot;</span>);
+<a name="l01003"></a>01003                         wrapper=<span class="keyword">new</span> <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapperQD0.html">Fluke189DataResponseAnalyzerWrapperQD0</a>(datasetnumber, this-&gt;container);
+<a name="l01004"></a>01004                         this-&gt;delAtDeconstruction.push_back(wrapper);
+<a name="l01005"></a>01005                 }
+<a name="l01006"></a>01006                 <span class="keywordflow">else</span>
+<a name="l01007"></a>01007                 {
+<a name="l01008"></a>01008                         <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Unknown/not implemented container type&quot;</span>);
+<a name="l01009"></a>01009                 }
 <a name="l01010"></a>01010 
-<a name="l01011"></a>01011         };
-<a name="l01012"></a>01012 
-<a name="l01013"></a>01013 
-<a name="l01014"></a>01014 
-<a name="l01015"></a>01015 };
-<a name="l01016"></a>01016 
+<a name="l01011"></a>01011                  <span class="keywordflow">if</span>(! *this-&gt;delAtDeconstruction.rend())
+<a name="l01012"></a>01012                  {
+<a name="l01013"></a>01013                          <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;FlukeResponseAnalyserWrapper could not be created&quot;</span>);
+<a name="l01014"></a>01014                  }
+<a name="l01015"></a>01015 
+<a name="l01016"></a>01016                 <span class="keywordflow">return</span>  wrapper;
 <a name="l01017"></a>01017 
-<a name="l01022"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html">01022</a> <span class="keyword">class </span><a class="code" href="classFluke_1_1Fluke189QD0Logging.html">Fluke189QD0Logging</a>
-<a name="l01023"></a>01023 {
-<a name="l01024"></a>01024 <span class="keyword">public</span>: <span class="comment">/*Types*/</span>
-<a name="l01028"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">01028</a>         <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l01029"></a>01029         {
-<a name="l01030"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html#a77c06b226427799a17e72490de249ee5">01030</a>                 <span class="keywordtype">signed</span>   <span class="keywordtype">int</span> Value;     
-<a name="l01031"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html#a4cd128da7639e431620a55a1e6277c32">01031</a>                 <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Decimal;   
-<a name="l01032"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html#acb3acbb4970ef944283b3ab0fcb10004">01032</a>                 <span class="keywordtype">signed</span>   <span class="keywordtype">int</span> Prefix;    
-<a name="l01033"></a>01033         }  <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">minMaxAvgValueStorage_t</a>;
-<a name="l01034"></a>01034 
-<a name="l01038"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html">01038</a>         <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html">modes_t</a>
-<a name="l01039"></a>01039         {
-<a name="l01040"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aec3dfcfd1fab721574a0fe730a5e1646">01040</a>                 <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aec3dfcfd1fab721574a0fe730a5e1646" title="0=NoMinMaxAvg 1=Max 2=Min 3=Avg">minmaxavg</a>; 
-<a name="l01041"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aab48481e59dd89ef1ce2e40a935f6e7c">01041</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aab48481e59dd89ef1ce2e40a935f6e7c" title="This is true when delta mode is used but not in delta percent mode.">delta</a>;                             
-<a name="l01042"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a1f00c55b1cb3b81398e75039114d5383">01042</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a1f00c55b1cb3b81398e75039114d5383" title="This is true when delta percent mode is used but not in delta mode.">deltapercent</a>;              
-<a name="l01043"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a594d6d91e3f12f14c212cbb3e3de6b11">01043</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a594d6d91e3f12f14c212cbb3e3de6b11" title="This is true in autohold mode but not in hold.">autohold</a>;                  
-<a name="l01044"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#ac7a9e6524803a4745e96dc623d53b0f5">01044</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#ac7a9e6524803a4745e96dc623d53b0f5" title="This is true in hold mode but not in auto hold.">hold</a>;                              
-<a name="l01045"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#acca68d7c475c2a01f6aec4a76148f117">01045</a>                 <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ada71f6ab32a7b0eb40bb0ed96d7053bc">Fluke189DataResponseAnalyzerWrapper::Etch</a> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#acca68d7c475c2a01f6aec4a76148f117" title="This will show if there is rising or falling etch or neither.">etch</a>; 
-<a name="l01046"></a>01046 
-<a name="l01050"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a65967f61529859ff86e92dc060199b2e">01050</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a65967f61529859ff86e92dc060199b2e">operator==</a>(<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html">modes_t</a> modes)
-<a name="l01051"></a>01051                 {
-<a name="l01052"></a>01052                         <span class="keywordflow">return</span> (this-&gt;<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aec3dfcfd1fab721574a0fe730a5e1646" title="0=NoMinMaxAvg 1=Max 2=Min 3=Avg">minmaxavg</a>    == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aec3dfcfd1fab721574a0fe730a5e1646" title="0=NoMinMaxAvg 1=Max 2=Min 3=Avg">minmaxavg</a>   &amp;&amp;
-<a name="l01053"></a>01053                                         this-&gt;delta        == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aab48481e59dd89ef1ce2e40a935f6e7c" title="This is true when delta mode is used but not in delta percent mode.">delta</a>       &amp;&amp;
-<a name="l01054"></a>01054                                         this-&gt;deltapercent == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a1f00c55b1cb3b81398e75039114d5383" title="This is true when delta percent mode is used but not in delta mode.">deltapercent</a>&amp;&amp;
-<a name="l01055"></a>01055                                         this-&gt;etch                 == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#acca68d7c475c2a01f6aec4a76148f117" title="This will show if there is rising or falling etch or neither.">etch</a>        &amp;&amp;
-<a name="l01056"></a>01056                                         this-&gt;autohold     == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a594d6d91e3f12f14c212cbb3e3de6b11" title="This is true in autohold mode but not in hold.">autohold</a>    &amp;&amp;
-<a name="l01057"></a>01057                                         this-&gt;hold         == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#ac7a9e6524803a4745e96dc623d53b0f5" title="This is true in hold mode but not in auto hold.">hold</a>
-<a name="l01058"></a>01058                         );
-<a name="l01059"></a>01059                 }
-<a name="l01063"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a0dff151c2a364e53b9fc1dfcbda878b7">01063</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a0dff151c2a364e53b9fc1dfcbda878b7">operator!=</a>(<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html">modes_t</a> modes)
-<a name="l01064"></a>01064                 {
-<a name="l01065"></a>01065                         <span class="keywordflow">return</span> !this-&gt;<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a65967f61529859ff86e92dc060199b2e">operator ==</a>(modes);
+<a name="l01018"></a>01018         };
+<a name="l01019"></a>01019 
+<a name="l01020"></a>01020 
+<a name="l01021"></a>01021 
+<a name="l01022"></a>01022 };
+<a name="l01023"></a>01023 
+<a name="l01024"></a>01024 
+<a name="l01029"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html">01029</a> <span class="keyword">class </span><a class="code" href="classFluke_1_1Fluke189QD0Logging.html">Fluke189QD0Logging</a>
+<a name="l01030"></a>01030 {
+<a name="l01031"></a>01031 <span class="keyword">public</span>: <span class="comment">/*Types*/</span>
+<a name="l01035"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">01035</a>         <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l01036"></a>01036         {
+<a name="l01037"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html#a77c06b226427799a17e72490de249ee5">01037</a>                 <span class="keywordtype">signed</span>   <span class="keywordtype">int</span> Value;     
+<a name="l01038"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html#a4cd128da7639e431620a55a1e6277c32">01038</a>                 <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> Decimal;   
+<a name="l01039"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html#acb3acbb4970ef944283b3ab0fcb10004">01039</a>                 <span class="keywordtype">signed</span>   <span class="keywordtype">int</span> Prefix;    
+<a name="l01040"></a>01040         }  <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">minMaxAvgValueStorage_t</a>;
+<a name="l01041"></a>01041 
+<a name="l01045"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html">01045</a>         <span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html">modes_t</a>
+<a name="l01046"></a>01046         {
+<a name="l01047"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aec3dfcfd1fab721574a0fe730a5e1646">01047</a>                 <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aec3dfcfd1fab721574a0fe730a5e1646" title="0=NoMinMaxAvg 1=Max 2=Min 3=Avg">minmaxavg</a>; 
+<a name="l01048"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aab48481e59dd89ef1ce2e40a935f6e7c">01048</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aab48481e59dd89ef1ce2e40a935f6e7c" title="This is true when delta mode is used but not in delta percent mode.">delta</a>;                             
+<a name="l01049"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a1f00c55b1cb3b81398e75039114d5383">01049</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a1f00c55b1cb3b81398e75039114d5383" title="This is true when delta percent mode is used but not in delta mode.">deltapercent</a>;              
+<a name="l01050"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a594d6d91e3f12f14c212cbb3e3de6b11">01050</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a594d6d91e3f12f14c212cbb3e3de6b11" title="This is true in autohold mode but not in hold.">autohold</a>;                  
+<a name="l01051"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#ac7a9e6524803a4745e96dc623d53b0f5">01051</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#ac7a9e6524803a4745e96dc623d53b0f5" title="This is true in hold mode but not in auto hold.">hold</a>;                              
+<a name="l01052"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#acca68d7c475c2a01f6aec4a76148f117">01052</a>                 <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ada71f6ab32a7b0eb40bb0ed96d7053bc">Fluke189DataResponseAnalyzerWrapper::Etch</a> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#acca68d7c475c2a01f6aec4a76148f117" title="This will show if there is rising or falling etch or neither.">etch</a>; 
+<a name="l01053"></a>01053 
+<a name="l01057"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a65967f61529859ff86e92dc060199b2e">01057</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a65967f61529859ff86e92dc060199b2e">operator==</a>(<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html">modes_t</a> modes)
+<a name="l01058"></a>01058                 {
+<a name="l01059"></a>01059                         <span class="keywordflow">return</span> (this-&gt;<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aec3dfcfd1fab721574a0fe730a5e1646" title="0=NoMinMaxAvg 1=Max 2=Min 3=Avg">minmaxavg</a>    == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aec3dfcfd1fab721574a0fe730a5e1646" title="0=NoMinMaxAvg 1=Max 2=Min 3=Avg">minmaxavg</a>   &amp;&amp;
+<a name="l01060"></a>01060                                         this-&gt;delta        == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#aab48481e59dd89ef1ce2e40a935f6e7c" title="This is true when delta mode is used but not in delta percent mode.">delta</a>       &amp;&amp;
+<a name="l01061"></a>01061                                         this-&gt;deltapercent == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a1f00c55b1cb3b81398e75039114d5383" title="This is true when delta percent mode is used but not in delta mode.">deltapercent</a>&amp;&amp;
+<a name="l01062"></a>01062                                         this-&gt;etch                 == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#acca68d7c475c2a01f6aec4a76148f117" title="This will show if there is rising or falling etch or neither.">etch</a>        &amp;&amp;
+<a name="l01063"></a>01063                                         this-&gt;autohold     == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a594d6d91e3f12f14c212cbb3e3de6b11" title="This is true in autohold mode but not in hold.">autohold</a>    &amp;&amp;
+<a name="l01064"></a>01064                                         this-&gt;hold         == modes.<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#ac7a9e6524803a4745e96dc623d53b0f5" title="This is true in hold mode but not in auto hold.">hold</a>
+<a name="l01065"></a>01065                         );
 <a name="l01066"></a>01066                 }
-<a name="l01067"></a>01067         } <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#aa9e03c2f5b92478c1f3182fc7b9a0a60">modes_t</a>;
-<a name="l01068"></a>01068 
-<a name="l01069"></a>01069 <span class="keyword">private</span>:<span class="comment">/*Variables*/</span>
-<a name="l01070"></a>01070 
-<a name="l01071"></a>01071         <span class="comment">/*</span>
-<a name="l01072"></a>01072 <span class="comment">         * Variables for storing minimum maximum and average value</span>
-<a name="l01073"></a>01073 <span class="comment">         */</span>
-<a name="l01074"></a>01074          minMaxAvgValueStorage_t current_pri, current_sec;
+<a name="l01070"></a><a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a0dff151c2a364e53b9fc1dfcbda878b7">01070</a>                 <span class="keywordtype">bool</span> <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a0dff151c2a364e53b9fc1dfcbda878b7">operator!=</a>(<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html">modes_t</a> modes)
+<a name="l01071"></a>01071                 {
+<a name="l01072"></a>01072                         <span class="keywordflow">return</span> !this-&gt;<a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html#a65967f61529859ff86e92dc060199b2e">operator ==</a>(modes);
+<a name="l01073"></a>01073                 }
+<a name="l01074"></a>01074         } <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#aa9e03c2f5b92478c1f3182fc7b9a0a60">modes_t</a>;
 <a name="l01075"></a>01075 
-<a name="l01076"></a>01076          <span class="comment">/*</span>
-<a name="l01077"></a>01077 <span class="comment">          * Error Variables</span>
-<a name="l01078"></a>01078 <span class="comment">          */</span>
-<a name="l01079"></a>01079          <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">Fluke189DataResponseAnalyzerWrapper::DispError</a> pri_error, sec_error;
-<a name="l01080"></a>01080 
-<a name="l01081"></a>01081     <span class="comment">//Primary Display</span>
-<a name="l01082"></a>01082                 minMaxAvgValueStorage_t  pri_min;
-<a name="l01083"></a>01083                 minMaxAvgValueStorage_t  pri_max;
-<a name="l01084"></a>01084                 minMaxAvgValueStorage_t  pri_avg;
-<a name="l01085"></a>01085                 <span class="keywordtype">long</span> <span class="keywordtype">long</span> pri_avg_ll;
-<a name="l01086"></a>01086                 <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> pri_count;
+<a name="l01076"></a>01076 <span class="keyword">private</span>:<span class="comment">/*Variables*/</span>
+<a name="l01077"></a>01077 
+<a name="l01078"></a>01078         <span class="comment">/*</span>
+<a name="l01079"></a>01079 <span class="comment">         * Variables for storing minimum maximum and average value</span>
+<a name="l01080"></a>01080 <span class="comment">         */</span>
+<a name="l01081"></a>01081          minMaxAvgValueStorage_t current_pri, current_sec;
+<a name="l01082"></a>01082 
+<a name="l01083"></a>01083          <span class="comment">/*</span>
+<a name="l01084"></a>01084 <span class="comment">          * Error Variables</span>
+<a name="l01085"></a>01085 <span class="comment">          */</span>
+<a name="l01086"></a>01086          <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#a5e26140c615bf0b73788f665a7bec9c7">Fluke189DataResponseAnalyzerWrapper::DispError</a> pri_error, sec_error;
 <a name="l01087"></a>01087 
-<a name="l01088"></a>01088                 <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#aa9e03c2f5b92478c1f3182fc7b9a0a60">modes_t</a> modes;
-<a name="l01089"></a>01089 
-<a name="l01090"></a>01090     <span class="comment">//Secondary Display</span>
-<a name="l01091"></a>01091                 minMaxAvgValueStorage_t  sec_min;
-<a name="l01092"></a>01092                 minMaxAvgValueStorage_t  sec_max;
-<a name="l01093"></a>01093                 minMaxAvgValueStorage_t  sec_avg;
-<a name="l01094"></a>01094                 <span class="keywordtype">long</span> <span class="keywordtype">long</span> sec_avg_ll;
-<a name="l01095"></a>01095                 <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> sec_count;
+<a name="l01088"></a>01088     <span class="comment">//Primary Display</span>
+<a name="l01089"></a>01089                 minMaxAvgValueStorage_t  pri_min;
+<a name="l01090"></a>01090                 minMaxAvgValueStorage_t  pri_max;
+<a name="l01091"></a>01091                 minMaxAvgValueStorage_t  pri_avg;
+<a name="l01092"></a>01092                 <span class="keywordtype">long</span> <span class="keywordtype">long</span> pri_avg_ll;
+<a name="l01093"></a>01093                 <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> pri_count;
+<a name="l01094"></a>01094 
+<a name="l01095"></a>01095                 <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#aa9e03c2f5b92478c1f3182fc7b9a0a60">modes_t</a> modes;
 <a name="l01096"></a>01096 
-<a name="l01097"></a>01097         <span class="comment">/*</span>
-<a name="l01098"></a>01098 <span class="comment">         * Variables for storing current units</span>
-<a name="l01099"></a>01099 <span class="comment">         */</span>
-<a name="l01100"></a>01100          <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Fluke189DataResponseAnalyzerWrapper::Unit</a> pri_unit, sec_unit;
-<a name="l01101"></a>01101          std::string pri_current, sec_current;
-<a name="l01102"></a>01102          std::string pri_unit_str, sec_unit_str;
+<a name="l01097"></a>01097     <span class="comment">//Secondary Display</span>
+<a name="l01098"></a>01098                 minMaxAvgValueStorage_t  sec_min;
+<a name="l01099"></a>01099                 minMaxAvgValueStorage_t  sec_max;
+<a name="l01100"></a>01100                 minMaxAvgValueStorage_t  sec_avg;
+<a name="l01101"></a>01101                 <span class="keywordtype">long</span> <span class="keywordtype">long</span> sec_avg_ll;
+<a name="l01102"></a>01102                 <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> sec_count;
 <a name="l01103"></a>01103 
-<a name="l01104"></a>01104 <span class="keyword">public</span>: <span class="comment">/*Functions*/</span>
-<a name="l01105"></a>01105 
-<a name="l01109"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ab856daf79c71ace0841c10c9f9b8f9e6">01109</a>         <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ab856daf79c71ace0841c10c9f9b8f9e6">Fluke189QD0Logging</a>()
-<a name="l01110"></a>01110         {
-<a name="l01111"></a>01111                 this-&gt;pri_unit=Fluke189DataResponseAnalyzerWrapper::AU_None;
-<a name="l01112"></a>01112                 this-&gt;pri_unit=Fluke189DataResponseAnalyzerWrapper::AU_None;
-<a name="l01113"></a>01113         };
-<a name="l01117"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ac134feed3bec91193ba7ffd119f9833d">01117</a>         <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ac134feed3bec91193ba7ffd119f9833d">~Fluke189QD0Logging</a>(){};
-<a name="l01118"></a>01118 
-<a name="l01119"></a>01119 
-<a name="l01120"></a>01120 
-<a name="l01121"></a>01121 <span class="keyword">private</span>:
-<a name="l01122"></a>01122 
-<a name="l01123"></a>01123     <span class="comment">/*</span>
-<a name="l01124"></a>01124 <span class="comment">     * Check if operandSmall is smaller than operandBig</span>
-<a name="l01125"></a>01125 <span class="comment">     * needed to get</span>
-<a name="l01126"></a>01126 <span class="comment">     */</span>
-<a name="l01127"></a>01127         <span class="keywordtype">bool</span> fluke189ValueSmallerThan(minMaxAvgValueStorage_t operandSmall,minMaxAvgValueStorage_t operandBig)
-<a name="l01128"></a>01128         {
+<a name="l01104"></a>01104         <span class="comment">//Reset Variable</span>
+<a name="l01105"></a>01105                 <span class="keywordtype">bool</span> pri_reset;
+<a name="l01106"></a>01106                 <span class="keywordtype">bool</span> sec_reset;
+<a name="l01107"></a>01107 
+<a name="l01108"></a>01108         <span class="comment">/*</span>
+<a name="l01109"></a>01109 <span class="comment">         * Variables for storing current units</span>
+<a name="l01110"></a>01110 <span class="comment">         */</span>
+<a name="l01111"></a>01111          <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Fluke189DataResponseAnalyzerWrapper::Unit</a> pri_unit, sec_unit;
+<a name="l01112"></a>01112          <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#afef24496da239e3613c40ad3582d7adc">Fluke189DataResponseAnalyzerWrapper::CurrentType</a> pri_current, sec_current;
+<a name="l01113"></a>01113          <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Fluke189DataResponseAnalyzerWrapper::Unit</a> pri_unit_str, sec_unit_str;
+<a name="l01114"></a>01114 
+<a name="l01115"></a>01115 <span class="keyword">public</span>: <span class="comment">/*Functions*/</span>
+<a name="l01116"></a>01116 
+<a name="l01120"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ab856daf79c71ace0841c10c9f9b8f9e6">01120</a>         <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ab856daf79c71ace0841c10c9f9b8f9e6">Fluke189QD0Logging</a>()
+<a name="l01121"></a>01121         {
+<a name="l01122"></a>01122                 this-&gt;pri_unit=Fluke189DataResponseAnalyzerWrapper::AU_None;
+<a name="l01123"></a>01123                 this-&gt;pri_unit=Fluke189DataResponseAnalyzerWrapper::AU_None;
+<a name="l01124"></a>01124         };
+<a name="l01128"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ac134feed3bec91193ba7ffd119f9833d">01128</a>         <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ac134feed3bec91193ba7ffd119f9833d">~Fluke189QD0Logging</a>(){};
 <a name="l01129"></a>01129 
-<a name="l01130"></a>01130                 <span class="comment">//Calculation of decimal point location:</span>
-<a name="l01131"></a>01131                 <span class="comment">//each step in prefix shifts the decimal point 3 times in a direction</span>
-<a name="l01132"></a>01132                 <span class="keywordtype">int</span> decimalPosSmall=(-3)*(operandSmall.Prefix)+operandSmall.Decimal;
-<a name="l01133"></a>01133                 <span class="keywordtype">int</span> decimalPosBig  =(-3)*(operandBig.Prefix)+operandBig.Decimal;
-<a name="l01134"></a>01134 
-<a name="l01135"></a>01135 
-<a name="l01136"></a>01136                 <span class="keywordtype">long</span> <span class="keywordtype">long</span> big,small; <span class="comment">//Stores all values in piko prefix</span>
-<a name="l01137"></a>01137 
-<a name="l01138"></a>01138                 big  =operandBig.Value*pow(10, 13-decimalPosBig);
-<a name="l01139"></a>01139                 small=operandSmall.Value*pow(10, 13-decimalPosSmall);
+<a name="l01130"></a>01130 
+<a name="l01131"></a>01131 
+<a name="l01132"></a>01132 <span class="keyword">private</span>:
+<a name="l01133"></a>01133 
+<a name="l01134"></a>01134     <span class="comment">/*</span>
+<a name="l01135"></a>01135 <span class="comment">     * Check if operandSmall is smaller than operandBig</span>
+<a name="l01136"></a>01136 <span class="comment">     * needed to get</span>
+<a name="l01137"></a>01137 <span class="comment">     */</span>
+<a name="l01138"></a>01138         <span class="keywordtype">bool</span> fluke189ValueSmallerThan(minMaxAvgValueStorage_t operandSmall,minMaxAvgValueStorage_t operandBig)
+<a name="l01139"></a>01139         {
 <a name="l01140"></a>01140 
-<a name="l01141"></a>01141                 <span class="keywordflow">return</span> (small&lt;big);
-<a name="l01142"></a>01142         }
-<a name="l01143"></a>01143 
-<a name="l01144"></a>01144 
+<a name="l01141"></a>01141                 <span class="comment">//Calculation of decimal point location:</span>
+<a name="l01142"></a>01142                 <span class="comment">//each step in prefix shifts the decimal point 3 times in a direction</span>
+<a name="l01143"></a>01143                 <span class="keywordtype">int</span> decimalPosSmall=(-3)*(operandSmall.Prefix)+operandSmall.Decimal;
+<a name="l01144"></a>01144                 <span class="keywordtype">int</span> decimalPosBig  =(-3)*(operandBig.Prefix)+operandBig.Decimal;
 <a name="l01145"></a>01145 
 <a name="l01146"></a>01146 
-<a name="l01147"></a>01147 <span class="keyword">public</span>:
+<a name="l01147"></a>01147                 <span class="keywordtype">long</span> <span class="keywordtype">long</span> big,small; <span class="comment">//Stores all values in piko prefix</span>
 <a name="l01148"></a>01148 
-<a name="l01154"></a>01154         std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a328f1e4b632082f62d461fd4ba6eb838">minMaxAvgValueStorageToString</a>(minMaxAvgValueStorage_t value);
+<a name="l01149"></a>01149                 big  =operandBig.Value*pow(10, 13-decimalPosBig);
+<a name="l01150"></a>01150                 small=operandSmall.Value*pow(10, 13-decimalPosSmall);
+<a name="l01151"></a>01151 
+<a name="l01152"></a>01152                 <span class="keywordflow">return</span> (small&lt;big);
+<a name="l01153"></a>01153         }
+<a name="l01154"></a>01154 
 <a name="l01155"></a>01155 
 <a name="l01156"></a>01156 
-<a name="l01162"></a>01162          <span class="keywordtype">void</span> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#af06d4058c124e5b13893311145d529d2">addContainer</a>(<a class="code" href="classFluke_1_1Fluke189.html#a9a5b405bb506cd2482de2f8bb0bea189">Fluke189::RCT_QD0</a>&amp; container);
-<a name="l01163"></a>01163 
-<a name="l01167"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a61180ec1e3f4ffc507c5cc92bfa61952">01167</a>          <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">minMaxAvgValueStorage_t</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a61180ec1e3f4ffc507c5cc92bfa61952">get_Primary_Minimum</a>()
-<a name="l01168"></a>01168          {
-<a name="l01169"></a>01169                  <span class="keywordflow">return</span> this-&gt;pri_min;
-<a name="l01170"></a>01170          };
-<a name="l01171"></a>01171 
-<a name="l01175"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a7da9ac7b5617e427cdfc1b09d6bd4373">01175</a>          <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">minMaxAvgValueStorage_t</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a7da9ac7b5617e427cdfc1b09d6bd4373">get_Primary_Maximum</a>()
-<a name="l01176"></a>01176          {
-<a name="l01177"></a>01177                  <span class="keywordflow">return</span> this-&gt;pri_max;
-<a name="l01178"></a>01178          }
-<a name="l01179"></a>01179 
-<a name="l01183"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a29473a5a7d016d020f0948fcf3e31e50">01183</a>          <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a29473a5a7d016d020f0948fcf3e31e50">get_Primary_Average_LL</a>()
-<a name="l01184"></a>01184          {
-<a name="l01185"></a>01185                  <span class="keywordflow">return</span> this-&gt;pri_avg_ll;
-<a name="l01186"></a>01186          }
-<a name="l01187"></a>01187 
-<a name="l01191"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a447e04b2f508cb4a821c2842b96115ae">01191</a>          <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">minMaxAvgValueStorage_t</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a447e04b2f508cb4a821c2842b96115ae">get_Secondary_Minimum</a>()
-<a name="l01192"></a>01192          {
-<a name="l01193"></a>01193                  <span class="keywordflow">return</span> this-&gt;sec_min;
-<a name="l01194"></a>01194          }
-<a name="l01195"></a>01195 
-<a name="l01199"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a368a2503ede00bd9ef45937fc76278ea">01199</a>          <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">minMaxAvgValueStorage_t</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a368a2503ede00bd9ef45937fc76278ea">get_Secondary_Maximum</a>()
-<a name="l01200"></a>01200          {
-<a name="l01201"></a>01201                  <span class="keywordflow">return</span> this-&gt;sec_max;
-<a name="l01202"></a>01202          }
-<a name="l01203"></a>01203 
-<a name="l01207"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a1f33bcc2d2342018f0a1ef5b4ec3caa0">01207</a>          <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a1f33bcc2d2342018f0a1ef5b4ec3caa0">get_Secondary_Average_LL</a>()
-<a name="l01208"></a>01208          {
-<a name="l01209"></a>01209                  <span class="keywordflow">return</span> this-&gt;sec_avg_ll;
-<a name="l01210"></a>01210          }
-<a name="l01211"></a>01211 
-<a name="l01215"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a864f0f60f6995d5d035163caf0651565">01215</a>          <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Fluke189DataResponseAnalyzerWrapper::Unit</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a864f0f60f6995d5d035163caf0651565">get_Primary_Unit</a>()
-<a name="l01216"></a>01216          {
-<a name="l01217"></a>01217                  <span class="keywordflow">return</span> this-&gt;pri_unit;
-<a name="l01218"></a>01218          }
-<a name="l01219"></a>01219 
-<a name="l01223"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a7d50361ed373ebaf4bf9cd7bf101f93d">01223</a>          <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Fluke189DataResponseAnalyzerWrapper::Unit</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a7d50361ed373ebaf4bf9cd7bf101f93d">get_Secondary_Unit</a>()
-<a name="l01224"></a>01224          {
-<a name="l01225"></a>01225                  <span class="keywordflow">return</span> this-&gt;sec_unit;
-<a name="l01226"></a>01226          }
-<a name="l01227"></a>01227 
-<a name="l01231"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a334633daaf140e8d49655e65ecd382e3">01231</a>          <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html">modes_t</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a334633daaf140e8d49655e65ecd382e3">get_Modes</a>()
-<a name="l01232"></a>01232          {
-<a name="l01233"></a>01233                  <span class="keywordflow">return</span> this-&gt;modes;
-<a name="l01234"></a>01234          }
-<a name="l01235"></a>01235 
-<a name="l01239"></a>01239          std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a1ab6475394ca111e1afcd044d4f278e7">get_Primary_ValueAndUnit_String</a>();
-<a name="l01240"></a>01240 
-<a name="l01244"></a>01244          std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a5e36bbcb7bc5c45ffaf099af76c46d7e">get_Secondary_ValueAndUnit_String</a>();
-<a name="l01245"></a>01245 
-<a name="l01246"></a>01246 };
+<a name="l01157"></a>01157 
+<a name="l01158"></a>01158 <span class="keyword">public</span>:
+<a name="l01159"></a>01159 
+<a name="l01165"></a>01165         std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a328f1e4b632082f62d461fd4ba6eb838">minMaxAvgValueStorageToString</a>(minMaxAvgValueStorage_t value);
+<a name="l01166"></a>01166 
+<a name="l01172"></a>01172          <span class="keywordtype">void</span> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#af06d4058c124e5b13893311145d529d2">addContainer</a>(<a class="code" href="classFluke_1_1Fluke189.html#a9a5b405bb506cd2482de2f8bb0bea189">Fluke189::RCT_QD0</a>&amp; container);
+<a name="l01173"></a>01173 
+<a name="l01178"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a610c90f3ad529040eaf5aeb7195fe1bd">01178</a>          <span class="keywordtype">void</span> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a610c90f3ad529040eaf5aeb7195fe1bd">reset_primary</a>()
+<a name="l01179"></a>01179          {
+<a name="l01180"></a>01180                  this-&gt;pri_reset=<span class="keyword">true</span>;
+<a name="l01181"></a>01181          }
+<a name="l01182"></a>01182 
+<a name="l01187"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ac5205e2183bdfffcd46229b71baeb3fb">01187</a>          <span class="keywordtype">void</span> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ac5205e2183bdfffcd46229b71baeb3fb">reset_secondary</a>()
+<a name="l01188"></a>01188          {
+<a name="l01189"></a>01189                  this-&gt;sec_reset=<span class="keyword">true</span>;
+<a name="l01190"></a>01190          }
+<a name="l01191"></a>01191 
+<a name="l01195"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a61180ec1e3f4ffc507c5cc92bfa61952">01195</a>          <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">minMaxAvgValueStorage_t</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a61180ec1e3f4ffc507c5cc92bfa61952">get_Primary_Minimum</a>()
+<a name="l01196"></a>01196          {
+<a name="l01197"></a>01197                  <span class="keywordflow">return</span> this-&gt;pri_min;
+<a name="l01198"></a>01198          };
+<a name="l01199"></a>01199 
+<a name="l01203"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a7da9ac7b5617e427cdfc1b09d6bd4373">01203</a>          <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">minMaxAvgValueStorage_t</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a7da9ac7b5617e427cdfc1b09d6bd4373">get_Primary_Maximum</a>()
+<a name="l01204"></a>01204          {
+<a name="l01205"></a>01205                  <span class="keywordflow">return</span> this-&gt;pri_max;
+<a name="l01206"></a>01206          }
+<a name="l01207"></a>01207 
+<a name="l01211"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a29473a5a7d016d020f0948fcf3e31e50">01211</a>          <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a29473a5a7d016d020f0948fcf3e31e50">get_Primary_Average_LL</a>()
+<a name="l01212"></a>01212          {
+<a name="l01213"></a>01213                  <span class="keywordflow">return</span> this-&gt;pri_avg_ll;
+<a name="l01214"></a>01214          }
+<a name="l01215"></a>01215 
+<a name="l01219"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a447e04b2f508cb4a821c2842b96115ae">01219</a>          <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">minMaxAvgValueStorage_t</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a447e04b2f508cb4a821c2842b96115ae">get_Secondary_Minimum</a>()
+<a name="l01220"></a>01220          {
+<a name="l01221"></a>01221                  <span class="keywordflow">return</span> this-&gt;sec_min;
+<a name="l01222"></a>01222          }
+<a name="l01223"></a>01223 
+<a name="l01227"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a368a2503ede00bd9ef45937fc76278ea">01227</a>          <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1minMaxAvgValueStorage__t.html">minMaxAvgValueStorage_t</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a368a2503ede00bd9ef45937fc76278ea">get_Secondary_Maximum</a>()
+<a name="l01228"></a>01228          {
+<a name="l01229"></a>01229                  <span class="keywordflow">return</span> this-&gt;sec_max;
+<a name="l01230"></a>01230          }
+<a name="l01231"></a>01231 
+<a name="l01235"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a1f33bcc2d2342018f0a1ef5b4ec3caa0">01235</a>          <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a1f33bcc2d2342018f0a1ef5b4ec3caa0">get_Secondary_Average_LL</a>()
+<a name="l01236"></a>01236          {
+<a name="l01237"></a>01237                  <span class="keywordflow">return</span> this-&gt;sec_avg_ll;
+<a name="l01238"></a>01238          }
+<a name="l01239"></a>01239 
+<a name="l01243"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a864f0f60f6995d5d035163caf0651565">01243</a>          <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Fluke189DataResponseAnalyzerWrapper::Unit</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a864f0f60f6995d5d035163caf0651565">get_Primary_Unit</a>()
+<a name="l01244"></a>01244          {
+<a name="l01245"></a>01245                  <span class="keywordflow">return</span> this-&gt;pri_unit;
+<a name="l01246"></a>01246          }
 <a name="l01247"></a>01247 
-<a name="l01248"></a>01248 
-<a name="l01249"></a>01249 
-<a name="l01250"></a>01250 
-<a name="l01251"></a>01251 }
-<a name="l01252"></a>01252 
-<a name="l01253"></a>01253 <span class="preprocessor">#endif </span><span class="comment">/* FLUKE189_H_ */</span>
+<a name="l01251"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a7d50361ed373ebaf4bf9cd7bf101f93d">01251</a>          <a class="code" href="classFluke_1_1Fluke189DataResponseAnalyzerWrapper.html#ab8e5f2306e4d2ad3d741d273793aaed1">Fluke189DataResponseAnalyzerWrapper::Unit</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a7d50361ed373ebaf4bf9cd7bf101f93d">get_Secondary_Unit</a>()
+<a name="l01252"></a>01252          {
+<a name="l01253"></a>01253                  <span class="keywordflow">return</span> this-&gt;sec_unit;
+<a name="l01254"></a>01254          }
+<a name="l01255"></a>01255 
+<a name="l01259"></a><a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a334633daaf140e8d49655e65ecd382e3">01259</a>          <a class="code" href="structFluke_1_1Fluke189QD0Logging_1_1modes__t.html">modes_t</a> <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a334633daaf140e8d49655e65ecd382e3">get_Modes</a>()
+<a name="l01260"></a>01260          {
+<a name="l01261"></a>01261                  <span class="keywordflow">return</span> this-&gt;modes;
+<a name="l01262"></a>01262          }
+<a name="l01263"></a>01263 
+<a name="l01267"></a>01267          std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a1ab6475394ca111e1afcd044d4f278e7">get_Primary_ValueAndUnit_String</a>();
+<a name="l01268"></a>01268 
+<a name="l01272"></a>01272          std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ad4b792edac72623811391b8973a7feb9">get_Primary_Max_ValueAndUnit_String</a>();
+<a name="l01273"></a>01273 
+<a name="l01277"></a>01277          std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#ab127d5f48ca12170a48cbaacf2b9f96f">get_Primary_Min_ValueAndUnit_String</a>();
+<a name="l01278"></a>01278 
+<a name="l01282"></a>01282          std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a2df10d36428d5950a20d5eb9b24615c0">get_Primary_Avg_ValueAndUnit_String</a>();
+<a name="l01283"></a>01283 
+<a name="l01284"></a>01284 
+<a name="l01288"></a>01288          std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a5e36bbcb7bc5c45ffaf099af76c46d7e">get_Secondary_ValueAndUnit_String</a>();
+<a name="l01289"></a>01289 
+<a name="l01293"></a>01293          std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a57918fff03c4c54763b13ee3da0e6ea2">get_Secondary_Max_ValueAndUnit_String</a>();
+<a name="l01294"></a>01294 
+<a name="l01298"></a>01298          std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a592eb82801467a79a5bdd133bb5e5840">get_Secondary_Min_ValueAndUnit_String</a>();
+<a name="l01299"></a>01299 
+<a name="l01303"></a>01303          std::string <a class="code" href="classFluke_1_1Fluke189QD0Logging.html#a34ee9e63eb8b4b44e76fcde20856898c">get_Secondary_Avg_ValueAndUnit_String</a>();
+<a name="l01304"></a>01304 
+<a name="l01305"></a>01305 };
+<a name="l01306"></a>01306 
+<a name="l01307"></a>01307 
+<a name="l01308"></a>01308 
+<a name="l01309"></a>01309 
+<a name="l01310"></a>01310 }
+<a name="l01311"></a>01311 
+<a name="l01312"></a>01312 <span class="preprocessor">#endif </span><span class="comment">/* FLUKE189_H_ */</span>
 </pre></div></div>
 <!--- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -885,7 +907,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<hr size="1"/><address style="text-align: right;"><small>Generated on Tue Jul 27 11:49:49 2010 for LibFluke by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on Thu Jul 29 21:49:01 2010 for LibFluke by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

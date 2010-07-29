@@ -754,8 +754,17 @@ public:
 	 * This function will convert a Unit to a string
 	 * @param [in] unit The unit enum variable
 	 * @param [in] symbol If true it returns only the symbol (V instead of Volts)
+	 * @return Returns the string describing the unit
 	 */
 	static std::string unitToString(Unit unit, bool symbol);
+
+	/**
+	 * This function will convert a Etch type variable to a string
+	 * @param [in] etch The etch variable
+	 * @param [in] symbol If true it returns only a symbole instead of a full string
+	 * @return Returns a string for the current etch mode
+	 */
+	static std::string etchToString(Etch etch, bool symbol);
 
 	/////////////////////
 	//VIRTUAL FUNCTIONS//
