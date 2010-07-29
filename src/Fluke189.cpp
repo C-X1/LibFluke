@@ -509,7 +509,7 @@ namespace Fluke {
 	std::string Fluke189DataResponseAnalyzerWrapper::currentTypeToString(CurrentType type, bool symbol)
 	{
 		std::string typestr;
-		if(symbol)
+		if(!symbol)
 		{
 			switch(type)
 			{
@@ -966,7 +966,7 @@ namespace Fluke {
 	 if(this->modes.delta || this->modes.deltapercent) ValueString.append("Δ");
 	 ValueString += this->minMaxAvgValueStorageToString(this->current_pri);
 	 ValueString.append(Fluke189DataResponseAnalyzerWrapper::unitToString(this->pri_unit_str,true));
-
+	 ValueString.append(Fluke189DataResponseAnalyzerWrapper::currentTypeToString(this->pri_current,true));
 	 if(pri_error) ValueString=Fluke189DataResponseAnalyzerWrapper::valueErrorToString(pri_error);
 	 return ValueString;
 	}
@@ -977,6 +977,7 @@ namespace Fluke {
 		 if(this->modes.delta || this->modes.deltapercent) ValueString.append("Δ");
 		 ValueString += this->minMaxAvgValueStorageToString(this->pri_max);
 		 ValueString.append(Fluke189DataResponseAnalyzerWrapper::unitToString(this->pri_unit_str,true));
+		 ValueString.append(Fluke189DataResponseAnalyzerWrapper::currentTypeToString(this->pri_current,true));
 		 if(pri_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
 		 return ValueString;
 	}
@@ -987,6 +988,7 @@ namespace Fluke {
 		 if(this->modes.delta || this->modes.deltapercent) ValueString.append("Δ");
 		 ValueString += this->minMaxAvgValueStorageToString(this->pri_min);
 		 ValueString.append(Fluke189DataResponseAnalyzerWrapper::unitToString(this->pri_unit_str,true));
+		 ValueString.append(Fluke189DataResponseAnalyzerWrapper::currentTypeToString(this->pri_current,true));
 		 if(pri_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
 		 return ValueString;
 	}
@@ -997,6 +999,7 @@ namespace Fluke {
 		 if(this->modes.delta || this->modes.deltapercent) ValueString.append("Δ");
 		 ValueString += this->minMaxAvgValueStorageToString(this->pri_avg);
 		 ValueString.append(Fluke189DataResponseAnalyzerWrapper::unitToString(this->pri_unit_str,true));
+		 ValueString.append(Fluke189DataResponseAnalyzerWrapper::currentTypeToString(this->pri_current,true));
 		 if(pri_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
 		 return ValueString;
 	}
@@ -1008,6 +1011,7 @@ namespace Fluke {
 
 		std::string ValueString=this->minMaxAvgValueStorageToString(this->current_sec);
 		ValueString.append(Fluke189DataResponseAnalyzerWrapper::unitToString(this->sec_unit_str,true));
+		ValueString.append(Fluke189DataResponseAnalyzerWrapper::currentTypeToString(this->sec_current,true));
 		if(sec_error) ValueString=Fluke189DataResponseAnalyzerWrapper::valueErrorToString(sec_error);
 		return ValueString;
 	}
@@ -1017,6 +1021,7 @@ namespace Fluke {
 
 		std::string ValueString=this->minMaxAvgValueStorageToString(this->sec_max);
 		ValueString.append(Fluke189DataResponseAnalyzerWrapper::unitToString(this->sec_unit_str,true));
+		ValueString.append(Fluke189DataResponseAnalyzerWrapper::currentTypeToString(this->sec_current,true));
 		if(sec_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
 		return ValueString;
 	}
@@ -1026,6 +1031,7 @@ namespace Fluke {
 
 		std::string ValueString=this->minMaxAvgValueStorageToString(this->sec_min);
 		ValueString.append(Fluke189DataResponseAnalyzerWrapper::unitToString(this->sec_unit_str,true));
+		ValueString.append(Fluke189DataResponseAnalyzerWrapper::currentTypeToString(this->sec_current,true));
 		if(sec_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
 		return ValueString;
 	}
@@ -1035,6 +1041,7 @@ namespace Fluke {
 
 		std::string ValueString=this->minMaxAvgValueStorageToString(this->sec_avg);
 		ValueString.append(Fluke189DataResponseAnalyzerWrapper::unitToString(this->sec_unit_str,true));
+		ValueString.append(Fluke189DataResponseAnalyzerWrapper::currentTypeToString(this->sec_current,true));
 		if(sec_reset) ValueString = ""; //If we have not had a good measurement after reset do not show the value
 		return ValueString;
 	}
