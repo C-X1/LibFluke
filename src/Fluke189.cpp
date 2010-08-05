@@ -918,7 +918,7 @@ namespace Fluke {
 
 	 }
 
-	std::string Fluke189QD0Logging::minMaxAvgValueStorageToString(minMaxAvgValueStorage_t value)
+	std::string Fluke189QD0Logging::minMaxAvgValueStorageToString(Fluke189Value_t value)
 	{
 		std::string strvalue, valmem;
 		std::stringstream convert_int;

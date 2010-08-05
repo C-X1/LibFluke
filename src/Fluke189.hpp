@@ -1046,7 +1046,7 @@ public: /*Types*/
 		signed   int Value;     ///<Value (without decimal)
 		unsigned int Decimal;	///<Decimal point location
 		signed   int Prefix;	///<Prefix
-	}  minMaxAvgValueStorage_t;
+	}  Fluke189Value_t;
 
 	/**
 	 * Struct for modes information
@@ -1085,9 +1085,9 @@ public: /*Types*/
 private:/*Variables*/
 
 	/*
-	 * Variables for storing minimum maximum and average value
+	 * Variables for storing current values
 	 */
-	 minMaxAvgValueStorage_t current_pri, current_sec;
+	 Fluke189Value_t current_pri, current_sec;
 
 	 /*
 	  * Error Variables
@@ -1095,18 +1095,18 @@ private:/*Variables*/
 	 Fluke189DataResponseAnalyzerWrapper::DispError pri_error, sec_error;
 
     //Primary Display
-		minMaxAvgValueStorage_t  pri_min;
-		minMaxAvgValueStorage_t  pri_max;
-		minMaxAvgValueStorage_t  pri_avg;
+		Fluke189Value_t  pri_min;
+		Fluke189Value_t  pri_max;
+		Fluke189Value_t  pri_avg;
 		long long pri_avg_ll;
 		unsigned int pri_count;
 
 		modes_t modes;
 
     //Secondary Display
-		minMaxAvgValueStorage_t  sec_min;
-		minMaxAvgValueStorage_t  sec_max;
-		minMaxAvgValueStorage_t  sec_avg;
+		Fluke189Value_t  sec_min;
+		Fluke189Value_t  sec_max;
+		Fluke189Value_t  sec_avg;
 		long long sec_avg_ll;
 		unsigned int sec_count;
 
@@ -1144,7 +1144,7 @@ private:
      * Check if operandSmall is smaller than operandBig
      * needed to get
      */
-	bool fluke189ValueSmallerThan(minMaxAvgValueStorage_t operandSmall,minMaxAvgValueStorage_t operandBig)
+	bool fluke189ValueSmallerThan(Fluke189Value_t operandSmall,Fluke189Value_t operandBig)
 	{
 
 		//Calculation of decimal point location:
@@ -1162,16 +1162,17 @@ private:
 	}
 
 
+	void reset();
 
 
 public:
 
 	/**
-	 * This function converts a minMaxAvgValueStorage_t to a string with dot and prefix
+	 * This function converts a Fluke189Value_t to a string with dot and prefix
 	 * @param [in] value The value storage
 	 * @return Returns a standard string of the value
 	 */
-	std::string minMaxAvgValueStorageToString(minMaxAvgValueStorage_t value);
+	std::string minMaxAvgValueStorageToString(Fluke189Value_t value);
 
 	 /**
 	  * This function will add the container to the calculated min, max and average values
@@ -1199,9 +1200,17 @@ public:
 	 }
 
 	 /**
+	  * @return This function will return the internal variable for the current primary value
+	  */
+	 Fluke189Value_t get_Primary_Value()
+	 {
+		 return this->current_pri;
+	 }
+
+	 /**
 	  * @return This function will return the internal variable pri_min.
 	  */
-	 minMaxAvgValueStorage_t get_Primary_Minimum()
+	 Fluke189Value_t get_Primary_Minimum()
 	 {
 		 return this->pri_min;
 	 };
@@ -1209,7 +1218,7 @@ public:
 	 /**
 	  * @return This function will return the internal variable pri_max.
 	  */
-	 minMaxAvgValueStorage_t get_Primary_Maximum()
+	 Fluke189Value_t get_Primary_Maximum()
 	 {
 		 return this->pri_max;
 	 }
@@ -1223,9 +1232,18 @@ public:
 	 }
 
 	 /**
+	  * @return This function will return the internal variable for the current secondary value
+	  */
+	 Fluke189Value_t get_Secondary_Value()
+	 {
+		return this->current_sec;
+	 }
+
+
+	 /**
 	  * @return This function will return the internal variable sec_min.
 	  */
-	 minMaxAvgValueStorage_t get_Secondary_Minimum()
+	 Fluke189Value_t get_Secondary_Minimum()
 	 {
 		 return this->sec_min;
 	 }
@@ -1233,7 +1251,7 @@ public:
 	 /**
 	  * @return This function will return the internal variable sec_max.
 	  */
-	 minMaxAvgValueStorage_t get_Secondary_Maximum()
+	 Fluke189Value_t get_Secondary_Maximum()
 	 {
 		 return this->sec_max;
 	 }
@@ -1310,6 +1328,8 @@ public:
 	  * @return Returns a String containing the Secondary avg value with dot, prefix and physical unit.
 	  */
 	 std::string get_Secondary_Avg_ValueAndUnit_String();
+
+
 
 };
 
