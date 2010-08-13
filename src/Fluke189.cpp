@@ -778,14 +778,15 @@ namespace Fluke {
 		 //If we have Percent for the primary value we need to ignore the Prefix... it could be wrong...
 		 this->current_pri.Prefix=(dra[0]->getAnalyzedInfoStruct().i_priUnit != Fluke189DataResponseAnalyzerWrapper::AU_Percent)?container.Data()->I_priSI_Prefix0 : 0;
 
-		 this->current_pri.Decimal=(container.Data()->I_priDecimal0 != 128) ? container.Data()->I_priDecimal0 : 2;
+		 this->current_pri.Decimal=(container.Data()->I_priDecimal0 < 6) ? container.Data()->I_priDecimal0 : 2;
 		 this->pri_unit_str=dra[0]->getAnalyzedInfoStruct().i_priUnit;
 
 
 
 		 this->current_sec.Value=container.Data()->I_secValue0;
 		 this->current_sec.Prefix=container.Data()->I_secSi_Prefix;
-		 this->current_sec.Decimal=(container.Data()->I_secDecimal != 128) ? container.Data()->I_secDecimal : 2;
+		 this->current_sec.Decimal=(container.Data()->I_secDecimal < 6) ? container.Data()->I_secDecimal : 2;
+		 std::cout<<this->current_pri.Decimal<<std::endl;
 		 this->sec_unit_str=dra[0]->getAnalyzedInfoStruct().i_secUnit;
 
 
