@@ -1226,6 +1226,14 @@ public:
 	 /**
 	  * @return This function will return the internal variable pri_avg.
 	  */
+	 Fluke189Value_t get_Primary_Average()
+	 {
+		 return this->pri_avg;
+	 }
+
+	 /**
+	  * @return This function will return the internal variable pri_avg.
+	  */
 	 long long get_Primary_Average_LL()
 	 {
 		 return this->pri_avg_ll;
@@ -1254,6 +1262,14 @@ public:
 	 Fluke189Value_t get_Secondary_Maximum()
 	 {
 		 return this->sec_max;
+	 }
+
+	 /**
+	  * @return This function will return the internal variable sec_avg.
+	  */
+	 Fluke189Value_t get_Secondary_Average()
+	 {
+		 return this->sec_avg;
 	 }
 
 	 /**
