@@ -682,6 +682,7 @@ namespace Fluke {
 				break;
 			}
 		}
+		return EtchString;
 	}
 	////////////////////////////////////////////////////
 	////Fluke189ResponseAnalyzerWrapperQD0 Functions////
@@ -854,9 +855,9 @@ namespace Fluke {
 		 {
 			 this->pri_max=this->current_pri;
 		 }
-		 if(fluke189ValueSmallerThan(this->sec_min, this->current_sec) && !dra[0]->hasErrorSECdisplay() && !sec_reset)
+		 if(fluke189ValueSmallerThan(this->sec_max, this->current_sec) && !dra[0]->hasErrorSECdisplay() && !sec_reset)
 		 {
-			 this->sec_min=this->current_sec;
+			 this->sec_max=this->current_sec;
 		 }
 
 		 //Process AVERAGE
